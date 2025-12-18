@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { ArrowRight, Building, Users, Award, TrendingUp, Calendar, Mail, ChevronRight, Sparkles } from "lucide-react";
 import Header from "@/components/Header";
+import Hero from "@/components/Hero";
 import { Button } from "@/components/ui/button";
 
 const Index = () => {
@@ -49,35 +50,9 @@ const Index = () => {
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-100">
       <Header />
       
-      <main className="relative">
+      <main className="relative -mt-20">
         {/* Hero Section */}
-        <section className="relative overflow-hidden py-20 lg:py-32">
-          <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 to-blue-800/10"></div>
-          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center space-y-8">
-              <div className={`transition-all duration-1000 transform ${isLoaded ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
-                <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent leading-tight">
-                  {currentLang === 'ar' ? 'جمعية المهندسين البحرينية' : 'Bahrain Society of Engineers'}
-                </h1>
-                <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-                  {currentLang === 'ar' ? 'الريادة في الهندسة منذ عام 1972' : 'Leadership in Engineering Since 1972'}
-                </p>
-              </div>
-              
-              <div className={`transition-all duration-1000 delay-300 transform ${isLoaded ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
-                <Button className="group bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 text-lg rounded-full hover:scale-105 transition-all shadow-lg hover:shadow-xl">
-                  {currentLang === 'ar' ? 'انضم إلينا' : 'Join Us'}
-                  <ArrowRight className="mr-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-                </Button>
-              </div>
-            </div>
-          </div>
-          
-          {/* Animated Background Elements */}
-          <div className="absolute top-20 left-10 w-20 h-20 bg-blue-200 rounded-full opacity-20 animate-pulse"></div>
-          <div className="absolute bottom-20 right-10 w-32 h-32 bg-blue-300 rounded-full opacity-10 animate-ping"></div>
-          <div className="absolute top-40 right-20 w-16 h-16 bg-blue-100 rounded-full opacity-30 animate-bounce"></div>
-        </section>
+        <Hero />
 
         {/* Stats Section */}
         <section className="py-16 lg:py-24 bg-white">
