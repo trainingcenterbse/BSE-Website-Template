@@ -1,3 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -8,97 +12,98 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* Warm, sophisticated palette inspired by the design */
-    --background: 36 44% 96%;
-    --foreground: 0 0% 18%;
+    /* BSE Bahrain Society of Engineers - Enhanced Blue color scheme */
+    --background: 210 100% 98%;
+    --foreground: 210 100% 8%;
 
-    --card: 33 40% 94%;
-    --card-foreground: 0 0% 18%;
+    --card: 210 100% 100%;
+    --card-foreground: 210 100% 8%;
 
-    --popover: 36 44% 96%;
-    --popover-foreground: 0 0% 18%;
+    --popover: 210 100% 98%;
+    --popover-foreground: 210 100% 8%;
 
-    --primary: 0 0% 18%;
-    --primary-foreground: 36 44% 96%;
+    --primary: 210 100% 45%;
+    --primary-foreground: 210 100% 98%;
 
-    --secondary: 25 30% 70%;
-    --secondary-foreground: 0 0% 18%;
+    --secondary: 210 100% 94%;
+    --secondary-foreground: 210 100% 8%;
 
-    --muted: 33 30% 88%;
-    --muted-foreground: 0 0% 40%;
+    --muted: 210 100% 92%;
+    --muted-foreground: 210 100% 45%;
 
-    --accent: 140 20% 50%;
-    --accent-foreground: 36 44% 96%;
+    --accent: 210 100% 50%;
+    --accent-foreground: 210 100% 98%;
 
     --destructive: 0 84% 60%;
-    --destructive-foreground: 36 44% 96%;
+    --destructive-foreground: 210 100% 98%;
 
-    --border: 33 25% 85%;
-    --input: 33 25% 85%;
-    --ring: 0 0% 18%;
+    --border: 210 100% 88%;
+    --input: 210 100% 88%;
+    --ring: 210 100% 45%;
 
-    --radius: 1rem;
+    --radius: 0.75rem;
 
-    /* Custom design tokens */
-    --tag-financing: 210 50% 75%;
-    --tag-lifestyle: 140 20% 70%;
-    --tag-community: 25 35% 60%;
-    --tag-wellness: 280 30% 75%;
-    --tag-travel: 195 50% 70%;
-    --tag-creativity: 330 40% 75%;
-    --tag-growth: 50 45% 70%;
+    /* Enhanced BSE design tokens - Professional Blue theme */
+    --tag-financing: 210 100% 45%;
+    --tag-lifestyle: 210 100% 65%;
+    --tag-community: 210 100% 60%;
+    --tag-wellness: 210 100% 70%;
+    --tag-travel: 210 100% 65%;
+    --tag-creativity: 210 100% 70%;
+    --tag-growth: 210 100% 65%;
 
-    /* Polish design tokens */
-    --cream: 40 40% 90%;
-    --cream-foreground: 0 0% 18%;
-    --surface-elevated: 36 44% 98%;
-    --shadow-soft: 0 0% 0%;
+    /* Professional BSE design tokens */
+    --cream: 210 100% 98%;
+    --cream-foreground: 210 100% 8%;
+    --surface-elevated: 210 100% 100%;
+    --shadow-soft: 210 100% 20%;
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
   }
 
   .dark {
-    --background: 0 0% 10%;
-    --foreground: 36 44% 96%;
+    --background: 210 100% 8%;
+    --foreground: 210 100% 95%;
 
-    --card: 0 0% 14%;
-    --card-foreground: 36 44% 96%;
+    --card: 210 100% 12%;
+    --card-foreground: 210 100% 95%;
 
-    --popover: 0 0% 10%;
-    --popover-foreground: 36 44% 96%;
+    --popover: 210 100% 8%;
+    --popover-foreground: 210 100% 95%;
 
-    --primary: 36 44% 96%;
-    --primary-foreground: 0 0% 18%;
+    --primary: 210 100% 50%;
+    --primary-foreground: 210 100% 98%;
 
-    --secondary: 25 15% 30%;
-    --secondary-foreground: 36 44% 96%;
+    --secondary: 210 100% 18%;
+    --secondary-foreground: 210 100% 95%;
 
-    --muted: 0 0% 20%;
-    --muted-foreground: 0 0% 60%;
+    --muted: 210 100% 20%;
+    --muted-foreground: 210 100% 65%;
 
-    --accent: 140 20% 45%;
-    --accent-foreground: 36 44% 96%;
+    --accent: 210 100% 50%;
+    --accent-foreground: 210 100% 98%;
 
     --destructive: 0 62% 50%;
-    --destructive-foreground: 36 44% 96%;
+    --destructive-foreground: 210 100% 98%;
 
-    --border: 0 0% 20%;
-    --input: 0 0% 20%;
-    --ring: 36 44% 96%;
+    --border: 210 100% 20%;
+    --input: 210 100% 20%;
+    --ring: 210 100% 50%;
 
-    /* Dark mode tag colors */
-    --tag-financing: 210 40% 45%;
-    --tag-lifestyle: 140 20% 40%;
-    --tag-community: 25 30% 40%;
-    --tag-wellness: 280 25% 45%;
-    --tag-travel: 195 40% 45%;
-    --tag-creativity: 330 35% 45%;
-    --tag-growth: 50 40% 45%;
+    /* Dark mode enhanced tag colors - Professional Blue theme */
+    --tag-financing: 210 100% 40%;
+    --tag-lifestyle: 210 100% 35%;
+    --tag-community: 210 100% 35%;
+    --tag-wellness: 210 100% 40%;
+    --tag-travel: 210 100% 35%;
+    --tag-creativity: 210 100% 40%;
+    --tag-growth: 210 100% 35%;
 
-    /* Dark mode polish tokens */
-    --cream: 40 20% 25%;
-    --cream-foreground: 36 44% 96%;
-    --surface-elevated: 0 0% 16%;
-    --shadow-soft: 0 0% 0%;
+    /* Dark mode professional BSE tokens */
+    --cream: 210 100% 15%;
+    --cream-foreground: 210 100% 95%;
+    --surface-elevated: 210 100% 12%;
+    --shadow-soft: 210 100% 20%;
   }
 }
 
@@ -109,6 +114,17 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground font-sans antialiased;
+    font-family: 'Inter', 'Cairo', 'Tajawal', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+
+  /* Arabic Typography */
+  [dir="rtl"] {
+    font-family: 'Tajawal', 'Cairo', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+
+  /* English Typography */
+  [dir="ltr"] {
+    font-family: 'Inter', 'Cairo', 'Tajawal', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   }
 
   html {
