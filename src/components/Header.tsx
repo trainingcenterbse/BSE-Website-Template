@@ -10,6 +10,7 @@ const Header = () => {
   const [isDark, setIsDark] = useState(false);
   const [currentLang, setCurrentLang] = useState('ar');
   const [activeTab, setActiveTab] = useState<string | null>(null);
+  const [activeSubItem, setActiveSubItem] = useState<string | null>(null);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [isLangSwitching, setIsLangSwitching] = useState(false);
@@ -125,12 +126,31 @@ const Header = () => {
   };
 
   const handleTabClick = (tab: string) => {
-    setActiveTab(tab);
+    // Check if it's a sub-item (from the items array) or main tab
+    const isSubItem = Object.values(tabs).some(t => 
+      t.items.some(item => item.title === tab)
+    );
+    
+    if (isSubItem) {
+      // Find which tab this sub-item belongs to
+      const parentTab = Object.keys(tabs).find(t => 
+        tabs[t as keyof typeof tabs].items.some(item => item.title === tab)
+      );
+      if (parentTab) {
+        setActiveTab(parentTab);
+        setActiveSubItem(tab);
+      }
+    } else {
+      // It's a main tab
+      setActiveTab(tab);
+      setActiveSubItem(null);
+    }
     setIsSearchOpen(false);
   };
 
   const handleBack = () => {
     setActiveTab(null);
+    setActiveSubItem(null);
     setIsSearchOpen(false);
   };
 
@@ -243,46 +263,27 @@ const Header = () => {
                     <AnimatePresence mode="wait">
                       {activeTab && (
                         <motion.div
-                          key={`tab-name-${activeTab}`}
+                          key={`tab-name-${activeTab}-${activeSubItem}`}
                           initial={{ 
                             opacity: 0, 
-                            x: 150,
-                            scale: 0.8
+                            scale: 0.3,
+                            transition: { duration: 0.8, ease: "easeInOut" }
                           }}
                           animate={{ 
                             opacity: 1, 
-                            x: 0,
                             scale: 1,
-                            transition: { 
-                              duration: 1.0, 
-                              ease: "easeOut",
-                              type: "spring",
-                              stiffness: 200,
-                              damping: 25
-                            }
+                            transition: { duration: 0.8, ease: "easeInOut" }
                           }}
                           exit={{ 
                             opacity: 0, 
-                            x: 150,
-                            scale: 0.8,
-                            transition: { duration: 0.6, ease: "easeInOut" }
+                            scale: 0.3,
+                            transition: { duration: 0.8, ease: "easeInOut" }
                           }}
-                          className="flex flex-col justify-center"
+                          className="flex flex-col"
                         >
-                          <motion.span 
-                            className="text-sm sm:text-base lg:text-lg font-bold text-blue-600 dark:text-blue-100 truncate"
-                            style={{
-                              backgroundImage: `linear-gradient(to right, ${tabs[activeTab as keyof typeof tabs]?.color || 'from-blue-600 to-blue-700'})`,
-                              WebkitBackgroundClip: 'text',
-                              WebkitTextFillColor: 'transparent',
-                              backgroundClip: 'text'
-                            }}
-                            initial={{ rotateY: 90 }}
-                            animate={{ rotateY: 0 }}
-                            transition={{ delay: 0.3, duration: 0.4 }}
-                          >
-                            {tabs[activeTab as keyof typeof tabs]?.title}
-                          </motion.span>
+                          <span className="text-xs sm:text-xs lg:text-sm font-bold text-blue-600 dark:text-blue-100 truncate group-hover:text-blue-700 dark:group-hover:text-blue-300 transition-all duration-300 transform group-hover:translate-x-1">
+                            {activeSubItem || tabs[activeTab as keyof typeof tabs]?.title}
+                          </span>
                         </motion.div>
                       )}
                     </AnimatePresence>
@@ -340,7 +341,7 @@ const Header = () => {
                         exit="hidden"
                         transition={{ delay: index * 0.1 }}
                         onClick={() => handleTabClick(item.title)}
-                        className="flex items-center gap-1.5 px-4 py-1.5 text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-300 cursor-pointer bg-transparent hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-600 dark:hover:from-white dark:hover:to-gray-100 hover:text-white dark:hover:text-blue-600 rounded-full hover:shadow-lg hover:shadow-2xl hover:scale-105 relative overflow-hidden"
+                        className="px-4 py-1.5 text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-300 cursor-pointer bg-transparent hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-600 dark:hover:from-white dark:hover:to-gray-100 hover:text-white dark:hover:text-blue-600 rounded-full hover:shadow-lg hover:shadow-2xl hover:scale-105 relative overflow-hidden flex items-center gap-1.5"
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                       >
