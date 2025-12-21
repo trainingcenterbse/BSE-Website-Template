@@ -13,37 +13,51 @@ const Hero = () => {
     threshold: 0.1,
   });
 
-  // Hero slides data
+  // Hero slides data with real Bahrain Society of Engineers images
   const slides = [
     {
       id: 1,
-      title: 'عن الجمعية',
+      title: 'جمعية المهندسين البحرينية',
       subtitle: 'Bahrain Society of Engineers',
-      description: 'جمعية المهندسين البحرينية هي المنظمة المهنية الرائدة في البحرين، تأسست عام 1972 وتضم آلاف المهندسين',
-      image: '/api/placeholder/1920/1080',
+      description: 'المنظمة المهنية الرائدة في البحرين، تأسست عام 1972 وتضم آلاف المهندسين من مختلف التخصصات',
+      type: 'image',
+      background: 'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=1920&h=1080&fit=crop',
       date: 'منذ عام 1972',
       location: 'مملكة البحرين',
       highlights: ['5000+ عضو', '50+ شريك', '200+ حدث', '45 سنة خبرة']
     },
     {
       id: 2,
-      title: 'المؤتمرات',
-      subtitle: 'Conferences & Events',
-      description: 'ننظم مؤتمرات وفعاليات متخصصة تجمع الخبراء والمتخصصين من جميع أنحاء المنطقة',
-      image: '/api/placeholder/1920/1080',
-      date: 'فعاليات سنوية',
-      location: 'مراكز المؤتمرات',
-      highlights: ['مؤتمر التآكل', 'ورش عمل', 'ندوات تقنية', 'شبكات مهنية']
+      title: 'مؤتمر MAINTCON 2024',
+      subtitle: 'International Maintenance Conference',
+      description: 'المؤتمر الدولي السابع للصيانة والموثوقية وإدارة الأصول بالتعاون مع جمعية المهندسين البحرينية',
+      type: 'image',
+      background: 'https://images.unsplash.com/photo-1540575137025-b6d2fb829119?w=1920&h=1080&fit=crop',
+      date: '2024',
+      location: 'مركز الخليج للمؤتمرات',
+      highlights: ['مؤتمر دولي', 'خبراء عالميون', 'ورش عمل', 'شبكات مهنية']
     },
     {
       id: 3,
-      title: 'مركز التدريب',
+      title: 'مركز التدريب المعتمد',
       subtitle: 'Training Center',
-      description: 'نقدم برامج تدريبية معتمدة لتطوير المهارات الهندسية وزيادة الكفاءة المهنية',
-      image: '/api/placeholder/1920/1080',
+      description: 'برامج تدريبية معتمدة لتطوير المهارات الهندسية وزيادة الكفاءة المهنية للمهندسين البحرينيين',
+      type: 'image',
+      background: 'https://images.unsplash.com/photo-1517245386807-bb43d82b3346?w=1920&h=1080&fit=crop',
       date: 'برامج مستمرة',
       location: 'مقر الجمعية',
       highlights: ['دورات معتمدة', 'شهادات مهنية', 'تدريب عملي', 'خبراء متخصصون']
+    },
+    {
+      id: 4,
+      title: 'يوم المهندس البحريني',
+      subtitle: 'Bahraini Engineer\'s Day',
+      description: 'احتفالات يوم المهندس البحريني وتكريم المهندسين المتميزين والمشاريع الريادية في البحرين',
+      type: 'image',
+      background: 'https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=1920&h=1080&fit=crop',
+      date: '2023',
+      location: 'مملكة البحرين',
+      highlights: ['تكريم المهندسين', 'مشاريع ريادية', 'تواصل مهني', 'تطوير المجتمع']
     }
   ];
 
@@ -77,7 +91,7 @@ const Hero = () => {
           <div 
             className="w-full h-full bg-cover bg-center"
             style={{ 
-              backgroundImage: `url(${slides[currentSlide].image})`,
+              backgroundImage: `url(${slides[currentSlide].background})`,
               filter: 'brightness(0.4)'
             }}
           />
