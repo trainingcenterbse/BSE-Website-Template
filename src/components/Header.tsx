@@ -205,7 +205,7 @@ const Header = () => {
                         whileHover={{ scale: 1 }}
                         transition={{ duration: 0.2 }}
                       />
-                      <ArrowLeft className="w-4 h-4 text-gray-600 dark:text-gray-300 relative z-10" />
+                      <ArrowLeft className={`w-4 h-4 text-gray-600 dark:text-gray-300 relative z-10 transform ${currentLang === 'ar' ? 'rotate-180' : ''}`} />
                     </motion.button>
                   )}
                 </AnimatePresence>
@@ -355,24 +355,24 @@ const Header = () => {
                   </motion.nav>
                 )}
 
-                {/* Search Bar - Only visible when search is open */}
+                {/* Search Bar - Full width when search is open */}
                 {isSearchOpen && (
                   <motion.div
                     key="search-bar"
                     initial={{ opacity: 0, width: 0 }}
-                    animate={{ opacity: 1, width: "auto" }}
+                    animate={{ opacity: 1, width: "100%" }}
                     exit={{ opacity: 0, width: 0 }}
                     transition={{ duration: 0.3 }}
-                    className="flex-1 max-w-md"
+                    className="flex-1 mx-4"
                   >
                     <div className="relative">
-                      <Search className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                      <Search className={`absolute top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 ${currentLang === 'ar' ? 'right-3' : 'left-3'}`} />
                       <input
                         type="text"
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
                         placeholder={currentLang === 'ar' ? 'ابحث في الموقع...' : 'Search website...'}
-                        className="w-full pr-10 pl-4 py-2 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-all duration-300 text-sm"
+                        className={`w-full ${currentLang === 'ar' ? 'pr-4 pl-10' : 'pl-4 pr-10'} py-2 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-all duration-300 text-sm`}
                         autoFocus
                       />
                     </div>
@@ -430,62 +430,95 @@ const Header = () => {
                   )}
                 </AnimatePresence>
 
-                {/* Language Toggle */}
-                <motion.button
-                  ref={langButtonRef}
-                  onClick={toggleLanguage}
-                  className="p-1.5 sm:p-2 rounded-full relative group overflow-hidden"
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.9 }}
-                >
-                  <motion.div
-                    className="absolute inset-0 bg-gradient-to-r from-blue-700/10 to-blue-600/10 rounded-full"
-                    initial={{ scaleY: 0 }}
-                    whileHover={{ scaleY: 1 }}
-                    transition={{ duration: 0.2 }}
-                  />
-                  <span className="relative z-10 flex items-center">
-                    <motion.div
-                      animate={{ rotate: isLangSwitching ? 360 : 0 }}
-                      transition={{ duration: 0.6 }}
-                    >
-                      <Globe className="h-3 w-3 sm:h-4 sm:w-4" />
-                    </motion.div>
-                    <motion.span 
-                      className="text-xs font-medium ml-1 lang-text"
-                      key={currentLang}
-                      initial={{ opacity: 0, y: -10 }}
-                      animate={{ opacity: 1, y: 0 }}
+                {/* Language Toggle - Hidden in search mode */}
+                <AnimatePresence mode="wait">
+                  {!isSearchOpen && (
+                    <motion.button
+                      key="lang-toggle"
+                      ref={langButtonRef}
+                      onClick={toggleLanguage}
+                      className="p-1.5 sm:p-2 rounded-full relative group overflow-hidden"
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.9 }}
+                      initial={{ scale: 0, opacity: 0 }}
+                      animate={{ scale: 1, opacity: 1 }}
+                      exit={{ scale: 0, opacity: 0 }}
                       transition={{ duration: 0.3 }}
                     >
-                      {currentLang === 'ar' ? 'EN' : 'AR'}
-                    </motion.span>
-                  </span>
-                </motion.button>
+                      <motion.div
+                        className="absolute inset-0 bg-gradient-to-r from-blue-700/10 to-blue-600/10 rounded-full"
+                        initial={{ scaleY: 0 }}
+                        whileHover={{ scaleY: 1 }}
+                        transition={{ duration: 0.2 }}
+                      />
+                      <span className="relative z-10 flex items-center">
+                        <motion.div
+                          animate={{ rotate: isLangSwitching ? 360 : 0 }}
+                          transition={{ duration: 0.6 }}
+                        >
+                          <Globe className="h-3 w-3 sm:h-4 sm:w-4" />
+                        </motion.div>
+                        <motion.span 
+                          className="text-xs font-medium ml-1 lang-text"
+                          key={currentLang}
+                          initial={{ opacity: 0, y: -10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.3 }}
+                        >
+                          {currentLang === 'ar' ? 'EN' : 'AR'}
+                        </motion.span>
+                      </span>
+                    </motion.button>
+                  )}
+                </AnimatePresence>
 
-                {/* Theme Toggle */}
-                <button
-                  onClick={toggleTheme}
-                  className="p-1.5 sm:p-2 rounded-full relative group overflow-hidden transition-all duration-300"
-                >
-                  <span className="relative z-10">
-                    {isDark ? (
-                      <Sun className="h-3 w-3 sm:h-4 sm:w-4" />
-                    ) : (
-                      <Moon className="h-3 w-3 sm:h-4 sm:w-4" />
-                    )}
-                  </span>
-                  <div className="absolute inset-0 bg-gradient-to-r from-blue-700/10 to-blue-600/10 transform scale-y-0 group-hover:scale-y-100 transition-transform duration-300 rounded-full"></div>
-                </button>
+                {/* Theme Toggle - Hidden in search mode */}
+                <AnimatePresence mode="wait">
+                  {!isSearchOpen && (
+                    <motion.button
+                      key="theme-toggle"
+                      onClick={toggleTheme}
+                      className="p-1.5 sm:p-2 rounded-full relative group overflow-hidden transition-all duration-300"
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.9 }}
+                      initial={{ scale: 0, opacity: 0 }}
+                      animate={{ scale: 1, opacity: 1 }}
+                      exit={{ scale: 0, opacity: 0 }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      <span className="relative z-10">
+                        {isDark ? (
+                          <Sun className="h-3 w-3 sm:h-4 sm:w-4" />
+                        ) : (
+                          <Moon className="h-3 w-3 sm:h-4 sm:w-4" />
+                        )}
+                      </span>
+                      <div className="absolute inset-0 bg-gradient-to-r from-blue-700/10 to-blue-600/10 transform scale-y-0 group-hover:scale-y-100 transition-transform duration-300 rounded-full"></div>
+                    </motion.button>
+                  )}
+                </AnimatePresence>
                 
-                {/* Membership Center Button with Users Icon */}
-                <Button className="hidden md:flex bg-gradient-to-r from-blue-700 to-blue-600 hover:from-blue-800 hover:to-blue-700 dark:from-blue-800 dark:to-blue-700 text-white rounded-full px-4 py-1.5 text-xs sm:text-sm font-medium hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-2xl relative overflow-hidden group">
-                  <span className="relative z-10 flex items-center gap-1.5">
-                    <Users className="w-4 h-4" />
-                    {currentLang === 'ar' ? 'مركز العضوية' : 'Membership Center'}
-                  </span>
-                  <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent transform translate-x-full group-hover:translate-x-0 transition-transform duration-500"></div>
-                </Button>
+                {/* Membership Center Button - Hidden in search mode */}
+                <AnimatePresence mode="wait">
+                  {!isSearchOpen && (
+                    <motion.div
+                      key="membership-btn"
+                      className="hidden md:flex"
+                      initial={{ scale: 0, opacity: 0 }}
+                      animate={{ scale: 1, opacity: 1 }}
+                      exit={{ scale: 0, opacity: 0 }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      <Button className="bg-gradient-to-r from-blue-700 to-blue-600 hover:from-blue-800 hover:to-blue-700 dark:from-blue-800 dark:to-blue-700 text-white rounded-full px-4 py-1.5 text-xs sm:text-sm font-medium hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-2xl relative overflow-hidden group">
+                        <span className="relative z-10 flex items-center gap-1.5">
+                          <Users className="w-4 h-4" />
+                          {currentLang === 'ar' ? 'مركز العضوية' : 'Membership Center'}
+                        </span>
+                        <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent transform translate-x-full group-hover:translate-x-0 transition-transform duration-500"></div>
+                      </Button>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
 
                 {/* Mobile Menu Button */}
                 <button
