@@ -28,9 +28,10 @@ const Header = () => {
       logo: '/favicon.ico',
       items: [
         { title: currentLang === 'ar' ? 'من نحن' : 'About Us', icon: User },
-        { title: currentLang === 'ar' ? 'المهمة والرؤية' : 'Vision & Mission', icon: Award },
         { title: currentLang === 'ar' ? 'المؤسسون' : 'Founders', icon: GraduationCap },
-        { title: currentLang === 'ar' ? 'مجلس الإدارة' : 'Board of Directors', icon: Briefcase }
+        { title: currentLang === 'ar' ? 'مجلس الإدارة' : 'Board of Directors', icon: Briefcase },
+        { title: currentLang === 'ar' ? 'الأنظمة واللوائح' : 'Systems & Regulations', icon: Users },
+        { title: currentLang === 'ar' ? 'تقارير الجمعية العمومية' : 'General Assembly Reports', icon: Calendar }
       ]
     },
     conferences: {
@@ -126,6 +127,15 @@ const Header = () => {
   };
 
   const handleTabClick = (tab: string) => {
+    // Define navigation routes for specific pages
+    const pageRoutes: { [key: string]: string } = {
+      [currentLang === 'ar' ? 'من نحن' : 'About Us']: '/about-us',
+      [currentLang === 'ar' ? 'المؤسسون' : 'Founders']: '/founders',
+      [currentLang === 'ar' ? 'مجلس الإدارة' : 'Board of Directors']: '/board-of-directors',
+      [currentLang === 'ar' ? 'الأنظمة واللوائح' : 'Systems & Regulations']: '/systems-regulations',
+      [currentLang === 'ar' ? 'تقارير الجمعية العمومية' : 'General Assembly Reports']: '/general-assembly-reports'
+    };
+
     // Check if it's a sub-item (from the items array) or main tab
     const isSubItem = Object.values(tabs).some(t => 
       t.items.some(item => item.title === tab)
@@ -139,6 +149,12 @@ const Header = () => {
       if (parentTab) {
         setActiveTab(parentTab);
         setActiveSubItem(tab);
+        
+        // Navigate to the specific page if route exists
+        const route = pageRoutes[tab];
+        if (route) {
+          window.location.href = route;
+        }
       }
     } else {
       // It's a main tab
