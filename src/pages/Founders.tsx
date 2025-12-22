@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-import { Users, Award, Calendar, BookOpen, Star, Heart, ArrowRight, Mail, Phone, MapPin, GraduationCap } from "lucide-react";
+import { Users, Award, Calendar, BookOpen, Star, Heart, ArrowRight, Mail, Phone, MapPin, GraduationCap, Shield } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
@@ -165,59 +165,100 @@ const Founders = () => {
       
       <main>
         {/* Hero Section */}
-        <section className="relative py-20 lg:py-32 bg-gradient-to-br from-purple-600 via-blue-700 to-purple-800 overflow-hidden">
-          {/* Background Elements */}
+        <section className="relative h-96 lg:h-[500px] bg-gradient-to-br from-blue-900 via-blue-800 to-slate-900 overflow-hidden">
+          {/* Background Image with Overlay */}
           <div className="absolute inset-0">
-            <div className="absolute top-10 right-10 w-72 h-72 bg-purple-400/20 rounded-full blur-3xl animate-pulse"></div>
-            <div className="absolute bottom-10 left-10 w-96 h-96 bg-blue-400/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
+            <img 
+              src="/Founders.jpg" 
+              alt="Bahrain Engineers Society Founders" 
+              className="w-full h-full object-cover opacity-40"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-blue-900/70 via-blue-800/60 to-slate-900/70"></div>
           </div>
           
-          <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              className="text-center"
-            >
-              <h1 className="text-4xl lg:text-6xl font-bold text-white mb-6">
-                {currentLang === 'ar' ? 'المؤسسون' : 'The Founders'}
-              </h1>
-              <p className="text-xl lg:text-2xl text-purple-100 max-w-3xl mx-auto leading-relaxed">
-                {currentLang === 'ar'
-                  ? 'الرواد الذين وضعوا أساس جمعية المهندسين البحرينية ومهدوا الطريق للأجيال القادمة'
-                  : 'The pioneers who laid the foundation of the Bahrain Society of Engineers and paved the way for future generations'
-                }
-              </p>
-            </motion.div>
+          <div className="relative z-10 h-full flex items-center justify-center">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8 }}
+                className="text-center"
+              >
+                <h1 className="text-4xl lg:text-6xl font-bold text-white mb-6">
+                  {currentLang === 'ar' ? 'المؤسسون الأوائل' : 'The First Founders'}
+                </h1>
+                <motion.div
+                  initial={{ width: 0 }}
+                  animate={{ width: "120px" }}
+                  transition={{ duration: 1, delay: 0.4 }}
+                  className="h-1 bg-gradient-to-r from-blue-400 to-slate-400 mx-auto mb-6"
+                />
+                <p className="text-xl lg:text-2xl text-blue-100 max-w-3xl mx-auto leading-relaxed">
+                  {currentLang === 'ar'
+                    ? 'قصة تأسيس جمعية المهندسين البحرينية والرجال الذين قاموا بهذا العمل العظيم'
+                    : 'The story of establishing the Bahrain Society of Engineers and the men who accomplished this great work'
+                  }
+                </p>
+              </motion.div>
+            </div>
           </div>
         </section>
 
         {/* Founding Story Section */}
-        <section className="py-20 lg:py-32 bg-gradient-to-br from-white via-purple-50 to-blue-50 relative overflow-hidden">
+        <section className="relative py-16 lg:py-24 bg-gradient-to-br from-slate-50 via-blue-50/20 to-slate-50/30 overflow-hidden">
+          {/* Modern Background */}
           <div className="absolute inset-0">
-            <div className="absolute top-10 right-10 w-72 h-72 bg-purple-100/20 rounded-full blur-3xl"></div>
-            <div className="absolute bottom-10 left-10 w-96 h-96 bg-blue-100/20 rounded-full blur-3xl"></div>
+            <div className="absolute inset-0 bg-gradient-to-br from-blue-900/5 via-transparent to-slate-900/5"></div>
+            <motion.div
+              animate={{ 
+                scale: [1, 1.1, 1],
+                opacity: [0.1, 0.2, 0.1],
+              }}
+              transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute top-1/3 left-1/4 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl"
+            />
+            <motion.div
+              animate={{ 
+                scale: [1, 1.2, 1],
+                opacity: [0.1, 0.15, 0.1],
+              }}
+              transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+              className="absolute bottom-1/3 right-1/4 w-72 h-72 bg-slate-500/10 rounded-full blur-3xl"
+            />
           </div>
           
           <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              className="text-center mb-16"
+              transition={{ duration: 1, ease: "easeOut" }}
+              className="text-center mb-12"
             >
-              <div className="inline-flex items-center justify-center mb-6">
-                <div className="h-1 w-20 bg-gradient-to-r from-purple-600 to-blue-600 rounded-full"></div>
-                <div className="mx-6">
-                  <div className="w-16 h-16 bg-gradient-to-br from-purple-600 to-blue-700 rounded-2xl flex items-center justify-center shadow-lg">
-                    <Calendar className="w-8 h-8 text-white" />
-                  </div>
+              <motion.div
+                initial={{ scale: 0.8, opacity: 0 }}
+                whileInView={{ scale: 1, opacity: 1 }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+                className="inline-block"
+              >
+                <div className="bg-gradient-to-r from-blue-600 to-slate-700 text-white px-4 py-1.5 rounded-full text-xs font-semibold mb-3 shadow-lg">
+                  {currentLang === 'ar' ? 'قصة التأسيس' : 'Foundation Story'}
                 </div>
-                <div className="h-1 w-20 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full"></div>
-              </div>
-              <h2 className="text-4xl lg:text-6xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent mb-4">
+              </motion.div>
+              <h2 className="text-3xl lg:text-5xl font-bold bg-gradient-to-r from-blue-900 to-slate-800 bg-clip-text text-transparent mb-4">
                 {foundingStory.title}
               </h2>
+              <motion.div
+                initial={{ width: 0 }}
+                whileInView={{ width: "120px" }}
+                transition={{ duration: 1.2, delay: 0.4 }}
+                className="h-1 bg-gradient-to-r from-blue-600 to-slate-600 mx-auto mb-4"
+              />
+              <p className="text-sm text-gray-600 max-w-2xl mx-auto">
+                {currentLang === 'ar'
+                  ? 'الظروف والعوامل التي أدت إلى تأسيس جمعية المهندسين البحرينية'
+                  : 'The circumstances and factors that led to the establishment of the Bahrain Society of Engineers'
+                }
+              </p>
             </motion.div>
             
             <motion.div
@@ -228,7 +269,7 @@ const Founders = () => {
             >
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                 <div>
-                  <div className="text-6xl font-bold text-purple-600 mb-4">{foundingStory.year}</div>
+                  <div className="text-6xl font-bold text-blue-700 mb-4">{foundingStory.year}</div>
                   <p className="text-lg text-gray-700 leading-relaxed mb-8">
                     {foundingStory.description}
                   </p>
@@ -241,13 +282,13 @@ const Founders = () => {
                       initial={{ opacity: 0, x: 50 }}
                       whileInView={{ opacity: 1, x: 0 }}
                       transition={{ duration: 0.6, delay: index * 0.2 }}
-                      className="flex items-center bg-purple-50 rounded-xl p-4"
+                      className="flex items-center bg-blue-50 rounded-xl p-4"
                     >
-                      <div className="w-12 h-12 bg-gradient-to-br from-purple-600 to-blue-600 rounded-xl flex items-center justify-center mr-4">
+                      <div className="w-12 h-12 bg-gradient-to-br from-blue-700 to-blue-600 rounded-xl flex items-center justify-center mr-4">
                         <Calendar className="w-6 h-6 text-white" />
                       </div>
                       <div>
-                        <div className="text-sm font-bold text-purple-600 mb-1">{moment.date}</div>
+                        <div className="text-sm font-bold text-blue-700 mb-1">{moment.date}</div>
                         <div className="text-gray-700">{moment.event}</div>
                       </div>
                     </motion.div>
@@ -258,138 +299,351 @@ const Founders = () => {
           </div>
         </section>
 
-        {/* Founders Grid */}
-        <section className="py-20 lg:py-32 bg-gradient-to-br from-gray-50 to-purple-50 relative overflow-hidden">
+        {/* Foundation Journey Section */}
+        <section className="relative py-16 lg:py-24 bg-gradient-to-br from-blue-900 via-blue-800 to-slate-900 overflow-hidden">
+          {/* Dark Background Elements */}
           <div className="absolute inset-0">
-            <div className="absolute top-40 right-20 w-80 h-80 bg-gradient-to-br from-purple-300/30 to-blue-300/30 rounded-full blur-3xl animate-bounce"></div>
-            <div className="absolute bottom-40 left-20 w-64 h-64 bg-gradient-to-br from-blue-300/30 to-purple-300/30 rounded-full blur-3xl animate-bounce delay-500"></div>
-          </div>
-          
-          <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <motion.div
-              ref={ref}
-              initial={{ opacity: 0, y: 30 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.8 }}
-              className="text-center mb-16"
-            >
-              <h2 className="text-4xl lg:text-6xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent mb-4">
-                {currentLang === 'ar' ? 'المؤسسون الأوائل' : 'The First Founders'}
-              </h2>
-              <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-                {currentLang === 'ar' ? 'القادة الذين وضعوا أساس نجاح الجمعية' : 'The leaders who laid the foundation for the society\'s success'}
-              </p>
-            </motion.div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {founders.map((founder) => (
-                <motion.div
-                  key={founder.id}
-                  initial={{ opacity: 0, y: 50 }}
-                  animate={inView ? { opacity: 1, y: 0 } : {}}
-                  whileHover={{ y: -10 }}
-                  transition={{ duration: 0.6, delay: founder.id * 0.2 }}
-                  className="bg-white rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 overflow-hidden"
-                >
-                  {/* Profile Header */}
-                  <div className="relative h-48 bg-gradient-to-br from-purple-600 to-blue-600">
-                    <img 
-                      src={founder.image} 
-                      alt={founder.name} 
-                      className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 w-32 h-32 rounded-full border-4 border-white shadow-xl"
-                    />
-                    <div className="absolute top-4 right-4">
-                      <span className="px-3 py-1 rounded-full text-xs font-bold bg-white/20 backdrop-blur-sm text-white">
-                        {founder.specialization}
-                      </span>
-                    </div>
-                  </div>
-                  
-                  {/* Profile Content */}
-                  <div className="p-8 pt-20">
-                    <div className="text-center mb-6">
-                      <h3 className="text-2xl font-bold text-gray-900 mb-2">{founder.name}</h3>
-                      <p className="text-purple-600 font-medium mb-1">{founder.title}</p>
-                      <div className="flex items-center justify-center text-gray-600 text-sm">
-                        <GraduationCap className="w-4 h-4 mr-2" />
-                        {founder.specialization}
-                      </div>
-                    </div>
-                    
-                    <p className="text-gray-600 leading-relaxed mb-6">{founder.bio}</p>
-                    
-                    {/* Achievements */}
-                    <div className="mb-6">
-                      <h4 className="font-bold text-gray-900 mb-3">
-                        {currentLang === 'ar' ? 'الإنجازات الرئيسية' : 'Key Achievements'}
-                      </h4>
-                      <div className="space-y-2">
-                        {founder.achievements.slice(0, 3).map((achievement, index) => (
-                          <div key={index} className="flex items-center text-gray-700 text-sm">
-                            <Star className="w-4 h-4 text-yellow-500 mr-2 flex-shrink-0" />
-                            <span>{achievement}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                    
-                    {/* Education */}
-                    <div className="mb-6">
-                      <h4 className="font-bold text-gray-900 mb-3">
-                        {currentLang === 'ar' ? 'التعليم' : 'Education'}
-                      </h4>
-                      <div className="space-y-1">
-                        {founder.education.slice(0, 2).map((edu, index) => (
-                          <div key={index} className="flex items-center text-gray-700 text-sm">
-                            <BookOpen className="w-4 h-4 text-purple-600 mr-2 flex-shrink-0" />
-                            <span className="line-clamp-1">{edu}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                    
-                    {/* Contact */}
-                    <div className="border-t pt-4">
-                      <div className="grid grid-cols-1 gap-2 text-sm">
-                        <div className="flex items-center text-gray-600">
-                          <Mail className="w-4 h-4 mr-2" />
-                          <span className="line-clamp-1">{founder.contact.email}</span>
-                        </div>
-                        <div className="flex items-center text-gray-600">
-                          <Phone className="w-4 h-4 mr-2" />
-                          <span>{founder.contact.phone}</span>
-                        </div>
-                        <div className="flex items-center text-gray-600">
-                          <MapPin className="w-4 h-4 mr-2" />
-                          <span>{founder.contact.location}</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Legacy Section */}
-        <section className="py-20 lg:py-32 bg-gradient-to-br from-purple-600 to-blue-700 relative overflow-hidden">
-          <div className="absolute inset-0">
-            <div className="absolute top-20 left-20 w-80 h-80 bg-purple-400/10 rounded-full blur-3xl animate-pulse"></div>
-            <div className="absolute bottom-20 right-20 w-96 h-96 bg-blue-400/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
+              animate={{ 
+                scale: [1, 1.3, 1],
+                opacity: [0.2, 0.4, 0.2],
+              }}
+              transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute top-20 left-20 w-72 h-72 bg-blue-600/20 rounded-full blur-3xl"
+            />
+            <motion.div
+              animate={{ 
+                scale: [1.3, 1, 1.3],
+                opacity: [0.15, 0.3, 0.15],
+              }}
+              transition={{ duration: 15, repeat: Infinity, ease: "easeInOut", delay: 3 }}
+              className="absolute bottom-20 right-20 w-80 h-80 bg-slate-600/20 rounded-full blur-3xl"
+            />
+            <div className="absolute inset-0 bg-gradient-to-br from-blue-900/40 to-slate-900/40"></div>
           </div>
           
           <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              className="text-center mb-16"
+              transition={{ duration: 1, ease: "easeOut" }}
+              className="text-center mb-12"
             >
-              <h2 className="text-4xl lg:text-6xl font-bold text-white mb-6">
+              <motion.div
+                initial={{ scale: 0.8, opacity: 0 }}
+                whileInView={{ scale: 1, opacity: 1 }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+                className="inline-block"
+              >
+                <div className="bg-gradient-to-r from-blue-400 to-slate-400 text-white px-4 py-1.5 rounded-full text-xs font-semibold mb-3 shadow-lg backdrop-blur-sm">
+                  {currentLang === 'ar' ? 'رحلة التأسيس' : 'Foundation Journey'}
+                </div>
+              </motion.div>
+              <h2 className="text-3xl lg:text-5xl font-bold text-white mb-4">
+                {currentLang === 'ar' ? 'رحلة التأسيس' : 'The Foundation Journey'}
+              </h2>
+              <motion.div
+                initial={{ width: 0 }}
+                whileInView={{ width: "120px" }}
+                transition={{ duration: 1.2, delay: 0.4 }}
+                className="h-1 bg-gradient-to-r from-blue-400 to-slate-400 mx-auto mb-4"
+              />
+              <p className="text-sm text-blue-100 max-w-2xl mx-auto">
+                {currentLang === 'ar'
+                  ? 'التفاصيل الكاملة لرحلة تأسيس جمعية المهندسين البحرينية'
+                  : 'Complete details of the Bahrain Society of Engineers foundation journey'
+                }
+              </p>
+            </motion.div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+              <motion.div
+                initial={{ opacity: 0, x: -50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 1, delay: 0.6 }}
+                className="bg-white/10 backdrop-blur-md rounded-2xl p-6 shadow-xl border border-white/20"
+              >
+                <motion.div
+                  initial={{ rotate: 0 }}
+                  whileHover={{ rotate: [0, -10, 10, 0] }}
+                  transition={{ duration: 0.6 }}
+                  className="w-16 h-16 bg-gradient-to-br from-blue-500 to-slate-600 rounded-2xl flex items-center justify-center text-white mb-4"
+                >
+                  <Users className="w-8 h-8" />
+                </motion.div>
+                <h3 className="text-xl font-bold text-white mb-4">
+                  {currentLang === 'ar' ? 'قبل التأسيس' : 'Before Foundation'}
+                </h3>
+                <p className="text-blue-100 leading-relaxed text-sm">
+                  قبل العام 1972 م، كان مجتمع الهندسة أو المهندسين في البحرين يشكلان مجموعتين منفصلتين، واحدة تضم في الغالب المهندسين الأوروبيين العاملين في شركة نفط البحرين المحدودة (بابكو) والتي تأسست في العام 1929 م وبدأت بإنتاج النفط بكميات تجارية من حقل البحرين منذ يونيو 1932 م، ومجموعة ثانية تضم 22 من المهندسين البحرينيين، وكانت هذه المجموعة تجتمع من وقت لآخر في نادي الخريجين الذي كان يستقطب خريجي الجامعات من البحرينيين بمختلف تخصصاتهم العلمية، ومنها تخصص الهندسة بمختلف فروعها.
+                </p>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1, delay: 0.8 }}
+                className="bg-white/10 backdrop-blur-md rounded-2xl p-6 shadow-xl border border-white/20"
+              >
+                <motion.div
+                  initial={{ rotate: 0 }}
+                  whileHover={{ rotate: [0, -10, 10, 0] }}
+                  transition={{ duration: 0.6 }}
+                  className="w-16 h-16 bg-gradient-to-br from-blue-500 to-slate-600 rounded-2xl flex items-center justify-center text-white mb-4"
+                >
+                  <Award className="w-8 h-8" />
+                </motion.div>
+                <h3 className="text-xl font-bold text-white mb-4">
+                  {currentLang === 'ar' ? 'عوامل التأسيس' : 'Foundation Factors'}
+                </h3>
+                <p className="text-blue-100 leading-relaxed text-sm">
+                  ومما لا شك فيه أن عوامل عديدة أثرت في ظهور الحاجة لتأسيس الجمعية، ومن تلك العوامل الشعور الوطني الذي عمّ البلاد بعد الاستقلال عن بريطانيا في العام 1971 م، وكذلك الشعور بالحاجة للتمثيل المِهْني لهذا المجتمع الهندسي الصغير والذي بدأ يتنامى في البلاد مع عودة العديد من خريجي التخصصات الهندسية المختلفة إلى البلاد من المهندسين البحرينيين الذين شعروا بالحاجة إلى التمثيل المهني، من خلال إنشاء جمعية غير سياسية لتمثيل احتياجاتهم المهنية.
+                </p>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, x: 50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 1, delay: 1.0 }}
+                className="bg-white/10 backdrop-blur-md rounded-2xl p-6 shadow-xl border border-white/20"
+              >
+                <motion.div
+                  initial={{ rotate: 0 }}
+                  whileHover={{ rotate: [0, -10, 10, 0] }}
+                  transition={{ duration: 0.6 }}
+                  className="w-16 h-16 bg-gradient-to-br from-blue-500 to-slate-600 rounded-2xl flex items-center justify-center text-white mb-4"
+                >
+                  <Shield className="w-8 h-8" />
+                </motion.div>
+                <h3 className="text-xl font-bold text-white mb-4">
+                  {currentLang === 'ar' ? 'المباركة الرسمية' : 'Official Blessing'}
+                </h3>
+                <p className="text-blue-100 leading-relaxed text-sm">
+                  استطاع المؤسسون في الأشهر التي سبقت تأسيس الجمعية، الحصول على مباركة القيادة والحكومة، لتأسيس الجمعية وتأمين الدعم عالي المستوى والصادق لمساعي التأسيس، فحصلوا على التشجيع والتحفيز لتشكيل الجمعية، وقد صدر التصريح الأول من وزير العمل والشؤون الاجتماعية وكان الوزير آنذاك سعادة الأستاذ جواد سالم العريض، فأصبحت جمعية المهندسين البحرينية جمعيةً مرخصاً لها اعتباراً من الأول من يوليو 1972 م، وهو تاريخ إعلان الإشهار.
+                </p>
+              </motion.div>
+            </div>
+
+            {/* Foundation Date Highlight */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 1, delay: 1.2 }}
+              className="mt-12 bg-gradient-to-r from-blue-800 to-slate-800 rounded-3xl p-8 shadow-2xl border border-white/10"
+            >
+              <div className="text-center">
+                <motion.div
+                  initial={{ scale: 0 }}
+                  whileInView={{ scale: 1 }}
+                  transition={{ duration: 0.8, delay: 1.4 }}
+                  className="inline-block"
+                >
+                  <div className="text-6xl font-bold text-white mb-2">1 يوليو 1972</div>
+                  <p className="text-xl text-blue-200">
+                    {currentLang === 'ar' 
+                      ? 'تاريخ إعلان الإشهار الرسمي لجمعية المهندسين البحرينية'
+                      : 'Official declaration date of the Bahrain Society of Engineers'
+                    }
+                  </p>
+                </motion.div>
+              </div>
+            </motion.div>
+          </div>
+        </section>
+
+        {/* Founders Names Section */}
+        <section className="relative py-16 lg:py-24 bg-gradient-to-br from-slate-50 via-blue-50/20 to-slate-50/30 overflow-hidden">
+          {/* Modern Background */}
+          <div className="absolute inset-0">
+            <div className="absolute inset-0 bg-gradient-to-br from-blue-900/5 via-transparent to-slate-900/5"></div>
+            <motion.div
+              animate={{ 
+                scale: [1, 1.1, 1],
+                opacity: [0.1, 0.2, 0.1],
+              }}
+              transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute top-1/3 left-1/4 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl"
+            />
+            <motion.div
+              animate={{ 
+                scale: [1, 1.2, 1],
+                opacity: [0.1, 0.15, 0.1],
+              }}
+              transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+              className="absolute bottom-1/3 right-1/4 w-72 h-72 bg-slate-500/10 rounded-full blur-3xl"
+            />
+          </div>
+          
+          <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            {/* Large Founders Image */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1, delay: 0.2 }}
+              className="mb-12"
+            >
+              <div className="relative rounded-3xl overflow-hidden shadow-2xl">
+                <img 
+                  src="/Founders.jpg" 
+                  alt="BSE Founders" 
+                  className="w-full h-auto object-contain"
+                />
+                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent h-32"></div>
+                <div className="absolute bottom-8 left-0 right-0 text-center">
+                  <div className="bg-white/90 backdrop-blur-sm rounded-2xl p-6 max-w-2xl mx-auto">
+                    <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-2">
+                      {currentLang === 'ar' ? 'أسماء المؤسسين' : 'Founders Names'}
+                    </h2>
+                    <p className="text-lg text-gray-600">
+                      {currentLang === 'ar' ? 'مؤسسو جمعية المهندسين البحرينية - 1972' : 'Bahrain Society of Engineers Founders - 1972'}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Names Cards */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              {/* Standing Card */}
+              <motion.div
+                initial={{ opacity: 0, x: -50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 1, delay: 0.6 }}
+                className="bg-gradient-to-br from-blue-900 to-blue-800 rounded-3xl p-8 shadow-2xl border border-blue-700/30"
+              >
+                <div className="flex items-center mb-6">
+                  <div className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center mr-4">
+                    <Users className="w-6 h-6 text-white" />
+                  </div>
+                  <h3 className="text-2xl font-bold text-white">
+                    {currentLang === 'ar' ? 'الوقوف من اليمين' : 'Standing from Right'}
+                  </h3>
+                </div>
+                
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  {[
+                    'سيف عيسى البنعلي',
+                    'عيسى سيد خلف',
+                    'سالم عبداالله المناعي',
+                    'عبداالله محمد جمعة',
+                    'جميل كاظم العلوي',
+                    'إبراهيم خليل المؤيد',
+                    'الدكتور عصام عبد الله فخرو',
+                    'فاروق يوسف المؤيد',
+                    'كاظم الهاشمي',
+                    'سامي كيكسو'
+                  ].map((name, index) => (
+                    <motion.div
+                      key={index}
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.5, delay: 0.1 * index }}
+                      className="bg-white/10 backdrop-blur-sm rounded-xl p-3 border border-white/20 hover:bg-white/20 transition-all duration-300"
+                    >
+                      <div className="flex items-center">
+                        <div className="w-2 h-2 bg-blue-400 rounded-full ml-3"></div>
+                        <span className="text-white text-sm font-medium">{name}</span>
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+              </motion.div>
+
+              {/* Sitting Card */}
+              <motion.div
+                initial={{ opacity: 0, x: 50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 1, delay: 0.8 }}
+                className="bg-gradient-to-br from-slate-800 to-slate-900 rounded-3xl p-8 shadow-2xl border border-slate-700/30"
+              >
+                <div className="flex items-center mb-6">
+                  <div className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center mr-4">
+                    <Award className="w-6 h-6 text-white" />
+                  </div>
+                  <h3 className="text-2xl font-bold text-white">
+                    {currentLang === 'ar' ? 'الجلوس من اليمين' : 'Sitting from Right'}
+                  </h3>
+                </div>
+                
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  {[
+                    'عبد الرحمن أحمد فخرو',
+                    'خالد بن عبداالله آل خليفة',
+                    'علي محمد مراد',
+                    'ماجد جواد الجشي',
+                    'الدكتور عبداللطيف جاسم كانو',
+                    'فويسفا فخرو',
+                    'خالد عبد الرحمن المؤيد'
+                  ].map((name, index) => (
+                    <motion.div
+                      key={index}
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.5, delay: 0.1 * index }}
+                      className="bg-white/10 backdrop-blur-sm rounded-xl p-3 border border-white/20 hover:bg-white/20 transition-all duration-300"
+                    >
+                      <div className="flex items-center">
+                        <div className="w-2 h-2 bg-slate-400 rounded-full ml-3"></div>
+                        <span className="text-white text-sm font-medium">{name}</span>
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+              </motion.div>
+            </div>
+          </div>
+        </section>
+
+        {/* Legacy Section */}
+        <section className="relative py-16 lg:py-24 bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 overflow-hidden">
+          {/* Dark Background Elements */}
+          <div className="absolute inset-0">
+            <motion.div
+              animate={{ 
+                scale: [1, 1.3, 1],
+                opacity: [0.2, 0.4, 0.2],
+              }}
+              transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute top-20 left-20 w-72 h-72 bg-gradient-to-br from-blue-600/20 to-slate-600/20 rounded-full blur-3xl"
+            />
+            <motion.div
+              animate={{ 
+                scale: [1.3, 1, 1.3],
+                opacity: [0.15, 0.3, 0.15],
+              }}
+              transition={{ duration: 15, repeat: Infinity, ease: "easeInOut", delay: 3 }}
+              className="absolute bottom-20 right-20 w-80 h-80 bg-gradient-to-br from-slate-600/20 to-blue-600/20 rounded-full blur-3xl"
+            />
+            <div className="absolute inset-0 bg-gradient-to-br from-slate-900/40 to-blue-900/40"></div>
+          </div>
+          
+          <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1, ease: "easeOut" }}
+              className="text-center mb-12"
+            >
+              <motion.div
+                initial={{ scale: 0.8, opacity: 0 }}
+                whileInView={{ scale: 1, opacity: 1 }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+                className="inline-block"
+              >
+                <div className="bg-gradient-to-r from-blue-400 to-slate-400 text-white px-4 py-1.5 rounded-full text-xs font-semibold mb-3 shadow-lg backdrop-blur-sm">
+                  {currentLang === 'ar' ? 'إرثنا' : 'Our Legacy'}
+                </div>
+              </motion.div>
+              <h2 className="text-3xl lg:text-5xl font-bold text-white mb-4">
                 {currentLang === 'ar' ? 'إرث المؤسسين' : 'The Founders\' Legacy'}
               </h2>
-              <p className="text-xl text-purple-100 max-w-2xl mx-auto">
+              <motion.div
+                initial={{ width: 0 }}
+                whileInView={{ width: "120px" }}
+                transition={{ duration: 1.2, delay: 0.4 }}
+                className="h-1 bg-gradient-to-r from-blue-400 to-slate-400 mx-auto mb-4"
+              />
+              <p className="text-sm text-blue-100 max-w-2xl mx-auto">
                 {currentLang === 'ar' 
                   ? 'القيم والمبادئ التي أسسوا عليها الجمعية لا تزال توجهنا اليوم'
                   : 'The values and principles they founded the society on still guide us today'
@@ -427,13 +681,18 @@ const Founders = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   whileHover={{ scale: 1.05 }}
                   transition={{ duration: 0.6, delay: index * 0.1 }}
-                  className="bg-white/10 backdrop-blur-sm rounded-3xl p-8 text-center"
+                  className="bg-white/10 backdrop-blur-sm rounded-3xl p-8 text-center border border-white/20"
                 >
-                  <div className="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center mx-auto mb-6">
+                  <motion.div
+                    initial={{ rotate: 0 }}
+                    whileHover={{ rotate: [0, 360] }}
+                    transition={{ duration: 0.6 }}
+                    className="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center mx-auto mb-6"
+                  >
                     <item.icon className="w-8 h-8 text-white" />
-                  </div>
+                  </motion.div>
                   <h3 className="text-xl font-bold text-white mb-4">{item.title}</h3>
-                  <p className="text-purple-100 leading-relaxed">{item.description}</p>
+                  <p className="text-blue-100 leading-relaxed">{item.description}</p>
                 </motion.div>
               ))}
             </div>
