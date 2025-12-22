@@ -8,10 +8,168 @@ import Footer from "@/components/Footer";
 const BoardOfDirectors = () => {
   const [currentLang, setCurrentLang] = useState('ar');
   const [isLoaded, setIsLoaded] = useState(false);
+  const [viewMode, setViewMode] = useState('current'); // 'current' or 'previous'
 
   useEffect(() => {
     setIsLoaded(true);
   }, []);
+
+  const previousBoards = [
+    {
+      year: 2023,
+      members: [
+        { name: 'د. رائدة العلوي', position: 'الرئيس' },
+        { name: 'الدكتور عدنان التميمي', position: 'نائب الرئيس' },
+        { name: 'م. هدى سلطان', position: 'الأمين المالي' },
+        { name: 'م. هيام المسقطي', position: 'أمين السر' },
+        { name: 'م. شيخة الخلاصي', position: 'مديرة شؤون الأعضاء والمهنة' },
+        { name: 'م. عامر علي بن رجب', position: 'مدير مركز التدريب وتقنية المعلومات' },
+        { name: 'م. فريد بوشهري', position: 'مدير المؤتمرات والمعارض' },
+        { name: 'م. جعفر محمد علي', position: 'مدير الإعلام والعلاقات العامة' },
+        { name: 'م. حبيب حسين جبوري', position: 'مدير الأنشطة العامة وخدمة المجتمع' }
+      ]
+    },
+    {
+      year: 2022,
+      members: [
+        { name: 'د. رائدة العلوي', position: 'الرئيس' },
+        { name: 'م. محمد علي الخزاعي', position: 'نائب الرئيس' },
+        { name: 'م. هدى سلطان', position: 'الأمين المالي' },
+        { name: 'م. هيام المسقطي', position: 'أمين السر' },
+        { name: 'م. شيخة الخلاصي', position: 'مديرة شؤون الأعضاء والمهنة' },
+        { name: 'م. عدنان آل رحمة', position: 'مدير مركز التدريب وتقنية المعلومات' },
+        { name: 'م. فريد بوشهري', position: 'مدير المؤتمرات والمعارض' },
+        { name: 'م. جعفر محمد علي', position: 'مدير الإعلام والعلاقات العامة' },
+        { name: 'م. حبيب حسين جبوري', position: 'مدير الأنشطة العامة وخدمة المجتمع' }
+      ]
+    },
+    {
+      year: 2021,
+      members: [
+        { name: 'د. رائدة العلوي', position: 'الرئيس' },
+        { name: 'م. محمد علي الخزاعي', position: 'نائب الرئيس' },
+        { name: 'د. رائدة كاظم العلوي', position: 'الأمين المالي' },
+        { name: 'م. ياسر عبدالرحيم العباسي', position: 'أمين السر' },
+        { name: 'م. ريم إبراهيم خلفان', position: 'مديرة شؤون الأعضاء والمهنة' },
+        { name: 'م. رجاء يوسف الزياني', position: 'مديرة مركز التدريب وتقنية المعلومات' },
+        { name: 'د. هيثم عيسى القحطاني', position: 'مدير المؤتمرات والمعارض' },
+        { name: 'م. جعفر محمد علي', position: 'مدير الإعلام والعلاقات العامة' },
+        { name: 'م. حبيب حسين جبوري', position: 'مدير الأنشطة العامة وخدمة المجتمع' }
+      ]
+    },
+    {
+      year: 2020,
+      members: [
+        { name: 'د. ضياء عبدالعزيز توفيقي', position: 'الرئيس' },
+        { name: 'م. محمد علي الخزاعي', position: 'نائب الرئيس' },
+        { name: 'م. جواد جعفر الجبل', position: 'أمين السر' },
+        { name: 'م. فؤاد أحمد الشيخ', position: 'الأمين المالي ومدير المقر' },
+        { name: 'م. جميل خلف العلوي', position: 'مدير المؤتمرات والمعارض' },
+        { name: 'د. رائدة كاظم العلوي', position: 'مديرة التدريب وتقنية المعلومات' },
+        { name: 'م. ريم إبراهيم خلفان', position: 'مديرة الأنشطة العامة وخدمة المجتمع' },
+        { name: 'م. أيمن محمد ناصر', position: 'مدير شؤون العضوية والمهنة' },
+        { name: 'م. ريم أحمد العتيبي', position: 'مديرة الإعلام والعلاقات العامة' }
+      ]
+    },
+    {
+      year: 2019,
+      members: [
+        { name: 'د. ضياء عبدالعزيز توفيقي', position: 'الرئيس' },
+        { name: 'م. محمد علي الخزاعي', position: 'نائب الرئيس' },
+        { name: 'م. جواد جعفرالجبل', position: 'أمين السر' },
+        { name: 'م. فؤاد أحمد الشيخ', position: 'الأمين المالي ومدير المقر' },
+        { name: 'م. جميل خلف العلوي', position: 'مدير المؤتمرات والمعارض' },
+        { name: 'د. رائدة كاظم العلوي', position: 'مديرة مركز التدريب وتقنية المعلومات' },
+        { name: 'م. ريم إبراهيم خلفان', position: 'مديرة الأنشطة العامة وخدمة المجتمع' },
+        { name: 'م. ريم أحمد العتيبي', position: 'مديرة الإعلام والعلاقات العامة' },
+        { name: 'أيمن محمد ناصر', position: 'مدير شؤون العضوية والمهنة' }
+      ]
+    },
+    {
+      year: 2018,
+      members: [
+        { name: 'د. ضياء توفيقي', position: 'الرئيس' },
+        { name: 'م. عبدالنبي عبدالله الصباح', position: 'نائب الرئيس' },
+        { name: 'م. جواد جعفر الجبل', position: 'أمين السر' },
+        { name: 'م. فؤاد أحمد الشيخ', position: 'الأمين المالي ومدير المقر' },
+        { name: 'م. جميل خلف العلوي', position: 'مدير المؤتمرات والمعارض' },
+        { name: 'د. رائدة كاظم العلوي', position: 'مديرة شؤون العضوية والمهنة' },
+        { name: 'م. ريم إبراهيم خلفان', position: 'مديرة الأنشطة العامة وخدمة المجتمع' },
+        { name: 'م. هدى سلطان مبارك فرج', position: 'مديرة الإعلام ولعلاقات العامة' },
+        { name: 'م. عبدالهادي جاسم العطار', position: 'مدير مركز التدريب وتقنية المعلومات' }
+      ]
+    },
+    {
+      year: 2017,
+      members: [
+        { name: 'م. مسعود إبراهيم الهرمي', position: 'الرئيس' },
+        { name: 'م.عبدالنبي عبدالله الصباح', position: 'نائب الرئيس' },
+        { name: 'م. عباس علي الوطني', position: 'الأمين المالي' },
+        { name: 'م. جواد جعفرالجبل', position: 'أمين السر والعلاقات الخارجية' },
+        { name: 'م. جميل خلف العلوي', position: 'مدير المؤتمرات' },
+        { name: 'م. أيمن محمد ناصر', position: 'مدير التدريب وتقنية المعلومات' },
+        { name: 'م. ريم أحمد العتيبي', position: 'مديرة الأنشطة العامة' },
+        { name: 'م.عبدالنبي عبدالله الصباح', position: 'مديرة الإعلام' },
+        { name: 'م. أحمد عبدالرحمن الخان', position: 'مدير شؤون العضوية والمهنة' }
+      ]
+    },
+    {
+      year: 2016,
+      members: [
+        { name: 'م. مسعود إبراهيم الهرمي', position: 'الرئيس' },
+        { name: 'م.عبدالنبي عبدالله الصباح', position: 'نائب الرئيس' },
+        { name: 'م. عباس علي الوطني', position: 'الأمين المالي' },
+        { name: 'م. جواد جعفرالجبل', position: 'أمين السر والعلاقات الخارجية' },
+        { name: 'م. جميل خلف العلوي', position: 'مدير المؤتمرات' },
+        { name: 'م. أيمن محمد ناصر', position: 'مدير التدريب وتقنية المعلومات' },
+        { name: 'م. ريم أحمد العتيبي', position: 'مديرة الأنشطة العامة' },
+        { name: 'م. عامر علي بن رجب', position: 'مدير شؤون العضوية والمهنة' },
+        { name: 'م. ريم إبراهيم خلفان', position: 'مديرة الإعلام والعلاقات العامة' }
+      ]
+    },
+    {
+      year: 2015,
+      members: [
+        { name: 'م. مسعود إبراهيم الهرمي', position: 'الرئيس' },
+        { name: 'م. عبدالله أحمد جناحي', position: 'نائب الرئيس' },
+        { name: 'م. عباس علي الوطني', position: 'الأمين المالي' },
+        { name: 'م. جواد جعفرالجبل', position: 'أمين السر والعلاقات الخارجية' },
+        { name: 'م. جميل خلف العلوي', position: 'مدير المؤتمرات' },
+        { name: 'م. أيمن محمد ناصر', position: 'مدير التدريب' },
+        { name: 'م. ريم أحمد العتيبي', position: 'مديرة الانشطة العامة' },
+        { name: 'م.عبدالنبي عبدالله الصباح', position: 'مديرة الإعلام' },
+        { name: 'م. أحمد عبدالرحمن الخان', position: 'مدير شؤون العضوية والمهنة' }
+      ]
+    },
+    {
+      year: 2014,
+      members: [
+        { name: 'م. مسعود إبراهيم الهرمي', position: 'الرئيس' },
+        { name: 'م. عبدالله أحمد جناحي', position: 'نائب الرئيس' },
+        { name: 'م. محمد علي الخزاعي', position: 'أمين السر' },
+        { name: 'م. عباس علي الوطني', position: 'الأمين المالي' },
+        { name: 'م. جميل خلف العلوي', position: 'مدير المؤتمرات' },
+        { name: 'م. أحمد عبدالرحمن الخان', position: 'مدير العضوية' },
+        { name: 'م. أيمن محمد ناصر', position: 'مدير التدريب' },
+        { name: 'م. عبدالنبي عبدالله الصباح', position: 'مدير الإعلام' },
+        { name: 'م. ريم أحمد العتيبي', position: 'مديرة الأنشطة العامة' }
+      ]
+    },
+    {
+      year: 2013,
+      members: [
+        { name: 'م. عبدالمجيد بشير القصاب', position: 'الرئيس' },
+        { name: 'م. عبدالله أحمد جناحي', position: 'نائب الرئيس' },
+        { name: 'م. محمد علي الخزاعي', position: 'أمين السر' },
+        { name: 'م. حسين جعفر مكي', position: 'الأمين المالي' },
+        { name: 'م. جميل خلف العلوي', position: 'مدير المؤتمرات' },
+        { name: 'م. أحمد عبدالرحمن الخان', position: 'مدير شؤون العضوية والمهنة' },
+        { name: 'م. هدى سلطان مبارك فرج', position: 'مديرة التدريب' },
+        { name: 'م. عبدالنبي عبدالله الصباح', position: 'مدير الإعلام' },
+        { name: 'م. أيمن محمد ناصر', position: 'مدير الأنشطة العامة' }
+      ]
+    }
+  ];
 
   const [ref, inView] = useInView({
     triggerOnce: true,
@@ -248,36 +406,28 @@ const BoardOfDirectors = () => {
 
   const committees = [
     {
-      name: currentLang === 'ar' ? 'لجنة التدريب والتطوير المهني' : 'Training and Professional Development Committee',
-      chair: currentLang === 'ar' ? 'أ. سارة الحسن' : 'Eng. Sarah Al-Hasan',
+      name: currentLang === 'ar' ? 'لجنة شؤون الأعضاء والمهنة' : 'Membership and Profession Committee',
+      chair: currentLang === 'ar' ? 'المهندسة شيخة الخلاصي' : 'Eng. Shaikha Al-Khalasi',
+      members: 4,
+      focus: currentLang === 'ar'
+        ? 'إدارة عضوية المهندسين وتطوير معايير المهنة الهندسية'
+        : 'Managing engineer membership and developing engineering profession standards'
+    },
+    {
+      name: currentLang === 'ar' ? 'لجنة المؤتمرات والمعارض' : 'Conferences and Exhibitions Committee',
+      chair: currentLang === 'ar' ? 'المهندس فريد بوشهري' : 'Eng. Fareed Bushehri',
       members: 5,
-      focus: currentLang === 'ar' 
-        ? 'تطوير برامج التدريب والشهادات المهنية للمهندسين'
-        : 'Developing training programs and professional certifications for engineers'
+      focus: currentLang === 'ar'
+        ? 'تنظيم المؤتمرات الهندسية والمعارض المتخصصة والفعاليات العلمية'
+        : 'Organizing engineering conferences, specialized exhibitions, and scientific events'
     },
     {
-      name: currentLang === 'ar' ? 'لجنة العلاقات الدولية' : 'International Relations Committee',
-      chair: currentLang === 'ar' ? 'د. أحمد الفارس' : 'Dr. Ahmed Al-Faris',
-      members: 4,
+      name: currentLang === 'ar' ? 'لجنة الأنشطة العامة وخدمة المجتمع' : 'General Activities and Community Service Committee',
+      chair: currentLang === 'ar' ? 'المهندس حبيب جبوري' : 'Eng. Habib Jubouri',
+      members: 5,
       focus: currentLang === 'ar'
-        ? 'بناء الشراكات مع المنظمات الهندسية الدولية'
-        : 'Building partnerships with international engineering organizations'
-    },
-    {
-      name: currentLang === 'ar' ? 'لجنة الشؤون المالية' : 'Financial Affairs Committee',
-      chair: currentLang === 'ar' ? 'أ. محمد الشمري' : 'Eng. Mohammed Al-Shammari',
-      members: 3,
-      focus: currentLang === 'ar'
-        ? 'إدارة ميزانية الجمعية والمشاريع الاستثمارية'
-        : 'Managing the society budget and investment projects'
-    },
-    {
-      name: currentLang === 'ar' ? 'لجنة المعايير الأخلاقية' : 'Ethics Standards Committee',
-      chair: currentLang === 'ar' ? 'د. خالد النعيمي' : 'Dr. Khalid Al-Naimi',
-      members: 4,
-      focus: currentLang === 'ar'
-        ? 'وضع ومراقبة معايير الأخلاق المهنية للمهندسين'
-        : 'Establishing and monitoring professional ethics standards for engineers'
+        ? 'تنظيم الأنشطة العامة والمبادرات الخدمية للمجتمع'
+        : 'Organizing general activities and service initiatives for the community'
     }
   ];
 
@@ -382,146 +532,237 @@ const BoardOfDirectors = () => {
                 transition={{ duration: 1, delay: 0.4 }}
                 className="h-1 bg-gradient-to-r from-blue-400 to-slate-400 mx-auto mb-4"
               />
-              <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-8">
                 {currentLang === 'ar' ? 'فريق من القادة المتخصصين من مختلف التخصصات الهندسية' : 'A team of specialized leaders from various engineering disciplines'}
               </p>
+              
+              {/* View Mode Toggle */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.5 }}
+                className="flex justify-center mb-12"
+              >
+                <div className="inline-flex bg-white rounded-full shadow-lg p-1 border border-gray-200">
+                  <button
+                    onClick={() => setViewMode('current')}
+                    className={`px-6 py-3 rounded-full font-semibold transition-all duration-300 ${
+                      viewMode === 'current'
+                        ? 'bg-gradient-to-r from-blue-600 to-slate-700 text-white shadow-md'
+                        : 'text-gray-600 hover:text-gray-900'
+                    }`}
+                  >
+                    {currentLang === 'ar' ? 'المجلس الحالي' : 'Current Board'}
+                  </button>
+                  <button
+                    onClick={() => setViewMode('previous')}
+                    className={`px-6 py-3 rounded-full font-semibold transition-all duration-300 ${
+                      viewMode === 'previous'
+                        ? 'bg-gradient-to-r from-blue-600 to-slate-700 text-white shadow-md'
+                        : 'text-gray-600 hover:text-gray-900'
+                    }`}
+                  >
+                    {currentLang === 'ar' ? 'المجالس السابقة' : 'Previous Boards'}
+                  </button>
+                </div>
+              </motion.div>
             </motion.div>
             
-            {/* President Card - Featured */}
-            <motion.div
-              initial={{ opacity: 0, y: 50 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.8, delay: 0.1 }}
-              className="mb-8"
-            >
-              <div className="bg-white rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 overflow-hidden">
-                <div className="flex flex-col lg:flex-row">
-                  {/* Left Side - 1/3 Width Image */}
-                  <div className="lg:w-1/3 relative h-[652px] lg:h-[652px]">
-                    <div className="relative h-full overflow-hidden">
-                      <img 
-                        src={boardMembers[0].image} 
-                        alt={boardMembers[0].name} 
-                        className="w-full h-full object-cover object-top"
-                      />
-                      <div className="absolute top-4 left-4 bg-gradient-to-r from-blue-600 to-slate-700 text-white px-4 py-2 rounded-full shadow-lg">
-                        <span className="text-sm font-bold">
-                          {currentLang === 'ar' ? 'رئيس الجمعية' : 'Society President'}
-                        </span>
-                      </div>
-                      <div className="absolute bottom-4 right-4 bg-white/90 backdrop-blur-sm p-3 rounded-full shadow-lg">
-                        <Award className="w-6 h-6 text-blue-600" />
-                      </div>
-                    </div>
-                  </div>
-                  
-                  {/* Right Side - Enhanced Content */}
-                  <div className="lg:w-2/3 p-8 bg-gradient-to-br from-white to-blue-50/30">
-                    <div className="h-full flex flex-col justify-center space-y-6">
-                      {/* Name and Position */}
-                      <div className="text-center lg:text-left">
-                        <h3 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-2">
-                          {boardMembers[0].name}
-                        </h3>
-                        <p className="text-xl text-blue-600 font-semibold mb-4">
-                          {boardMembers[0].position}
-                        </p>
-                        <div className="w-24 h-1 bg-gradient-to-r from-blue-600 to-slate-700 mx-auto lg:mx-0"></div>
-                      </div>
-                      
-                      {/* President Message - Enhanced */}
-                      <div className="bg-white rounded-2xl p-6 shadow-lg border border-blue-100">
-                        <h4 className="text-lg font-bold text-blue-900 mb-4 flex items-center justify-center lg:justify-start">
-                          <span className="w-3 h-3 bg-blue-600 rounded-full mr-3"></span>
-                          {currentLang === 'ar' ? 'كلمة الرئيس' : 'President\'s Message'}
-                        </h4>
-                        <p className="text-gray-700 leading-relaxed text-base">
-                          {currentLang === 'ar' 
-                            ? 'يسعدني أن أرحب بكم في جمعية المهندسين البحرينية. نحن ملتزمون بتطوير المهنة الهندسية وخدمة أعضائنا والمجتمع.'
-                            : 'I am pleased to welcome you to the Bahrain Society of Engineers. We are committed to developing the engineering profession and serving our members and the community.'
-                          }
-                        </p>
-                      </div>
-                      
-                      {/* Quick Info - Enhanced */}
-                      <div className="grid grid-cols-2 gap-4">
-                        <div className="bg-white rounded-xl p-4 shadow-md border border-gray-200 hover:shadow-lg transition-shadow">
-                          <div className="flex items-center text-gray-700">
-                            <Briefcase className="w-5 h-5 text-blue-600 mr-3" />
-                            <span className="text-base font-medium">{boardMembers[0].experience}</span>
-                          </div>
-                        </div>
-                        <div className="bg-white rounded-xl p-4 shadow-md border border-gray-200 hover:shadow-lg transition-shadow">
-                          <div className="flex items-center text-gray-700">
-                            <GraduationCap className="w-5 h-5 text-blue-600 mr-3" />
-                            <span className="text-base font-medium">{boardMembers[0].specialization}</span>
-                          </div>
-                        </div>
-                      </div>
-                      
-                      {/* Contact - Enhanced */}
-                      <div className="flex flex-col sm:flex-row gap-4">
-                        <a href={`mailto:${boardMembers[0].contact.email}`} className="flex-1 inline-flex items-center justify-center bg-gradient-to-r from-blue-600 to-slate-700 hover:from-blue-700 hover:to-slate-800 text-white px-8 py-4 rounded-full font-bold text-lg transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105">
-                          <Mail className="w-5 h-5 mr-3" />
-                          {currentLang === 'ar' ? 'تواصل مع الرئيس' : 'Contact President'}
-                        </a>
-                        <div className="flex items-center justify-center text-gray-600 text-base px-6 bg-white rounded-full shadow-md">
-                          <Phone className="w-5 h-5 mr-2" />
-                          {boardMembers[0].contact.phone}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Other Board Members */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {boardMembers.filter(member => member.id > 1).map((member) => (
+            {viewMode === 'current' ? (
+              <>
+                {/* President Card - Featured */}
                 <motion.div
-                  key={member.id}
                   initial={{ opacity: 0, y: 50 }}
                   animate={inView ? { opacity: 1, y: 0 } : {}}
-                  whileHover={{ y: -10 }}
-                  transition={{ duration: 0.6, delay: member.id * 0.1 }}
-                  className="bg-white rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 overflow-hidden"
+                  transition={{ duration: 0.8, delay: 0.1 }}
+                  className="mb-8"
                 >
-                  {/* Image Section - 3/4 of card height */}
-                  <div className="relative h-96 bg-gray-50 overflow-hidden">
-                    <img 
-                      src={member.image} 
-                      alt={member.name} 
-                      className="w-full h-full object-cover object-top"
-                    />
-                  </div>
-                  
-                  {/* Header with Name and Position */}
-                  <div className="bg-gradient-to-r from-blue-600 to-slate-700 p-3 text-white">
-                    <h3 className="text-lg font-bold mb-1">{member.name}</h3>
-                    <p className="text-sm text-blue-100">{member.position}</p>
-                  </div>
-                  
-                  {/* Profile Content - Reduced */}
-                  <div className="p-4">
-                    {/* Bio - Shortened */}
-                    <p className="text-gray-600 leading-relaxed mb-3 text-sm line-clamp-1">{member.bio}</p>
-                    
-                    {/* Contact - Enhanced */}
-                    <div className="space-y-2">
-                      <a href={`mailto:${member.contact.email}`} className="w-full inline-flex items-center justify-center bg-gradient-to-r from-blue-600 to-slate-700 hover:from-blue-700 hover:to-slate-800 text-white px-6 py-3 rounded-full font-semibold transition-all duration-300 shadow-lg hover:shadow-xl">
-                        <Mail className="w-4 h-4 mr-2" />
-                        {currentLang === 'ar' ? 'تواصل' : 'Contact'}
-                      </a>
-                      <div className="flex items-center justify-center text-gray-500 text-xs">
-                        <Phone className="w-3 h-3 mr-1" />
-                        {member.contact.phone}
+                  <div className="bg-white rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 overflow-hidden">
+                    <div className="flex flex-col lg:flex-row">
+                      {/* Left Side - 1/3 Width Image */}
+                      <div className="lg:w-1/3 relative h-[652px] lg:h-[652px]">
+                        <div className="relative h-full overflow-hidden">
+                          <img 
+                            src={boardMembers[0].image} 
+                            alt={boardMembers[0].name} 
+                            className="w-full h-full object-cover object-top"
+                          />
+                          <div className="absolute top-4 left-4 bg-gradient-to-r from-blue-600 to-slate-700 text-white px-4 py-2 rounded-full shadow-lg">
+                            <span className="text-sm font-bold">
+                              {currentLang === 'ar' ? 'رئيس الجمعية' : 'Society President'}
+                            </span>
+                          </div>
+                          <div className="absolute bottom-4 right-4 bg-white/90 backdrop-blur-sm p-3 rounded-full shadow-lg">
+                            <Award className="w-6 h-6 text-blue-600" />
+                          </div>
+                        </div>
+                      </div>
+                      
+                      {/* Right Side - Enhanced Content */}
+                      <div className="lg:w-2/3 p-8 bg-gradient-to-br from-white to-blue-50/30">
+                        <div className="h-full flex flex-col justify-center space-y-6">
+                          {/* Name and Position */}
+                          <div className="text-center lg:text-left">
+                            <h3 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-2">
+                              {boardMembers[0].name}
+                            </h3>
+                            <p className="text-xl text-blue-600 font-semibold mb-4">
+                              {boardMembers[0].position}
+                            </p>
+                            <div className="w-24 h-1 bg-gradient-to-r from-blue-600 to-slate-700 mx-auto lg:mx-0"></div>
+                          </div>
+                          
+                          {/* President Message - Enhanced */}
+                          <div className="bg-white rounded-2xl p-6 shadow-lg border border-blue-100">
+                            <h4 className="text-lg font-bold text-blue-900 mb-4 flex items-center justify-center lg:justify-start">
+                              <span className="w-3 h-3 bg-blue-600 rounded-full mr-3"></span>
+                              {currentLang === 'ar' ? 'كلمة الرئيس' : 'President\'s Message'}
+                            </h4>
+                            <p className="text-gray-700 leading-relaxed text-base">
+                              {currentLang === 'ar' 
+                                ? 'يسعدني أن أرحب بكم في جمعية المهندسين البحرينية. نحن ملتزمون بتطوير المهنة الهندسية وخدمة أعضائنا والمجتمع.'
+                                : 'I am pleased to welcome you to the Bahrain Society of Engineers. We are committed to developing the engineering profession and serving our members and the community.'
+                              }
+                            </p>
+                          </div>
+                          
+                          {/* Quick Info - Enhanced */}
+                          <div className="grid grid-cols-2 gap-4">
+                            <div className="bg-white rounded-xl p-4 shadow-md border border-gray-200 hover:shadow-lg transition-shadow">
+                              <div className="flex items-center text-gray-700">
+                                <Briefcase className="w-5 h-5 text-blue-600 mr-3" />
+                                <span className="text-base font-medium">{boardMembers[0].experience}</span>
+                              </div>
+                            </div>
+                            <div className="bg-white rounded-xl p-4 shadow-md border border-gray-200 hover:shadow-lg transition-shadow">
+                              <div className="flex items-center text-gray-700">
+                                <GraduationCap className="w-5 h-5 text-blue-600 mr-3" />
+                                <span className="text-base font-medium">{boardMembers[0].specialization}</span>
+                              </div>
+                            </div>
+                          </div>
+                          
+                          {/* Contact - Enhanced */}
+                          <div className="flex flex-col sm:flex-row gap-4">
+                            <a href={`mailto:${boardMembers[0].contact.email}`} className="flex-1 inline-flex items-center justify-center bg-gradient-to-r from-blue-600 to-slate-700 hover:from-blue-700 hover:to-slate-800 text-white px-8 py-4 rounded-full font-bold text-lg transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105">
+                              <Mail className="w-5 h-5 mr-3" />
+                              {currentLang === 'ar' ? 'تواصل مع الرئيس' : 'Contact President'}
+                            </a>
+                            <div className="flex items-center justify-center text-gray-600 text-base px-6 bg-white rounded-full shadow-md">
+                              <Phone className="w-5 h-5 mr-2" />
+                              {boardMembers[0].contact.phone}
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </motion.div>
-              ))}
-            </div>
+
+                {/* Other Board Members */}
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={inView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ duration: 0.8, delay: 0.3 }}
+                  className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+                >
+                  {boardMembers.filter(member => member.id > 1).map((member) => (
+                    <motion.div
+                      key={member.id}
+                      initial={{ opacity: 0, y: 50 }}
+                      animate={inView ? { opacity: 1, y: 0 } : {}}
+                      whileHover={{ y: -10 }}
+                      transition={{ duration: 0.6, delay: member.id * 0.1 }}
+                      className="bg-white rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 overflow-hidden"
+                    >
+                      {/* Image Section - 3/4 of card height */}
+                      <div className="relative h-96 bg-gray-50 overflow-hidden">
+                        <img 
+                          src={member.image} 
+                          alt={member.name} 
+                          className="w-full h-full object-cover object-top"
+                        />
+                      </div>
+                      
+                      {/* Header with Name and Position */}
+                      <div className="bg-gradient-to-r from-blue-600 to-slate-700 p-3 text-white">
+                        <h3 className="text-lg font-bold mb-1">{member.name}</h3>
+                        <p className="text-sm text-blue-100">{member.position}</p>
+                      </div>
+                      
+                      {/* Profile Content - Reduced */}
+                      <div className="p-4">
+                        {/* Bio - Shortened */}
+                        <p className="text-gray-600 leading-relaxed mb-3 text-sm line-clamp-1">{member.bio}</p>
+                        
+                        {/* Contact - Enhanced */}
+                        <div className="space-y-2">
+                          <a href={`mailto:${member.contact.email}`} className="w-full inline-flex items-center justify-center bg-gradient-to-r from-blue-600 to-slate-700 hover:from-blue-700 hover:to-slate-800 text-white px-6 py-3 rounded-full font-semibold transition-all duration-300 shadow-lg hover:shadow-xl">
+                            <Mail className="w-4 h-4 mr-2" />
+                            {currentLang === 'ar' ? 'تواصل' : 'Contact'}
+                          </a>
+                          <div className="flex items-center justify-center text-gray-500 text-xs">
+                            <Phone className="w-3 h-3 mr-1" />
+                            {member.contact.phone}
+                          </div>
+                        </div>
+                      </div>
+                    </motion.div>
+                  ))}
+                </motion.div>
+              </>
+            ) : (
+              <div className="space-y-8">
+                {previousBoards.map((board, index) => (
+                  <motion.div
+                    key={board.year}
+                    initial={{ opacity: 0, y: 50 }}
+                    animate={inView ? { opacity: 1, y: 0 } : {}}
+                    transition={{ duration: 0.6, delay: index * 0.1 }}
+                    className="bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 overflow-hidden"
+                  >
+                    {/* Board Year Header */}
+                    <div className="bg-gradient-to-r from-blue-600 to-slate-700 text-white p-6">
+                      <h3 className="text-2xl font-bold text-center">
+                        {currentLang === 'ar' ? `مجلس الإدارة ${board.year}` : `Board of Directors ${board.year}`}
+                      </h3>
+                    </div>
+                    
+                    {/* Board Members Grid */}
+                    <div className="p-6">
+                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        {board.members.map((member, memberIndex) => (
+                          <motion.div
+                            key={memberIndex}
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.4, delay: memberIndex * 0.1 }}
+                            whileHover={{ scale: 1.02, y: -5 }}
+                            className="bg-white rounded-xl border border-gray-200 p-4 shadow-sm hover:shadow-lg transition-all duration-300"
+                          >
+                            <div className="flex items-start space-x-3">
+                              <div className="flex-shrink-0">
+                                <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-slate-600 rounded-full flex items-center justify-center">
+                                  <Users className="w-5 h-5 text-white" />
+                                </div>
+                              </div>
+                              <div className="flex-1 min-w-0">
+                                <h4 className="text-base font-bold text-gray-900 mb-1 truncate">
+                                  {member.name}
+                                </h4>
+                                <span className="inline-block bg-gradient-to-r from-blue-100 to-slate-100 text-blue-800 px-3 py-1 rounded-full text-xs font-medium">
+                                  {member.position}
+                                </span>
+                              </div>
+                            </div>
+                          </motion.div>
+                        ))}
+                      </div>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            )}
           </div>
         </section>
 
@@ -586,36 +827,163 @@ const BoardOfDirectors = () => {
               </p>
             </motion.div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {committees.map((committee, index) => (
                 <motion.div
                   key={index}
-                  initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  whileHover={{ scale: 1.02 }}
-                  transition={{ duration: 0.6, delay: index * 0.2 }}
-                  className="bg-white rounded-3xl p-8 shadow-lg hover:shadow-xl transition-all duration-500"
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  whileHover={{ scale: 1.03, y: -5 }}
+                  transition={{ duration: 0.6, delay: index * 0.1 }}
+                  className="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden border border-gray-100"
                 >
-                  <div className="flex items-start">
-                    <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl flex items-center justify-center mr-4 flex-shrink-0">
-                      <Users className="w-6 h-6 text-white" />
-                    </div>
-                    <div className="flex-1">
-                      <h3 className="text-xl font-bold text-gray-900 mb-2">{committee.name}</h3>
-                      <div className="flex items-center text-blue-600 text-sm mb-3">
-                        <Shield className="w-4 h-4 mr-2" />
-                        <span>{currentLang === 'ar' ? 'الرئيس:' : 'Chair:'} {committee.chair}</span>
+                  {/* Committee Header */}
+                  <div className="bg-gradient-to-r from-blue-600 to-slate-700 p-4 text-white">
+                    <div className="flex items-center justify-between mb-2">
+                      <div className="w-10 h-10 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center">
+                        <Users className="w-5 h-5 text-white" />
                       </div>
-                      <div className="flex items-center text-gray-600 text-sm mb-3">
-                        <Users className="w-4 h-4 mr-2" />
-                        <span>{committee.members} {currentLang === 'ar' ? 'أعضاء' : 'members'}</span>
-                      </div>
-                      <p className="text-gray-600 leading-relaxed text-sm">{committee.focus}</p>
+                      <span className="bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-medium">
+                        {committee.members} {currentLang === 'ar' ? 'عضو' : 'members'}
+                      </span>
                     </div>
+                    <h3 className="text-lg font-bold leading-tight">{committee.name}</h3>
+                  </div>
+                  
+                  {/* Committee Content */}
+                  <div className="p-5">
+                    {/* Chair Info */}
+                    <div className="flex items-center mb-4 p-3 bg-blue-50 rounded-xl">
+                      <Shield className="w-5 h-5 text-blue-600 ml-3" />
+                      <div>
+                        <p className="text-xs text-blue-600 font-medium">
+                          {currentLang === 'ar' ? 'الرئيس:' : 'Chair:'}
+                        </p>
+                        <p className="text-sm font-bold text-gray-900">{committee.chair}</p>
+                      </div>
+                    </div>
+                    
+                    {/* Focus Description */}
+                    <div className="mb-4">
+                      <p className="text-gray-600 leading-relaxed text-sm line-clamp-3">
+                        {committee.focus}
+                      </p>
+                    </div>
+                    
+                    {/* Action Button */}
+                    <button className="w-full bg-gradient-to-r from-blue-600 to-slate-700 hover:from-blue-700 hover:to-slate-800 text-white px-4 py-2 rounded-xl font-medium transition-all duration-300 text-sm">
+                      {currentLang === 'ar' ? 'تفاصيل أكثر' : 'More Details'}
+                    </button>
                   </div>
                 </motion.div>
               ))}
             </div>
+
+                      </div>
+        </section>
+
+        
+        {/* Learn About Society Committees Section */}
+        <section className="py-20 lg:py-32 bg-white relative overflow-hidden">
+          {/* Subtle Background Elements */}
+          <div className="absolute inset-0">
+            <motion.div
+              animate={{ 
+                scale: [1, 1.1, 1],
+              }}
+              transition={{ 
+                duration: 8,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+              className="absolute top-20 right-20 w-64 h-64 bg-blue-50/30 rounded-full blur-3xl"
+            />
+            <motion.div
+              animate={{ 
+                scale: [1, 1.15, 1],
+              }}
+              transition={{ 
+                duration: 10,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+              className="absolute bottom-20 left-20 w-80 h-80 bg-slate-50/30 rounded-full blur-3xl"
+            />
+          </div>
+          
+          <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1, ease: "easeOut" }}
+              className="text-center mb-12"
+            >
+              <motion.div
+                initial={{ scale: 0.8, opacity: 0 }}
+                whileInView={{ scale: 1, opacity: 1 }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+                className="inline-block"
+              >
+                <div className="bg-gradient-to-r from-blue-400 to-slate-400 text-white px-6 py-2 rounded-full text-sm font-semibold mb-4 backdroprog backdrop-blur-sm">
+                  {currentLang === 'ar' ? 'اكتشف المزيد' : 'Discover More'}
+                </div>
+              </motion.div>
+              <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
+                {currentLang === 'ar' ? 'تعرف على لجان الجمعية' : 'Learn About Society Committees'}
+              </h2>
+              <motion.div
+                initial={{ width: 0 }}
+                whileInView={{ width: "100px" }}
+                transition={{ duration: 1, delay: 0.4 }}
+                className="h-1 bg-gradient-to-r from-blue-400 to-slate-400 mx-auto mb-4"
+              />
+              <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+                {currentLang === 'ar' 
+                  ? 'اكتشف المزيد عن لجان الجمعية المختلفة، أهدافها، الشعب العاملة فيها، والفرص المتاحة للمشاركة في أنشطتها'
+                  : 'Discover more about the different society committees, their objectives, working groups, and opportunities to participate in their activities'
+                }
+              </p>
+            </motion.div>
+            
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.5 }}
+              className="max-w-4xl mx-auto"
+            >
+              <div className="bg-gradient-to-r from-blue-50 to-slate-50 rounded-2xl p-8 border border-blue-100 shadow-lg">
+                <div className="text-center">
+                  <div className="w-20 h-20 bg-gradient-to-br from-blue-500 to-slate-600 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                    <Users className="w-10 h-10 text-white" />
+                  </div>
+                  <h3 className="text-2xl font-bold text-gray-900 mb-4">
+                    {currentLang === 'ar' ? 'انضم إلى مجتمعنا المهني' : 'Join Our Professional Community'}
+                  </h3>
+                  <p className="text-gray-600 leading-relaxed mb-8 max-w-2xl mx-auto">
+                    {currentLang === 'ar' 
+                      ? 'تضم جمعية المهندسين البحرينية لجان متخصصة تعمل على تطوير المهنة الهندسية وخدمة الأعضاء والمجتمع. يمكنك الانضمام إلى هذه اللجان والمساهمة في تحقيق أهداف الجمعية'
+                      : 'The Bahrain Society of Engineers includes specialized committees working on developing the engineering profession and serving members and the community. You can join these committees and contribute to achieving the society\'s goals'
+                    }
+                  </p>
+                  <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                    <motion.button
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      className="px-8 py-3 bg-gradient-to-r from-blue-600 to-slate-700 hover:from-blue-700 hover:to-slate-800 text-white rounded-full font-bold transition-all duration-300 shadow-lg hover:shadow-xl"
+                    >
+                      {currentLang === 'ar' ? 'جميع اللجان' : 'All Committees'}
+                    </motion.button>
+                    <motion.button
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      className="px-8 py-3 bg-white hover:bg-gray-50 text-blue-600 border-2 border-blue-600 rounded-full font-bold transition-all duration-300 shadow-md hover:shadow-lg"
+                    >
+                      {currentLang === 'ar' ? 'كيف تنضم؟' : 'How to Join?'}
+                    </motion.button>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
           </div>
         </section>
 
@@ -682,7 +1050,7 @@ const BoardOfDirectors = () => {
             </motion.div>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {[
+              {[/* eslint-disable-next-line */
                 {
                   icon: Calendar,
                   title: currentLang === 'ar' ? 'الاجتماعات الشهرية' : 'Monthly Meetings',

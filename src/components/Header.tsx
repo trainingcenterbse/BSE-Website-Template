@@ -22,16 +22,16 @@ const Header = () => {
   // Tab configurations
   const tabs = {
     about: {
-      title: currentLang === 'ar' ? 'من نحن' : 'About Us',
+      title: currentLang === 'ar' ? 'عن الجمعية' : 'About Society',
       color: 'from-blue-600 to-blue-700',
       bgColor: 'bg-blue-600',
       logo: '/favicon.ico',
       items: [
-        { title: currentLang === 'ar' ? 'من نحن' : 'About Us', icon: User },
-        { title: currentLang === 'ar' ? 'المؤسسون' : 'Founders', icon: GraduationCap },
-        { title: currentLang === 'ar' ? 'مجلس الإدارة' : 'Board of Directors', icon: Briefcase },
-        { title: currentLang === 'ar' ? 'الأنظمة واللوائح' : 'Systems & Regulations', icon: Users },
-        { title: currentLang === 'ar' ? 'تقارير الجمعية العمومية' : 'General Assembly Reports', icon: Calendar }
+        { title: currentLang === 'ar' ? 'من نحن' : 'About Us' },
+        { title: currentLang === 'ar' ? 'المؤسسون' : 'Founders' },
+        { title: currentLang === 'ar' ? 'مجلس الإدارة' : 'Board of Directors' },
+        { title: currentLang === 'ar' ? 'الأنظمة واللوائح' : 'Systems & Regulations' },
+        { title: currentLang === 'ar' ? 'تقارير الجمعية العمومية' : 'General Assembly Reports' }
       ]
     },
     conferences: {
@@ -40,9 +40,9 @@ const Header = () => {
       bgColor: 'bg-purple-600',
       logo: '/favicon.ico',
       items: [
-        { title: currentLang === 'ar' ? 'المؤتمرات القادمة' : 'Upcoming Conferences', icon: Calendar },
-        { title: currentLang === 'ar' ? 'المؤتمرات السابقة' : 'Past Conferences', icon: Calendar },
-        { title: currentLang === 'ar' ? 'مؤتمرات أخرى' : 'Other Conferences', icon: Calendar }
+        { title: currentLang === 'ar' ? 'المؤتمرات القادمة' : 'Upcoming Conferences' },
+        { title: currentLang === 'ar' ? 'المؤتمرات السابقة' : 'Past Conferences' },
+        { title: currentLang === 'ar' ? 'مؤتمرات أخرى' : 'Other Conferences' }
       ]
     },
     training: {
@@ -51,9 +51,9 @@ const Header = () => {
       bgColor: 'bg-green-600',
       logo: '/favicon.ico',
       items: [
-        { title: currentLang === 'ar' ? 'الدورات المعتمدة' : 'Accredited Courses', icon: GraduationCap },
-        { title: currentLang === 'ar' ? 'الشهادات المهنية' : 'Professional Certificates', icon: Award },
-        { title: currentLang === 'ar' ? 'البرامج التدريبية' : 'Training Programs', icon: Briefcase }
+        { title: currentLang === 'ar' ? 'الدورات المعتمدة' : 'Accredited Courses' },
+        { title: currentLang === 'ar' ? 'الشهادات المهنية' : 'Professional Certificates' },
+        { title: currentLang === 'ar' ? 'البرامج التدريبية' : 'Training Programs' }
       ]
     }
   };
@@ -362,7 +362,6 @@ const Header = () => {
                         whileTap={{ scale: 0.95 }}
                       >
                         <span className="relative z-10 flex items-center gap-1.5">
-                          <item.icon className="w-4 h-4" />
                           {item.title}
                         </span>
                         <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent transform translate-x-full group-hover:translate-x-0 transition-transform duration-500"></div>
