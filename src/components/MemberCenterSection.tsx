@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Briefcase, GraduationCap, Heart, Lightbulb, Building2, CheckCircle, ArrowRight, BookOpen, Users, Award, Target, Shield, Zap, Rocket, Globe, Star } from "lucide-react";
+import { Link } from "react-router-dom";
 
 interface MemberCenterSectionProps {
   currentLang: string;
@@ -78,6 +79,19 @@ const MemberCenterSection = ({ currentLang }: MemberCenterSectionProps) => {
         currentLang === 'ar' ? 'قواعد بيانات' : 'Databases'
       ],
       color: 'from-indigo-500 to-indigo-600'
+    },
+    {
+      icon: Users,
+      title: currentLang === 'ar' ? 'لجان الجمعية' : 'Association Committees',
+      description: currentLang === 'ar' ? 'انضم إلى اللجان المتخصصة وساهم في تطوير القطاع' : 'Join specialized committees and contribute to sector development',
+      features: [
+        currentLang === 'ar' ? 'لجان داخلية متخصصة' : 'Specialized internal committees',
+        currentLang === 'ar' ? 'فرق عمل حكومية' : 'Government task forces',
+        currentLang === 'ar' ? 'فرص تطوعية' : 'Volunteer opportunities',
+        currentLang === 'ar' ? 'تطوير مهني' : 'Professional development'
+      ],
+      color: 'from-teal-500 to-teal-600',
+      link: '/committees'
     }
   ];
 
@@ -207,10 +221,19 @@ const MemberCenterSection = ({ currentLang }: MemberCenterSectionProps) => {
                 </ul>
                 
                 <div className="flex items-center text-blue-300 mt-6 cursor-pointer group">
-                  <span className="font-semibold">
-                    {currentLang === 'ar' ? 'اعرف المزيد' : 'Learn More'}
-                  </span>
-                  <ArrowRight className="w-4 h-4 mr-2 group-hover:translate-x-2 transition-transform" />
+                  {service.link ? (
+                    <Link to={service.link} className="flex items-center font-semibold hover:text-blue-200 transition-colors">
+                      {currentLang === 'ar' ? 'اعرف المزيد' : 'Learn More'}
+                      <ArrowRight className="w-4 h-4 mr-2 group-hover:translate-x-2 transition-transform" />
+                    </Link>
+                  ) : (
+                    <>
+                      <span className="font-semibold">
+                        {currentLang === 'ar' ? 'اعرف المزيد' : 'Learn More'}
+                      </span>
+                      <ArrowRight className="w-4 h-4 mr-2 group-hover:translate-x-2 transition-transform" />
+                    </>
+                  )}
                 </div>
               </div>
             </motion.div>

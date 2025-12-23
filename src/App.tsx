@@ -29,6 +29,7 @@ import TrainingTrustees from "./pages/TrainingTrustees";
 import TrainingAccreditations from "./pages/TrainingAccreditations";
 import TrainingCourses from "./pages/TrainingCourses";
 import CourseDetail from "./pages/CourseDetailNew";
+import Committees from "./pages/Committees";
 
 const queryClient = new QueryClient();
 
@@ -64,6 +65,7 @@ const App = () => (
           <Route path="/training-accreditations" element={<TrainingAccreditations />} />
           <Route path="/training-courses" element={<TrainingCourses />} />
           <Route path="/course/:id" element={<CourseDetail />} />
+          <Route path="/committees" element={<Committees />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
