@@ -1,13 +1,20 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-import { FileText, Download, Calendar, Users, TrendingUp, Award, BarChart3, Eye, Clock, CheckCircle, AlertCircle, ArrowRight } from "lucide-react";
+import { FileText, Download, Calendar, Users, TrendingUp, Award, BarChart3, Eye, Clock, CheckCircle, AlertCircle, ArrowRight, Search, Filter, Globe, X, Menu, ChevronDown, FileDown, Languages } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
 const GeneralAssemblyReports = () => {
   const [currentLang, setCurrentLang] = useState('ar');
   const [isLoaded, setIsLoaded] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filterYear, setFilterYear] = useState('all');
+  const [filterLanguage, setFilterLanguage] = useState('all');
+  const [isSearchFocused, setIsSearchFocused] = useState(false);
+  const [showAdvancedFilters, setShowAdvancedFilters] = useState(false);
+  const [selectedReport, setSelectedReport] = useState(null);
+  const [showLanguageMenu, setShowLanguageMenu] = useState(false);
 
   useEffect(() => {
     setIsLoaded(true);
@@ -21,93 +28,201 @@ const GeneralAssemblyReports = () => {
   const reports = [
     {
       id: 1,
-      year: '2023',
-      title: currentLang === 'ar' ? 'تقرير الجمعية العمومية السنوي 2023' : 'Annual General Assembly Report 2023',
-      description: currentLang === 'ar'
-        ? 'تقرير شامل عن أنشطة الجمعية وإنجازاتها ومشاريعها للعام المالي 2023'
-        : 'Comprehensive report on the society\'s activities, achievements, and projects for fiscal year 2023',
-      meetingDate: currentLang === 'ar' ? '15 ديسمبر 2023' : 'December 15, 2023',
-      attendees: 1250,
-      decisions: 15,
-      budget: currentLang === 'ar' ? '2.5 مليون دينار' : '2.5 million BHD',
-      size: '4.8 MB',
-      pages: 85,
-      downloadUrl: '/reports/assembly-2023.pdf',
-      highlights: [
-        currentLang === 'ar' ? 'إطلاق 25 دورة تدريبية جديدة' : 'Launching 25 new training courses',
-        currentLang === 'ar' ? 'زيادة عدد الأعضاء بنسبة 15%' : 'Increasing membership by 15%',
-        currentLang === 'ar' ? 'توقيع 8 شراكات دولية' : 'Signing 8 international partnerships',
-        currentLang === 'ar' ? 'تنظيم 12 مؤتمراً وفعالية' : 'Organizing 12 conferences and events'
-      ],
+      year: '2025',
+      englishUrl: 'https://bse.bh/wp-content/uploads/AGM-Report-2025-English.pdf',
+      arabicUrl: 'https://bse.bh/wp-content/uploads/AGM-Report-2025-Arabic.pdf',
+      englishTitle: 'AGM report 2025 English',
+      arabicTitle: 'تقرير 2025 عربي',
       status: 'published'
     },
     {
       id: 2,
-      year: '2022',
-      title: currentLang === 'ar' ? 'تقرير الجمعية العمومية السنوي 2022' : 'Annual General Assembly Report 2022',
-      description: currentLang === 'ar'
-        ? 'تقرير مفصل عن أداء الجمعية وتطوراتها خلال عام 2022 والخطط المستقبلية'
-        : 'Detailed report on the society\'s performance and developments during 2022 and future plans',
-      meetingDate: currentLang === 'ar' ? '18 ديسمبر 2022' : 'December 18, 2022',
-      attendees: 1180,
-      decisions: 12,
-      budget: currentLang === 'ar' ? '2.2 مليون دينار' : '2.2 million BHD',
-      size: '4.2 MB',
-      pages: 78,
-      downloadUrl: '/reports/assembly-2022.pdf',
-      highlights: [
-        currentLang === 'ar' ? 'تطوير المنصة الرقمية للجمعية' : 'Developing the society\'s digital platform',
-        currentLang === 'ar' ? 'إطلاق برنامج الشهادات المهنية' : 'Launching professional certification program',
-        currentLang === 'ar' ? 'توسيع شراكات مع الجامعات' : 'Expanding partnerships with universities',
-        currentLang === 'ar' ? 'تحديث معايير العضوية' : 'Updating membership standards'
-      ],
+      year: '2024',
+      englishUrl: 'https://bse.bh/wp-content/uploads/AGM-Report-2024-English.pdf',
+      arabicUrl: 'https://bse.bh/wp-content/uploads/AGM-Report-2024-Arabic.pdf',
+      englishTitle: 'AGM report 2024 English',
+      arabicTitle: 'تقرير 2024 عربي',
       status: 'published'
     },
     {
       id: 3,
-      year: '2021',
-      title: currentLang === 'ar' ? 'تقرير الجمعية العمومية السنوي 2021' : 'Annual General Assembly Report 2021',
-      description: currentLang === 'ar'
-        ? 'تقرير عن تحديات وإنجازات الجمعية خلال عام 2021 في ظل الظروف الاستثنائية'
-        : 'Report on the society\'s challenges and achievements during 2021 under exceptional circumstances',
-      meetingDate: currentLang === 'ar' ? '20 ديسمبر 2021' : 'December 20, 2021',
-      attendees: 980,
-      decisions: 18,
-      budget: currentLang === 'ar' ? '1.8 مليون دينار' : '1.8 million BHD',
-      size: '3.9 MB',
-      pages: 72,
-      downloadUrl: '/reports/assembly-2021.pdf',
-      highlights: [
-        currentLang === 'ar' ? 'التحول إلى التعليم عبر الإنترنت' : 'Transition to online education',
-        currentLang === 'ar' ? 'دعم المهندسين خلال الجائحة' : 'Supporting engineers during the pandemic',
-        currentLang === 'ar' ? 'إطلاق مبادرات الشباب' : 'Launching youth initiatives',
-        currentLang === 'ar' ? 'تقديم برامج دعم للأعضاء' : 'Providing support programs for members'
-      ],
+      year: '2023',
+      englishUrl: 'https://bse.bh/wp-content/uploads/AGM-Report-2023-English.pdf',
+      arabicUrl: 'https://bse.bh/wp-content/uploads/AGM-Report-2023-Arabic.pdf',
+      englishTitle: 'AGM report 2023 English',
+      arabicTitle: 'تقرير 2023 عربي',
       status: 'published'
     },
     {
       id: 4,
+      year: '2022',
+      englishUrl: 'https://bse.bh/wp-content/uploads/AGM-Report-2022-English.pdf',
+      arabicUrl: 'https://bse.bh/wp-content/uploads/AGM-Report-2022-Arabic.pdf',
+      englishTitle: 'AGM report 2022 English',
+      arabicTitle: 'تقرير 2022 عربي',
+      status: 'published'
+    },
+    {
+      id: 5,
+      year: '2021',
+      englishUrl: 'https://bse.bh/wp-content/uploads/AGM-Report-2021-English.pdf',
+      arabicUrl: 'https://bse.bh/wp-content/uploads/AGM-Report-2021-Arabic.pdf',
+      englishTitle: 'AGM report 2021 English',
+      arabicTitle: 'تقرير 2021 عربي',
+      status: 'published'
+    },
+    {
+      id: 6,
       year: '2020',
-      title: currentLang === 'ar' ? 'تقرير الجمعية العمومية السنوي 2020' : 'Annual General Assembly Report 2020',
-      description: currentLang === 'ar'
-        ? 'تقرير عن استجابة الجمعية لجائحة كورونا والتكيف مع الوضع الجديد'
-        : 'Report on the society\'s response to the COVID-19 pandemic and adaptation to the new situation',
-      meetingDate: currentLang === 'ar' ? '22 ديسمبر 2020' : 'December 22, 2020',
-      attendees: 750,
-      decisions: 20,
-      budget: currentLang === 'ar' ? '1.5 مليون دينار' : '1.5 million BHD',
-      size: '3.5 MB',
-      pages: 68,
-      downloadUrl: '/reports/assembly-2020.pdf',
-      highlights: [
-        currentLang === 'ar' ? 'تنظيم مؤتمرات افتراضية' : 'Organizing virtual conferences',
-        currentLang === 'ar' ? 'تقديم دورات عبر الإنترنت' : 'Offering online courses',
-        currentLang === 'ar' ? 'دعم القطاع الصحي' : 'Supporting the healthcare sector',
-        currentLang === 'ar' ? 'تعزيز التواصل الرقمي' : 'Enhancing digital communication'
-      ],
+      englishUrl: 'https://bse.bh/wp-content/uploads/AGM-Report-2020-English.pdf',
+      arabicUrl: 'https://bse.bh/wp-content/uploads/AGM-Report-2020-Arabic.pdf',
+      englishTitle: 'AGM report 2020 English',
+      arabicTitle: 'تقرير 2020 عربي',
+      status: 'published'
+    },
+    {
+      id: 7,
+      year: '2019',
+      englishUrl: null,
+      arabicUrl: null,
+      englishTitle: 'AGM report 2019 English',
+      arabicTitle: 'تقرير 2019 عربي',
+      status: 'published'
+    },
+    {
+      id: 8,
+      year: '2018',
+      englishUrl: 'https://bse.bh/wp-content/uploads/AGM-Report-2018-English.pdf',
+      arabicUrl: 'https://bse.bh/wp-content/uploads/AGM-Report-2018-Arabic.pdf',
+      englishTitle: 'AGM report 2018 English',
+      arabicTitle: 'تقرير 2018 عربي',
+      status: 'published'
+    },
+    {
+      id: 9,
+      year: '2017',
+      englishUrl: 'https://bse.bh/wp-content/uploads/AGM-Report-2017-English-.pdf',
+      arabicUrl: 'https://bse.bh/wp-content/uploads/AGM-Report-2017-Arabic-.pdf',
+      englishTitle: 'AGM report 2017 English',
+      arabicTitle: 'تقرير 2017 عربي',
+      status: 'published'
+    },
+    {
+      id: 10,
+      year: '2016',
+      englishUrl: 'https://bse.bh/wp-content/uploads/AGM-Report-2016-English-.pdf',
+      arabicUrl: 'https://bse.bh/wp-content/uploads/AGM-Report-2016-English.pdf',
+      englishTitle: 'AGM report 2016 English',
+      arabicTitle: 'تقرير 2016 عربي',
+      status: 'published'
+    },
+    {
+      id: 11,
+      year: '2015',
+      englishUrl: 'https://bse.bh/wp-content/uploads/AGM-Report-2015-English.pdf',
+      arabicUrl: 'https://bse.bh/wp-content/uploads/AGM-Report-2015-Arabic-.pdf',
+      englishTitle: 'AGM report 2015 English',
+      arabicTitle: 'تقرير 2015 عربي',
+      status: 'published'
+    },
+    {
+      id: 12,
+      year: '2014',
+      englishUrl: 'https://bse.bh/wp-content/uploads/AGM-Report-2014-Engilsh.pdf',
+      arabicUrl: 'https://bse.bh/wp-content/uploads/AGM-Reoport-2014-Arabic.pdf',
+      englishTitle: 'AGM report 2014 English',
+      arabicTitle: 'تقرير 2014 عربي',
+      status: 'published'
+    },
+    {
+      id: 13,
+      year: '2013',
+      englishUrl: 'https://bse.bh/wp-content/uploads/AGM-Report-2013-English-.pdf',
+      arabicUrl: 'https://bse.bh/wp-content/uploads/AGM-Report-2013-Arabic-.pdf',
+      englishTitle: 'AGM report 2013 English',
+      arabicTitle: 'تقرير 2013 عربي',
+      status: 'published'
+    },
+    {
+      id: 14,
+      year: '2012',
+      englishUrl: null,
+      arabicUrl: 'https://bse.bh/wp-content/uploads/AGM-Report-2012-Arabic.pdf',
+      englishTitle: 'AGM report 2012 English',
+      arabicTitle: 'تقرير 2012 عربي',
+      status: 'published'
+    },
+    {
+      id: 15,
+      year: '2011',
+      englishUrl: 'https://bse.bh/wp-content/uploads/AGM-Report-2011-English.pdf',
+      arabicUrl: 'https://bse.bh/wp-content/uploads/AGM-Report-2011-Arabic.pdf',
+      englishTitle: 'AGM report 2011 English',
+      arabicTitle: 'تقرير 2011 عربي',
+      status: 'published'
+    },
+    {
+      id: 16,
+      year: '2010',
+      englishUrl: 'https://bse.bh/wp-content/uploads/AGM-Report-2010-English.pdf',
+      arabicUrl: 'https://bse.bh/wp-content/uploads/AGM-Report-2010-Arabic.pdf',
+      englishTitle: 'AGM report 2010 English',
+      arabicTitle: 'تقرير 2010 عربي',
+      status: 'published'
+    },
+    {
+      id: 17,
+      year: '2009',
+      englishUrl: 'https://bse.bh/wp-content/uploads/AGM-Report-2009-English.pdf',
+      arabicUrl: 'https://bse.bh/wp-content/uploads/AGM-Report-2009-Arabic.pdf',
+      englishTitle: 'AGM report 2009 English',
+      arabicTitle: 'تقرير 2009 عربي',
+      status: 'published'
+    },
+    {
+      id: 18,
+      year: '2008',
+      englishUrl: 'https://bse.bh/wp-content/uploads/AGM-Report-2008-Englsih-.pdf',
+      arabicUrl: 'https://bse.bh/wp-content/uploads/AGM-Report-2008-Arabic-.pdf',
+      englishTitle: 'AGM report 2008 English',
+      arabicTitle: 'تقرير 2008 عربي',
+      status: 'published'
+    },
+    {
+      id: 19,
+      year: '2007',
+      englishUrl: null,
+      arabicUrl: 'https://bse.bh/wp-content/uploads/AGM-Report-2007-Arabic-.pdf',
+      englishTitle: 'AGM report 2007 English',
+      arabicTitle: 'تقرير 2007 عربي',
+      status: 'published'
+    },
+    {
+      id: 20,
+      year: '2006',
+      englishUrl: 'https://bse.bh/wp-content/uploads/AGM-Report-2006-English-.pdf',
+      arabicUrl: 'https://bse.bh/wp-content/uploads/AGM-Report-2006-Arabic-.pdf',
+      englishTitle: 'AGM report 2006 English',
+      arabicTitle: 'تقرير 2006 عربي',
       status: 'published'
     }
   ];
+
+  // Filter and search functions
+  const filteredReports = reports.filter(report => {
+    const matchesSearch = searchTerm === '' || 
+      report.year.includes(searchTerm) ||
+      report.englishTitle.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      report.arabicTitle.includes(searchTerm);
+    
+    const matchesYear = filterYear === 'all' || report.year === filterYear;
+    
+    const matchesLanguage = filterLanguage === 'all' || 
+      (filterLanguage === 'english' && report.englishUrl) ||
+      (filterLanguage === 'arabic' && report.arabicUrl);
+    
+    return matchesSearch && matchesYear && matchesLanguage;
+  });
 
   const financialHighlights = [
     {
@@ -230,20 +345,14 @@ const GeneralAssemblyReports = () => {
           </div>
         </section>
 
-        {/* Reports Grid */}
-        <section className="py-20 lg:py-32 bg-gradient-to-br from-white via-slate-50 to-blue-50 relative overflow-hidden">
-          <div className="absolute inset-0">
-            <div className="absolute top-10 right-10 w-72 h-72 bg-slate-200/20 rounded-full blur-3xl"></div>
-            <div className="absolute bottom-10 left-10 w-96 h-96 bg-blue-100/20 rounded-full blur-3xl"></div>
-          </div>
-          
-          <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Search and Filter Section */}
+        <section className="py-16 bg-white">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <motion.div
-              ref={ref}
               initial={{ opacity: 0, y: 30 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
-              className="text-center mb-16"
+              className="text-center mb-12"
             >
               <h2 className="text-4xl lg:text-6xl font-bold bg-gradient-to-r from-slate-600 to-blue-600 bg-clip-text text-transparent mb-4">
                 {currentLang === 'ar' ? 'التقارير السنوية' : 'Annual Reports'}
@@ -252,87 +361,352 @@ const GeneralAssemblyReports = () => {
                 {currentLang === 'ar' ? 'جميع تقارير الجمعية العمومية متاحة للتحميل والمراجعة' : 'All general assembly reports are available for download and review'}
               </p>
             </motion.div>
-            
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              {reports.map((report) => (
-                <motion.div
-                  key={report.id}
-                  initial={{ opacity: 0, y: 50 }}
-                  animate={inView ? { opacity: 1, y: 0 } : {}}
-                  whileHover={{ y: -5 }}
-                  transition={{ duration: 0.6, delay: report.id * 0.1 }}
-                  className="bg-white rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 overflow-hidden"
-                >
-                  {/* Header */}
-                  <div className="relative h-32 bg-gradient-to-br from-slate-600 to-blue-600">
-                    <div className="absolute top-4 right-4 flex gap-2">
-                      <span className={`px-3 py-1 rounded-full text-xs font-bold ${getStatusColor(report.status)}`}>
-                        {getStatusLabel(report.status)}
-                      </span>
-                      <span className="px-3 py-1 rounded-full text-xs font-bold bg-white/20 backdrop-blur-sm text-white">
-                        {report.year}
-                      </span>
-                    </div>
-                    <div className="absolute bottom-4 left-4">
-                      <div className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center">
-                        <FileText className="w-6 h-6 text-white" />
-                      </div>
-                    </div>
+
+            {/* Professional Search and Filter Section */}
+            <div className="bg-white rounded-3xl shadow-2xl p-8 mb-12 border border-gray-100">
+              {/* Advanced Search Bar */}
+              <div className="mb-6">
+                <div className={`relative transition-all duration-300 ${isSearchFocused ? 'scale-[1.02]' : ''}`}>
+                  <div className="absolute inset-y-0 right-0 flex items-center pr-4">
+                    <Search className={`w-6 h-6 transition-colors duration-300 ${isSearchFocused ? 'text-blue-600' : 'text-gray-400'}`} />
                   </div>
-                  
-                  {/* Content */}
-                  <div className="p-6">
-                    <h3 className="text-xl font-bold text-gray-900 mb-3">{report.title}</h3>
-                    <p className="text-gray-600 leading-relaxed mb-4 text-sm">{report.description}</p>
-                    
-                    {/* Meeting Info */}
-                    <div className="grid grid-cols-2 gap-4 mb-4">
-                      <div className="flex items-center text-gray-600 text-xs">
-                        <Calendar className="w-4 h-4 mr-2" />
-                        <span>{currentLang === 'ar' ? 'التاريخ:' : 'Date:'} {report.meetingDate}</span>
-                      </div>
-                      <div className="flex items-center text-gray-600 text-xs">
-                        <Users className="w-4 h-4 mr-2" />
-                        <span>{report.attendees} {currentLang === 'ar' ? 'حضور' : 'attendees'}</span>
-                      </div>
-                      <div className="flex items-center text-gray-600 text-xs">
-                        <CheckCircle className="w-4 h-4 mr-2" />
-                        <span>{report.decisions} {currentLang === 'ar' ? 'قرار' : 'decisions'}</span>
-                      </div>
-                      <div className="flex items-center text-gray-600 text-xs">
-                        <BarChart3 className="w-4 h-4 mr-2" />
-                        <span>{report.budget}</span>
-                      </div>
-                    </div>
-                    
-                    {/* Highlights */}
-                    <div className="mb-4">
-                      <h4 className="font-bold text-gray-900 mb-2 text-sm">
-                        {currentLang === 'ar' ? 'أبرز النقاط' : 'Key Highlights'}
-                      </h4>
-                      <div className="space-y-1">
-                        {report.highlights.slice(0, 2).map((highlight, index) => (
-                          <div key={index} className="flex items-center text-gray-700 text-xs">
-                            <Award className="w-3 h-3 text-yellow-500 mr-2 flex-shrink-0" />
-                            <span className="line-clamp-1">{highlight}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                    
-                    {/* Metadata and Download */}
-                    <div className="flex items-center justify-between border-t pt-4">
-                      <div className="text-xs text-gray-500">
-                        <span>{report.size} • {report.pages} {currentLang === 'ar' ? 'صفحة' : 'pages'}</span>
-                      </div>
-                      <button className="bg-gradient-to-r from-slate-600 to-blue-600 hover:from-slate-700 hover:to-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium shadow-lg hover:shadow-xl transition-all duration-300 flex items-center">
-                        <Download className="w-4 h-4 mr-2" />
-                        {currentLang === 'ar' ? 'تحميل' : 'Download'}
+                  <input
+                    type="text"
+                    placeholder={currentLang === 'ar' ? 'ابحث عن تقرير بالسنة أو بالاسم...' : 'Search by year or report name...'}
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    onFocus={() => setIsSearchFocused(true)}
+                    onBlur={() => setIsSearchFocused(false)}
+                    className={`w-full pr-12 pl-4 py-4 text-lg border-2 rounded-2xl transition-all duration-300 ${
+                      isSearchFocused 
+                        ? 'border-blue-500 bg-blue-50/30 shadow-lg' 
+                        : 'border-gray-200 bg-gray-50/50 hover:border-gray-300'
+                    } focus:outline-none focus:ring-4 focus:ring-blue-500/20`}
+                  />
+                  {searchTerm && (
+                    <button
+                      onClick={() => setSearchTerm('')}
+                      className="absolute left-4 top-1/2 -translate-y-1/2 p-2 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors duration-200"
+                    >
+                      <X className="w-4 h-4 text-gray-600" />
+                    </button>
+                  )}
+                </div>
+              </div>
+
+              {/* Advanced Filters Toggle */}
+              <div className="flex items-center justify-between mb-6">
+                <button
+                  onClick={() => setShowAdvancedFilters(!showAdvancedFilters)}
+                  className="flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-blue-600 to-slate-600 hover:from-blue-700 hover:to-slate-700 text-white rounded-2xl font-medium shadow-lg hover:shadow-xl transition-all duration-300"
+                >
+                  <Filter className="w-5 h-5" />
+                  <span>{currentLang === 'ar' ? 'الفلاتر المتقدمة' : 'Advanced Filters'}</span>
+                  <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${showAdvancedFilters ? 'rotate-180' : ''}`} />
+                </button>
+
+                {/* Results Count */}
+                <div className="flex items-center gap-2 px-4 py-2 bg-blue-50 rounded-xl">
+                  <span className="text-blue-600 font-medium">
+                    {filteredReports.length} {currentLang === 'ar' ? 'نتيجة' : 'results'}
+                  </span>
+                </div>
+              </div>
+
+              {/* Advanced Filters Panel */}
+              {showAdvancedFilters && (
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: 'auto' }}
+                  exit={{ opacity: 0, height: 0 }}
+                  transition={{ duration: 0.3 }}
+                  className="grid grid-cols-1 md:grid-cols-3 gap-6 p-6 bg-gradient-to-br from-blue-50/50 to-slate-50/50 rounded-2xl border border-blue-100"
+                >
+                  {/* Year Filter */}
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      {currentLang === 'ar' ? 'السنة' : 'Year'}
+                    </label>
+                    <select
+                      value={filterYear}
+                      onChange={(e) => setFilterYear(e.target.value)}
+                      className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white"
+                    >
+                      <option value="all">{currentLang === 'ar' ? 'جميع السنوات' : 'All Years'}</option>
+                      {reports.map(report => (
+                        <option key={report.year} value={report.year}>{report.year}</option>
+                      ))}
+                    </select>
+                  </div>
+
+                  {/* Language Filter */}
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      {currentLang === 'ar' ? 'اللغة' : 'Language'}
+                    </label>
+                    <select
+                      value={filterLanguage}
+                      onChange={(e) => setFilterLanguage(e.target.value)}
+                      className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white"
+                    >
+                      <option value="all">{currentLang === 'ar' ? 'جميع اللغات' : 'All Languages'}</option>
+                      <option value="english">{currentLang === 'ar' ? 'الإنجليزية' : 'English'}</option>
+                      <option value="arabic">{currentLang === 'ar' ? 'العربية' : 'Arabic'}</option>
+                    </select>
+                  </div>
+
+                  {/* Quick Actions */}
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      {currentLang === 'ar' ? 'إجراءات سريعة' : 'Quick Actions'}
+                    </label>
+                    <div className="flex gap-2">
+                      <button
+                        onClick={() => {
+                          setSearchTerm('');
+                          setFilterYear('all');
+                          setFilterLanguage('all');
+                        }}
+                        className="flex-1 px-4 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl font-medium transition-colors duration-200"
+                      >
+                        {currentLang === 'ar' ? 'مسح' : 'Clear'}
+                      </button>
+                      <button
+                        onClick={() => setShowAdvancedFilters(false)}
+                        className="flex-1 px-4 py-3 bg-blue-100 hover:bg-blue-200 text-blue-700 rounded-xl font-medium transition-colors duration-200"
+                      >
+                        {currentLang === 'ar' ? 'تطبيق' : 'Apply'}
                       </button>
                     </div>
                   </div>
                 </motion.div>
-              ))}
+              )}
+            </div>
+          </div>
+        </section>
+
+        {/* Reports List */}
+        <section className="py-8 lg:py-16 bg-gradient-to-br from-white via-slate-50 to-blue-50 relative overflow-hidden">
+          <div className="absolute inset-0">
+            <div className="absolute top-10 right-10 w-72 h-72 bg-slate-200/20 rounded-full blur-3xl"></div>
+            <div className="absolute bottom-10 left-10 w-96 h-96 bg-blue-100/20 rounded-full blur-3xl"></div>
+          </div>
+          
+          <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            {/* Professional Reports Table */}
+            <div className="bg-white rounded-3xl shadow-2xl overflow-hidden border border-gray-100">
+              {/* Table Header with Language Selector */}
+              <div className="bg-gradient-to-r from-slate-700 via-blue-700 to-slate-800 p-6">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center">
+                      <FileText className="w-6 h-6 text-white" />
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-bold text-white">
+                        {currentLang === 'ar' ? 'قائمة التقارير' : 'Reports List'}
+                      </h3>
+                      <p className="text-blue-100 text-sm">
+                        {filteredReports.length} {currentLang === 'ar' ? 'تقرير متاح' : 'reports available'}
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Language Selector Sidebar */}
+                  <div className="relative">
+                    <button
+                      onClick={() => setShowLanguageMenu(!showLanguageMenu)}
+                      className="flex items-center gap-3 px-4 py-2 bg-white/10 backdrop-blur-sm hover:bg-white/20 border border-white/20 rounded-2xl text-white transition-all duration-300"
+                    >
+                      <Languages className="w-5 h-5" />
+                      <span className="font-medium">
+                        {currentLang === 'ar' ? 'اللغة' : 'Language'}
+                      </span>
+                      <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${showLanguageMenu ? 'rotate-180' : ''}`} />
+                    </button>
+
+                    {/* Language Dropdown Menu */}
+                    {showLanguageMenu && (
+                      <motion.div
+                        initial={{ opacity: 0, y: -10, scale: 0.95 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        exit={{ opacity: 0, y: -10, scale: 0.95 }}
+                        transition={{ duration: 0.2 }}
+                        className="absolute top-full right-0 mt-2 w-48 bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden z-50"
+                      >
+                        <button
+                          onClick={() => {
+                            setFilterLanguage('all');
+                            setShowLanguageMenu(false);
+                          }}
+                          className={`w-full px-4 py-3 text-left hover:bg-blue-50 transition-colors duration-200 flex items-center gap-3 ${
+                            filterLanguage === 'all' ? 'bg-blue-50 text-blue-600 font-medium' : 'text-gray-700'
+                          }`}
+                        >
+                          <Globe className="w-4 h-4" />
+                          <span>{currentLang === 'ar' ? 'جميع اللغات' : 'All Languages'}</span>
+                        </button>
+                        <button
+                          onClick={() => {
+                            setFilterLanguage('english');
+                            setShowLanguageMenu(false);
+                          }}
+                          className={`w-full px-4 py-3 text-left hover:bg-blue-50 transition-colors duration-200 flex items-center gap-3 ${
+                            filterLanguage === 'english' ? 'bg-blue-50 text-blue-600 font-medium' : 'text-gray-700'
+                          }`}
+                        >
+                          <div className="w-4 h-4 bg-blue-600 rounded-full flex items-center justify-center">
+                            <span className="text-white text-xs font-bold">E</span>
+                          </div>
+                          <span>{currentLang === 'ar' ? 'الإنجليزية' : 'English'}</span>
+                        </button>
+                        <button
+                          onClick={() => {
+                            setFilterLanguage('arabic');
+                            setShowLanguageMenu(false);
+                          }}
+                          className={`w-full px-4 py-3 text-left hover:bg-blue-50 transition-colors duration-200 flex items-center gap-3 ${
+                            filterLanguage === 'arabic' ? 'bg-blue-50 text-blue-600 font-medium' : 'text-gray-700'
+                          }`}
+                        >
+                          <div className="w-4 h-4 bg-green-600 rounded-full flex items-center justify-center">
+                            <span className="text-white text-xs font-bold">ع</span>
+                          </div>
+                          <span>{currentLang === 'ar' ? 'العربية' : 'Arabic'}</span>
+                        </button>
+                      </motion.div>
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              {/* Table Content */}
+              <div className="overflow-x-auto">
+                <table className="w-full">
+                  <thead className="bg-gradient-to-r from-gray-50 to-blue-50 border-b border-gray-200">
+                    <tr>
+                      <th className="px-6 py-4 text-center font-bold text-gray-900">
+                        <div className="flex items-center justify-center gap-2">
+                          <Calendar className="w-4 h-4 text-blue-600" />
+                          {currentLang === 'ar' ? 'السنة' : 'Year'}
+                        </div>
+                      </th>
+                      <th className="px-6 py-4 text-center font-bold text-gray-900">
+                        <div className="flex items-center justify-center gap-2">
+                          <div className="w-4 h-4 bg-blue-600 rounded-full flex items-center justify-center">
+                            <span className="text-white text-xs font-bold">E</span>
+                          </div>
+                          {currentLang === 'ar' ? 'تقرير إنجليزي' : 'English Report'}
+                        </div>
+                      </th>
+                      <th className="px-6 py-4 text-center font-bold text-gray-900">
+                        <div className="flex items-center justify-center gap-2">
+                          <div className="w-4 h-4 bg-green-600 rounded-full flex items-center justify-center">
+                            <span className="text-white text-xs font-bold">ع</span>
+                          </div>
+                          {currentLang === 'ar' ? 'تقرير عربي' : 'Arabic Report'}
+                        </div>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {filteredReports.length > 0 ? (
+                      filteredReports.map((report, index) => (
+                        <motion.tr
+                          key={report.id}
+                          initial={{ opacity: 0, x: -20 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          whileHover={{ backgroundColor: '#f0f9ff', scale: 1.01 }}
+                          transition={{ duration: 0.3, delay: index * 0.05 }}
+                          className="border-b border-gray-100 hover:bg-blue-50/50 transition-all duration-200"
+                        >
+                          <td className="px-6 py-6 text-center">
+                            <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-blue-100 to-slate-100 rounded-2xl font-bold text-lg text-gray-900 shadow-sm">
+                              {report.year}
+                            </div>
+                          </td>
+                          <td className="px-6 py-6 text-center">
+                            {report.englishUrl ? (
+                              <motion.a
+                                href={report.englishUrl}
+                                target="_blank"
+                                rel="noreferrer noopener"
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
+                                className="inline-flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white rounded-2xl font-medium shadow-lg hover:shadow-xl transition-all duration-300"
+                              >
+                                <FileDown className="w-5 h-5" />
+                                <span>{report.englishTitle}</span>
+                                <div className="w-2 h-2 bg-white/30 rounded-full animate-pulse"></div>
+                              </motion.a>
+                            ) : (
+                              <div className="inline-flex items-center gap-3 px-6 py-3 bg-gray-100 text-gray-400 rounded-2xl font-medium cursor-not-allowed">
+                                <FileDown className="w-5 h-5" />
+                                <span>{report.englishTitle}</span>
+                              </div>
+                            )}
+                          </td>
+                          <td className="px-6 py-6 text-center">
+                            {report.arabicUrl ? (
+                              <motion.a
+                                href={report.arabicUrl}
+                                target="_blank"
+                                rel="noreferrer noopener"
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
+                                className="inline-flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white rounded-2xl font-medium shadow-lg hover:shadow-xl transition-all duration-300"
+                              >
+                                <FileDown className="w-5 h-5" />
+                                <span>{report.arabicTitle}</span>
+                                <div className="w-2 h-2 bg-white/30 rounded-full animate-pulse"></div>
+                              </motion.a>
+                            ) : (
+                              <div className="inline-flex items-center gap-3 px-6 py-3 bg-gray-100 text-gray-400 rounded-2xl font-medium cursor-not-allowed">
+                                <FileDown className="w-5 h-5" />
+                                <span>{report.arabicTitle}</span>
+                              </div>
+                            )}
+                          </td>
+                        </motion.tr>
+                      ))
+                    ) : (
+                      <tr>
+                        <td colSpan={3} className="px-6 py-16 text-center text-gray-500">
+                          <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            className="flex flex-col items-center max-w-md mx-auto"
+                          >
+                            <div className="w-20 h-20 bg-gradient-to-br from-gray-100 to-gray-200 rounded-3xl flex items-center justify-center mb-6">
+                              <FileText className="w-10 h-10 text-gray-400" />
+                            </div>
+                            <h3 className="text-xl font-bold text-gray-700 mb-3">
+                              {currentLang === 'ar' ? 'لا توجد تقارير مطابقة' : 'No matching reports found'}
+                            </h3>
+                            <p className="text-gray-500 mb-6">
+                              {currentLang === 'ar' 
+                                ? 'حاول تعديل معايير البحث أو الفلترة للعثور على التقارير' 
+                                : 'Try adjusting your search or filter criteria to find reports'
+                              }
+                            </p>
+                            <button
+                              onClick={() => {
+                                setSearchTerm('');
+                                setFilterYear('all');
+                                setFilterLanguage('all');
+                              }}
+                              className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-2xl font-medium transition-colors duration-200"
+                            >
+                              {currentLang === 'ar' ? 'مسح الفلاتر' : 'Clear Filters'}
+                            </button>
+                          </motion.div>
+                        </td>
+                      </tr>
+                    )}
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </section>
