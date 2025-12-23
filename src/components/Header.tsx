@@ -51,9 +51,10 @@ const Header = () => {
       bgColor: 'bg-green-600',
       logo: '/favicon.ico',
       items: [
-        { title: currentLang === 'ar' ? 'الدورات المعتمدة' : 'Accredited Courses' },
-        { title: currentLang === 'ar' ? 'الشهادات المهنية' : 'Professional Certificates' },
-        { title: currentLang === 'ar' ? 'البرامج التدريبية' : 'Training Programs' }
+        { title: currentLang === 'ar' ? 'عن المركز' : 'About the Center' },
+        { title: currentLang === 'ar' ? 'مجلس الأمناء' : 'Board of Trustees' },
+        { title: currentLang === 'ar' ? 'الاعتمادات الدولية' : 'International Accreditations' },
+        { title: currentLang === 'ar' ? 'الدورات التدريبية' : 'Training Courses' }
       ]
     }
   };
@@ -133,7 +134,13 @@ const Header = () => {
       [currentLang === 'ar' ? 'المؤسسون' : 'Founders']: '/founders',
       [currentLang === 'ar' ? 'مجلس الإدارة' : 'Board of Directors']: '/board-of-directors',
       [currentLang === 'ar' ? 'الأنظمة واللوائح' : 'Systems & Regulations']: '/systems-regulations',
-      [currentLang === 'ar' ? 'تقارير الجمعية العمومية' : 'General Assembly Reports']: '/general-assembly-reports'
+      [currentLang === 'ar' ? 'تقارير الجمعية العمومية' : 'General Assembly Reports']: '/general-assembly-reports',
+      // Training Center Routes
+      [currentLang === 'ar' ? 'مركز التدريب' : 'Training Center']: '/training-center',
+      [currentLang === 'ar' ? 'عن المركز' : 'About the Center']: '/about-training-center',
+      [currentLang === 'ar' ? 'مجلس الأمناء' : 'Board of Trustees']: '/training-trustees',
+      [currentLang === 'ar' ? 'الاعتمادات الدولية' : 'International Accreditations']: '/training-accreditations',
+      [currentLang === 'ar' ? 'الدورات التدريبية' : 'Training Courses']: '/training-courses'
     };
 
     // Check if it's a sub-item (from the items array) or main tab

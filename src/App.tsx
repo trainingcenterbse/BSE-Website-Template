@@ -22,6 +22,13 @@ import Founders from "./pages/Founders";
 import BoardOfDirectors from "./pages/BoardOfDirectors";
 import SystemsRegulations from "./pages/SystemsRegulations";
 import GeneralAssemblyReports from "./pages/GeneralAssemblyReports";
+// Training Center Pages
+import TrainingCenter from "./pages/TrainingCenter";
+import AboutTrainingCenter from "./pages/AboutTrainingCenter";
+import TrainingTrustees from "./pages/TrainingTrustees";
+import TrainingAccreditations from "./pages/TrainingAccreditations";
+import TrainingCourses from "./pages/TrainingCourses";
+import CourseDetail from "./pages/CourseDetailNew";
 
 const queryClient = new QueryClient();
 
@@ -50,6 +57,13 @@ const App = () => (
           <Route path="/board-of-directors" element={<BoardOfDirectors />} />
           <Route path="/systems-regulations" element={<SystemsRegulations />} />
           <Route path="/general-assembly-reports" element={<GeneralAssemblyReports />} />
+          {/* Training Center Pages */}
+          <Route path="/training-center" element={<TrainingCenter />} />
+          <Route path="/about-training-center" element={<AboutTrainingCenter />} />
+          <Route path="/training-trustees" element={<TrainingTrustees />} />
+          <Route path="/training-accreditations" element={<TrainingAccreditations />} />
+          <Route path="/training-courses" element={<TrainingCourses />} />
+          <Route path="/course/:id" element={<CourseDetail />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
