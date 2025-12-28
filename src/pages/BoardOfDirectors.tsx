@@ -1,18 +1,247 @@
-import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { useState, useEffect, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-import { Users, Award, Calendar, Mail, Phone, MapPin, Briefcase, GraduationCap, Shield, ArrowRight, BookOpen } from "lucide-react";
+import { Users, Award, Calendar, Mail, Phone, MapPin, Briefcase, GraduationCap, Shield, ArrowRight, BookOpen, ChevronLeft, ChevronRight } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+
+// Timeline Item Component
+const TimelineItem = ({ president, index, onSelect }) => (
+  <div className="absolute top-1/2 transform -translate-y-1/2">
+    {/* Timeline Point */}
+    <motion.div
+      className="absolute w-4 h-4 bg-blue-500 rounded-full border-4 border-white shadow-lg"
+      style={{
+        left: `${index * 200}px`,
+        top: '50%',
+        transform: 'translate(-50%, -50%)'
+      }}
+      animate={{
+        scale: [1, 1.2, 1],
+        boxShadow: [
+          '0 0 0 0 rgba(59, 130, 246, 0.7)',
+          '0 0 0 10px rgba(59, 130, 246, 0)',
+          '0 0 0 0 rgba(59, 130, 246, 0)'
+        ]
+      }}
+      transition={{
+        duration: 2,
+        repeat: Infinity,
+        delay: index * 0.5
+      }}
+    />
+    
+    {/* Year Label */}
+    <motion.div
+      className="absolute bg-white/90 backdrop-blur-sm rounded-lg px-3 py-1 shadow-lg"
+      style={{
+        left: `${index * 200}px`,
+        top: '50%',
+        transform: 'translate(-50%, 40px)'
+      }}
+      animate={{
+        y: ['40px', '45px', '40px']
+      }}
+      transition={{
+        duration: 3,
+        repeat: Infinity,
+        delay: index * 0.5
+      }}
+    >
+      <div className="text-lg font-bold text-blue-900">{president.year}</div>
+    </motion.div>
+
+    {/* President Bubble - Top */}
+    <motion.div
+      className="absolute bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl p-4 shadow-xl cursor-pointer"
+      style={{
+        left: `${index * 200}px`,
+        top: '50%',
+        transform: 'translate(-50%, -140px)',
+        width: '160px'
+      }}
+      animate={{
+        y: ['-140px', '-145px', '-140px'],
+        scale: [1, 1.05, 1]
+      }}
+      transition={{
+        duration: 4,
+        repeat: Infinity,
+        delay: index * 0.5
+      }}
+      whileHover={{ scale: 1.1, y: -150 }}
+      onClick={() => onSelect(president)}
+    >
+      <div className="text-center">
+        <div className="text-white font-bold text-sm mb-1">{president.president}</div>
+        <div className="text-blue-100 text-xs">{president.title}</div>
+      </div>
+    </motion.div>
+
+    {/* Connecting Lines */}
+    <svg
+      className="absolute pointer-events-none"
+      style={{
+        left: `${index * 200 - 80}px`,
+        top: '50%',
+        transform: 'translateY(-50%)',
+        width: '160px',
+        height: '200px'
+      }}
+    >
+      <motion.line
+        x1="80"
+        y1="100"
+        x2="80"
+        y2="60"
+        stroke="rgba(59, 130, 246, 0.3)"
+        strokeWidth="2"
+        animate={{
+          opacity: [0.3, 0.6, 0.3]
+        }}
+        transition={{
+          duration: 2,
+          repeat: Infinity,
+          delay: index * 0.5
+        }}
+      />
+      <motion.line
+        x1="80"
+        y1="100"
+        x2="80"
+        y2="140"
+        stroke="rgba(148, 163, 184, 0.3)"
+        strokeWidth="2"
+        animate={{
+          opacity: [0.3, 0.6, 0.3]
+        }}
+        transition={{
+          duration: 2,
+          repeat: Infinity,
+          delay: index * 0.5 + 0.5
+        }}
+      />
+    </svg>
+  </div>
+);
 
 const BoardOfDirectors = () => {
   const [currentLang, setCurrentLang] = useState('ar');
   const [isLoaded, setIsLoaded] = useState(false);
   const [viewMode, setViewMode] = useState('current'); // 'current' or 'previous'
+  const [selectedPresident, setSelectedPresident] = useState(null);
+  const [isPaused, setIsPaused] = useState(false);
+  const [timelinePosition, setTimelinePosition] = useState(0);
+  const timelineRef = useRef(null);
 
   useEffect(() => {
     setIsLoaded(true);
   }, []);
+
+  const handlePrevious = () => {
+    setTimelinePosition(prev => Math.min(prev + 200, 0));
+  };
+
+  const handleNext = () => {
+    const maxPosition = -(presidentsTimeline.length * 200 - 800);
+    setTimelinePosition(prev => Math.max(prev - 200, maxPosition));
+  };
+
+  const handlePresidentClick = (president) => {
+    setSelectedPresident(president);
+  };
+
+  // Presidents timeline data
+  const presidentsTimeline = [
+    {
+      year: 2023,
+      president: 'د. رائدة العلوي',
+      title: 'رئيسة الجمعية',
+      period: '2023 - حتى الآن',
+      image: 'https://bse.bh/wp-content/uploads/BOARD-of-Directors-2022-President-Raida-scaled.jpg',
+      achievements: ['قيادة الجمعية نحو التميز', 'تطوير برامج التدريب المهني', 'تعزيز الشراكات الدولية']
+    },
+    {
+      year: 2022,
+      president: 'د. رائدة العلوي',
+      title: 'رئيسة الجمعية',
+      period: '2022 - 2023',
+      image: 'https://bse.bh/wp-content/uploads/BOARD-of-Directors-2022-President-Raida-scaled.jpg',
+      achievements: ['استمرارية القيادة', 'تطوير البرامج المهنية', 'تعظيم الأثر المجتمعي']
+    },
+    {
+      year: 2021,
+      president: 'د. رائدة العلوي',
+      title: 'رئيسة الجمعية',
+      period: '2021 - 2022',
+      image: 'https://bse.bh/wp-content/uploads/BOARD-of-Directors-2022-President-Raida-scaled.jpg',
+      achievements: ['التحول الرقمي', 'تطوير الخدمات', 'تعزيز العضوية']
+    },
+    {
+      year: 2020,
+      president: 'د. ضياء عبدالعزيز توفيقي',
+      title: 'رئيس الجمعية',
+      period: '2020 - 2021',
+      image: 'https://bse.bh/wp-content/uploads/Dr-Zia-Toufeeqi-President-2020-2021.jpg',
+      achievements: ['إدارة أزمة كوفيد-19', 'استمرارية الخدمات', 'دعم المهندسين']
+    },
+    {
+      year: 2019,
+      president: 'د. ضياء عبدالعزيز توفيقي',
+      title: 'رئيس الجمعية',
+      period: '2019 - 2020',
+      image: 'https://bse.bh/wp-content/uploads/Dr-Zia-Toufeeqi-President-2020-2021.jpg',
+      achievements: ['تطوير الاستراتيجيات', 'تعزيز الشراكات', 'تحديث الهوية']
+    },
+    {
+      year: 2018,
+      president: 'د. ضياء توفيقي',
+      title: 'رئيس الجمعية',
+      period: '2018 - 2019',
+      image: 'https://bse.bh/wp-content/uploads/Dr-Zia-Toufeeqi-President-2020-2021.jpg',
+      achievements: ['تحديث الهوية البصرية', 'تطوير الخدمات الرقمية', 'تعزيز التواجد الإعلامي']
+    },
+    {
+      year: 2017,
+      president: 'م. مسعود إبراهيم الهرمي',
+      title: 'رئيس الجمعية',
+      period: '2017 - 2018',
+      image: 'https://bse.bh/wp-content/uploads/Eng-Masoud-Harmi-President-2017-2018.jpg',
+      achievements: ['تطوير البنية التحتية', 'تحديث المرافق', 'تطوير البرامج']
+    },
+    {
+      year: 2016,
+      president: 'م. مسعود إبراهيم الهرمي',
+      title: 'رئيس الجمعية',
+      period: '2016 - 2017',
+      image: 'https://bse.bh/wp-content/uploads/Eng-Masoud-Harmi-President-2017-2018.jpg',
+      achievements: ['استمرارية المشاريع', 'تطوير العضوية', 'تعزيز الأنشطة']
+    },
+    {
+      year: 2015,
+      president: 'م. مسعود إبراهيم الهرمي',
+      title: 'رئيس الجمعية',
+      period: '2015 - 2016',
+      image: 'https://bse.bh/wp-content/uploads/Eng-Masoud-Harmi-President-2017-2018.jpg',
+      achievements: ['تطوير الشراكات', 'تحديث الخدمات', 'تعزيز التواجد']
+    },
+    {
+      year: 2014,
+      president: 'م. مسعود إبراهيم الهرمي',
+      title: 'رئيس الجمعية',
+      period: '2014 - 2015',
+      image: 'https://bse.bh/wp-content/uploads/Eng-Masoud-Harmi-President-2017-2018.jpg',
+      achievements: ['تطوير الاستراتيجية', 'تعزيز العضوية', 'تحديث البرامج']
+    },
+    {
+      year: 2013,
+      president: 'م. عبدالمجيد بشير القصاب',
+      title: 'رئيس الجمعية',
+      period: '2013 - 2014',
+      image: 'https://bse.bh/wp-content/uploads/Eng-Abdul-Majeed-Ghassab-President-2013-2014.jpg',
+      achievements: ['تطوير الهيكل التنظيمي', 'تحديث الخدمات', 'تعزيز الشراكات']
+    }
+  ];
 
   const previousBoards = [
     {
@@ -444,8 +673,8 @@ const BoardOfDirectors = () => {
       <Header />
       
       <main>
-        {/* Hero Section */}
-        <section className="relative h-96 lg:h-[500px] bg-gradient-to-br from-blue-900 via-blue-800 to-slate-900 overflow-hidden">
+        {/* Hero Section with Interactive Timeline */}
+        <section className="relative h-[600px] lg:h-[700px] bg-gradient-to-br from-blue-900 via-blue-800 to-slate-900 overflow-hidden">
           {/* Background Image with Overlay */}
           <div className="absolute inset-0">
             <img 
@@ -456,24 +685,367 @@ const BoardOfDirectors = () => {
             <div className="absolute inset-0 bg-gradient-to-r from-blue-900/70 via-blue-800/60 to-slate-900/70"></div>
           </div>
           
-          <div className="relative z-10 h-full flex items-center justify-center">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="relative z-10 h-full flex flex-col justify-between py-8">
+            {/* Header */}
+            <div className="text-center px-4 sm:px-6 lg:px-8">
               <motion.div
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8 }}
                 className="text-center"
               >
-                <h1 className="text-4xl lg:text-6xl font-bold text-white mb-6">
+                <h1 className="text-4xl lg:text-6xl font-bold text-white mb-4">
                   {currentLang === 'ar' ? 'مجلس الإدارة' : 'Board of Directors'}
                 </h1>
-                <p className="text-xl lg:text-2xl text-blue-100 max-w-3xl mx-auto leading-relaxed">
+                <p className="text-lg lg:text-xl text-blue-100 max-w-3xl mx-auto leading-relaxed">
                   {currentLang === 'ar'
-                    ? 'القادة الذين يوجهون جمعية المهندسين البحرينية نحو مستقبل مشرق'
-                    : 'The leaders guiding the Bahrain Society of Engineers towards a bright future'
+                    ? 'رؤساء الجمعية على مر السنوات - خط زمني تفاعلي'
+                    : 'Society Presidents Through the Years - Interactive Timeline'
                   }
                 </p>
               </motion.div>
+
+              {/* Selected President Details - Compact */}
+              <AnimatePresence>
+                {selectedPresident && (
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.95, y: 10 }}
+                    animate={{ opacity: 1, scale: 1, y: 0 }}
+                    exit={{ opacity: 0, scale: 0.95, y: -10 }}
+                    transition={{ duration: 0.3, ease: "easeOut" }}
+                    className="mt-6 max-w-2xl mx-auto"
+                  >
+                    <div className="bg-gradient-to-br from-white/20 to-white/10 backdrop-blur-lg border border-white/30 rounded-2xl p-4 shadow-xl relative overflow-hidden">
+                      {/* Decorative gradient */}
+                      <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-blue-400/20 to-transparent rounded-full blur-2xl"></div>
+                      <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-br from-purple-400/10 to-transparent rounded-full blur-xl"></div>
+                      
+                      <div className="relative z-10">
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-3">
+                            <div className="relative">
+                              <img 
+                                src={selectedPresident.image} 
+                                alt={selectedPresident.president}
+                                className="w-12 h-12 rounded-full object-cover border-2 border-white/50 shadow-lg"
+                              />
+                              <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-blue-400 rounded-full border border-white shadow-sm"></div>
+                              {/* Pulse effect */}
+                              <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-blue-400 rounded-full animate-ping"></div>
+                            </div>
+                            <div>
+                              <h3 className="text-white font-bold text-sm">{selectedPresident.president}</h3>
+                              <p className="text-blue-200 text-xs">{selectedPresident.period}</p>
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <div className="hidden sm:flex gap-1">
+                              {selectedPresident.achievements.slice(0, 2).map((achievement, index) => (
+                                <span key={index} className="bg-blue-500/20 text-blue-100 text-xs px-2 py-1 rounded-full border border-blue-400/20">
+                                  {achievement}
+                                </span>
+                              ))}
+                            </div>
+                            <button
+                              onClick={() => setSelectedPresident(null)}
+                              className="w-6 h-6 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center transition-all duration-200 group"
+                            >
+                              <svg className="w-3 h-3 text-white/70 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                              </svg>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+
+            {/* Interactive Continuous Timeline */}
+            <div className="flex-1 flex items-center px-4 sm:px-6 lg:px-8">
+              <div className="w-full max-w-7xl mx-auto">
+                <div className="relative">
+                  {/* Timeline Controls */}
+                  <div className="flex justify-between items-center mb-6">
+                    <button
+                      onClick={handlePrevious}
+                      className="flex items-center gap-2 bg-white/20 hover:bg-white/30 backdrop-blur-sm px-6 py-3 rounded-full text-white font-semibold transition-all duration-300 shadow-lg hover:shadow-xl"
+                    >
+                      <ChevronRight className="w-5 h-5" />
+                      {currentLang === 'ar' ? 'السابق' : 'Previous'}
+                    </button>
+                    
+                    <button
+                      onClick={() => setIsPaused(!isPaused)}
+                      className="flex items-center gap-2 bg-white/20 hover:bg-white/30 backdrop-blur-sm px-6 py-3 rounded-full text-white font-semibold transition-all duration-300 shadow-lg hover:shadow-xl"
+                    >
+                      {isPaused ? (
+                        <>
+                          {currentLang === 'ar' ? 'تشغيل' : 'Play'}
+                          <div className="w-5 h-5 flex items-center justify-center">
+                            <div className="w-0 h-0 border-l-8 border-l-white border-y-4 border-y-transparent"></div>
+                          </div>
+                        </>
+                      ) : (
+                        <>
+                          {currentLang === 'ar' ? 'إيقاف' : 'Pause'}
+                          <div className="w-5 h-5 flex items-center justify-center gap-1">
+                            <div className="w-1 h-4 bg-white"></div>
+                            <div className="w-1 h-4 bg-white"></div>
+                          </div>
+                        </>
+                      )}
+                    </button>
+                    
+                    <button
+                      onClick={handleNext}
+                      className="flex items-center gap-2 bg-white/20 hover:bg-white/30 backdrop-blur-sm px-6 py-3 rounded-full text-white font-semibold transition-all duration-300 shadow-lg hover:shadow-xl"
+                    >
+                      {currentLang === 'ar' ? 'التالي' : 'Next'}
+                      <ChevronLeft className="w-5 h-5" />
+                    </button>
+                  </div>
+
+                  {/* Timeline Container */}
+                  <div className="relative h-64 overflow-hidden">
+                    {/* Timeline Line */}
+                    <div className="absolute top-1/2 left-0 right-0 h-1 bg-gradient-to-r from-blue-400/30 via-blue-500/50 to-blue-400/30 transform -translate-y-1/2"></div>
+                    
+                    {/* Timeline Items */}
+                    <div
+                      className="absolute inset-0"
+                      style={{ 
+                        transform: `translateX(${timelinePosition}px)`,
+                        transition: 'transform 0.3s ease'
+                      }}
+                    >
+                      {!isPaused && (
+                        <motion.div
+                          className="absolute inset-0"
+                          animate={{
+                            x: currentLang === 'ar' ? [0, -presidentsTimeline.length * 200] : [0, presidentsTimeline.length * 200]
+                          }}
+                          transition={{
+                            x: {
+                              repeat: Infinity,
+                              repeatType: "loop",
+                              duration: 40,
+                              ease: "linear"
+                            }
+                          }}
+                        >
+                          {[...presidentsTimeline, ...presidentsTimeline].map((president, index) => (
+                            <div key={`${president.year}-${index}`} className="absolute top-1/2 transform -translate-y-1/2">
+                              {/* Timeline Point */}
+                              <motion.div
+                                className="absolute w-4 h-4 bg-blue-500 rounded-full border-4 border-white shadow-lg"
+                                style={{
+                                  left: `${index * 200}px`,
+                                  top: '50%',
+                                  transform: 'translate(-50%, -50%)'
+                                }}
+                                animate={{
+                                  scale: [1, 1.2, 1],
+                                  boxShadow: [
+                                    '0 0 0 0 rgba(59, 130, 246, 0.7)',
+                                    '0 0 0 10px rgba(59, 130, 246, 0)',
+                                    '0 0 0 0 rgba(59, 130, 246, 0)'
+                                  ]
+                                }}
+                                transition={{
+                                  duration: 2,
+                                  repeat: Infinity,
+                                  delay: index * 0.5
+                                }}
+                              />
+                              
+                              {/* Year Label */}
+                              <motion.div
+                                className="absolute bg-white/90 backdrop-blur-sm rounded-lg px-3 py-1 shadow-lg"
+                                style={{
+                                  left: `${index * 200}px`,
+                                  top: '50%',
+                                  transform: 'translate(-50%, 40px)'
+                                }}
+                                animate={{
+                                  y: ['40px', '45px', '40px']
+                                }}
+                                transition={{
+                                  duration: 3,
+                                  repeat: Infinity,
+                                  delay: index * 0.5
+                                }}
+                              >
+                                <div className="text-lg font-bold text-blue-900">{president.year}</div>
+                              </motion.div>
+
+                              {/* President Bubble - Top */}
+                              <motion.div
+                                className="absolute bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl p-4 shadow-xl cursor-pointer"
+                                style={{
+                                  left: `${index * 200}px`,
+                                  top: '50%',
+                                  transform: 'translate(-50%, -140px)',
+                                  width: '160px'
+                                }}
+                                animate={{
+                                  y: ['-140px', '-145px', '-140px'],
+                                  scale: [1, 1.05, 1]
+                                }}
+                                transition={{
+                                  duration: 4,
+                                  repeat: Infinity,
+                                  delay: index * 0.5
+                                }}
+                                whileHover={{ scale: 1.1, y: -150 }}
+                                onClick={() => handlePresidentClick(president)}
+                              >
+                                <div className="text-center">
+                                  <div className="text-white font-bold text-sm mb-1">{president.president}</div>
+                                  <div className="text-blue-100 text-xs">{president.title}</div>
+                                </div>
+                              </motion.div>
+
+                              {/* Connecting Lines */}
+                              <svg
+                                className="absolute pointer-events-none"
+                                style={{
+                                  left: `${index * 200 - 80}px`,
+                                  top: '50%',
+                                  transform: 'translateY(-50%)',
+                                  width: '160px',
+                                  height: '200px'
+                                }}
+                              >
+                                <motion.line
+                                  x1="80"
+                                  y1="100"
+                                  x2="80"
+                                  y2="60"
+                                  stroke="rgba(59, 130, 246, 0.3)"
+                                  strokeWidth="2"
+                                  animate={{
+                                    opacity: [0.3, 0.6, 0.3]
+                                  }}
+                                  transition={{
+                                    duration: 2,
+                                    repeat: Infinity,
+                                    delay: index * 0.5
+                                  }}
+                                />
+                                <motion.line
+                                  x1="80"
+                                  y1="100"
+                                  x2="80"
+                                  y2="140"
+                                  stroke="rgba(148, 163, 184, 0.3)"
+                                  strokeWidth="2"
+                                  animate={{
+                                    opacity: [0.3, 0.6, 0.3]
+                                  }}
+                                  transition={{
+                                    duration: 2,
+                                    repeat: Infinity,
+                                    delay: index * 0.5 + 0.5
+                                  }}
+                                />
+                              </svg>
+                            </div>
+                          ))}
+                        </motion.div>
+                      )}
+                      
+                      {isPaused && (
+                        <div className="absolute inset-0">
+                          {[...presidentsTimeline, ...presidentsTimeline].map((president, index) => (
+                            <div key={`${president.year}-paused-${index}`} className="absolute top-1/2 transform -translate-y-1/2">
+                              {/* Timeline Point */}
+                              <div
+                                className="absolute w-4 h-4 bg-blue-500 rounded-full border-4 border-white shadow-lg"
+                                style={{
+                                  left: `${index * 200}px`,
+                                  top: '50%',
+                                  transform: 'translate(-50%, -50%)'
+                                }}
+                              />
+                              
+                              {/* Year Label */}
+                              <div
+                                className="absolute bg-white/90 backdrop-blur-sm rounded-lg px-3 py-1 shadow-lg"
+                                style={{
+                                  left: `${index * 200}px`,
+                                  top: '50%',
+                                  transform: 'translate(-50%, 40px)'
+                                }}
+                              >
+                                <div className="text-lg font-bold text-blue-900">{president.year}</div>
+                              </div>
+
+                              {/* President Bubble - Top */}
+                              <div
+                                className="absolute bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl p-4 shadow-xl cursor-pointer"
+                                style={{
+                                  left: `${index * 200}px`,
+                                  top: '50%',
+                                  transform: 'translate(-50%, -140px)',
+                                  width: '160px'
+                                }}
+                                onClick={() => handlePresidentClick(president)}
+                              >
+                                <div className="text-center">
+                                  <div className="text-white font-bold text-sm mb-1">{president.president}</div>
+                                  <div className="text-blue-100 text-xs">{president.title}</div>
+                                </div>
+                              </div>
+
+                              {/* Connecting Lines */}
+                              <svg
+                                className="absolute pointer-events-none"
+                                style={{
+                                  left: `${index * 200 - 80}px`,
+                                  top: '50%',
+                                  transform: 'translateY(-50%)',
+                                  width: '160px',
+                                  height: '200px'
+                                }}
+                              >
+                                <line
+                                  x1="80"
+                                  y1="100"
+                                  x2="80"
+                                  y2="60"
+                                  stroke="rgba(59, 130, 246, 0.3)"
+                                  strokeWidth="2"
+                                />
+                                <line
+                                  x1="80"
+                                  y1="100"
+                                  x2="80"
+                                  y2="140"
+                                  stroke="rgba(148, 163, 184, 0.3)"
+                                  strokeWidth="2"
+                                />
+                              </svg>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Timeline Info */}
+                  <div className="mt-6 text-center">
+                    <p className="text-blue-200 text-sm">
+                      {currentLang === 'ar' 
+                        ? 'خط زمني متحرك يعرض رؤساء الجمعية عبر السنوات 2013 - 2023'
+                        : 'Animated timeline showing society presidents from 2013 - 2023'
+                      }
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </section>

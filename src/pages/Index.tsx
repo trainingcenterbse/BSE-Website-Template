@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
+import ProjectsLogoStrip from "@/components/ProjectsLogoStrip";
 import AboutSection from "@/components/AboutSection";
 import ServicesSection from "@/components/ServicesSection";
 import EventsSection from "@/components/EventsSection";
@@ -32,6 +33,7 @@ const Index = () => {
       
       <main>
         <Hero />
+        <ProjectsLogoStrip currentLang={currentLang} />
         <AboutSection currentLang={currentLang} />
         <ServicesSection currentLang={currentLang} />
         <EventsSection currentLang={currentLang} />

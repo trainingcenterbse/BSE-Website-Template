@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { useState, useEffect, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-import { Users, Award, Calendar, BookOpen, Star, Heart, ArrowRight, Mail, Phone, MapPin, GraduationCap, Shield } from "lucide-react";
+import { Users, Award, Calendar, BookOpen, Star, Heart, ArrowRight, Mail, Phone, MapPin, GraduationCap, Shield, ChevronLeft, ChevronRight } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
