@@ -195,7 +195,7 @@ const Founders = () => {
                 />
                 <p className="text-xl lg:text-2xl text-blue-100 max-w-3xl mx-auto leading-relaxed">
                   {currentLang === 'ar'
-                    ? 'قصة تأسيس جمعية المهندسين البحرينية والرجال الذين قاموا بهذا العمل العظيم'
+                    ? 'قصة تأسيس جمعية المهندسين البحرينية و الذين أسهموا في تأسيس هذا الصرح'
                     : 'The story of establishing the Bahrain Society of Engineers and the men who accomplished this great work'
                   }
                 </p>
