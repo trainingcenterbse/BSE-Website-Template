@@ -56,6 +56,15 @@ const Header = () => {
         { title: currentLang === 'ar' ? 'الاعتمادات الدولية' : 'International Accreditations' },
         { title: currentLang === 'ar' ? 'الدورات التدريبية' : 'Training Courses' }
       ]
+    },
+    committees: {
+      title: currentLang === 'ar' ? 'لجان الجمعية' : 'Society Committees',
+      color: 'from-orange-600 to-orange-700',
+      bgColor: 'bg-orange-600',
+      logo: '/favicon.ico',
+      items: [
+        { title: currentLang === 'ar' ? 'جميع اللجان' : 'All Committees' }
+      ]
     }
   };
 
@@ -140,7 +149,9 @@ const Header = () => {
       [currentLang === 'ar' ? 'عن المركز' : 'About the Center']: '/about-training-center',
       [currentLang === 'ar' ? 'مجلس الأمناء' : 'Board of Trustees']: '/training-trustees',
       [currentLang === 'ar' ? 'الاعتمادات الدولية' : 'International Accreditations']: '/training-accreditations',
-      [currentLang === 'ar' ? 'الدورات التدريبية' : 'Training Courses']: '/training-courses'
+      [currentLang === 'ar' ? 'الدورات التدريبية' : 'Training Courses']: '/training-courses',
+      // Committees Routes
+      [currentLang === 'ar' ? 'جميع اللجان' : 'All Committees']: '/committees'
     };
 
     // Check if it's a sub-item (from the items array) or main tab
@@ -148,7 +159,13 @@ const Header = () => {
       t.items.some(item => item.title === tab)
     );
     
-    if (isSubItem) {
+    // Check if this tab has a direct route
+    const hasDirectRoute = pageRoutes[tab];
+    
+    if (hasDirectRoute) {
+      // Direct navigation for tabs with routes
+      window.location.href = pageRoutes[tab];
+    } else if (isSubItem) {
       // Find which tab this sub-item belongs to
       const parentTab = Object.keys(tabs).find(t => 
         tabs[t as keyof typeof tabs].items.some(item => item.title === tab)
@@ -164,7 +181,7 @@ const Header = () => {
         }
       }
     } else {
-      // It's a main tab
+      // It's a main tab without direct route
       setActiveTab(tab);
       setActiveSubItem(null);
     }
