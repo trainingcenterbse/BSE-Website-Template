@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { Users, Building, Award, TrendingUp, Calendar, Target, Shield, Globe, ArrowRight, ArrowLeft, MapPin, Phone, Mail, Clock, Rocket, Eye, Heart, Star, CheckCircle, BookOpen, FileText, Briefcase, Radio, Handshake, ChevronDown } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import FloatingSidebar, { SidebarSection } from "@/components/FloatingSidebar";
 
 const AboutUs = () => {
   const [currentLang, setCurrentLang] = useState('ar');
@@ -13,6 +14,23 @@ const AboutUs = () => {
     setIsLoaded(true);
   }, []);
 
+  // Note: FloatingSidebar handles its own intersection observers
+
+  // Define sidebar sections for the AboutUs page
+  const sidebarSections: SidebarSection[] = [
+    { id: 'hero', icon: 'home', label: 'Home', labelAr: 'الرئيسية' },
+    { id: 'stats', icon: 'trendingUp', label: 'Statistics', labelAr: 'إحصائيات' },
+    { id: 'about', icon: 'info', label: 'About Us', labelAr: 'من نحن' },
+    { id: 'milestones', icon: 'calendar', label: 'Milestones', labelAr: 'إنجازاتنا' },
+    { id: 'vision', icon: 'eye', label: 'Our Vision', labelAr: 'رؤيتنا' },
+    { id: 'mission', icon: 'target', label: 'Our Mission', labelAr: 'رسالتنا' },
+    { id: 'values', icon: 'heart', label: 'Our Values', labelAr: 'قيمنا' },
+    { id: 'goals', icon: 'rocket', label: 'Our Goals', labelAr: 'أهدافنا' },
+    { id: 'services', icon: 'award', label: 'Our Services', labelAr: 'خدماتنا' },
+    { id: 'contact', icon: 'messageSquare', label: 'Contact', labelAr: 'تواصل معنا' }
+  ];
+
+  // useInView for Framer Motion animations (separate from FloatingSidebar)
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1,
@@ -205,11 +223,11 @@ const AboutUs = () => {
   }
 
   return (
-    <div className="min-h-screen bg-white" dir={currentLang === 'ar' ? 'rtl' : 'ltr'}>
+    <div className="min-h-screen bg-white" dir={currentLang === 'ar' ? 'rtl' : 'ltr'} ref={ref}>
       <Header />
       
       {/* Hero Section */}
-      <section className="relative h-96 lg:h-[500px] bg-gradient-to-br from-blue-900 via-blue-800 to-slate-900 overflow-hidden">
+      <section id="hero" className="relative h-96 lg:h-[500px] bg-gradient-to-br from-blue-900 via-blue-800 to-slate-900 overflow-hidden">
         {/* Background Image with Overlay */}
         <div className="absolute inset-0">
           <img 
@@ -242,7 +260,7 @@ const AboutUs = () => {
       </section>
 
       {/* Statistics Section */}
-      <section className="relative py-10 lg:py-16 bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 overflow-hidden">
+      <section id="stats" className="relative py-10 lg:py-16 bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 overflow-hidden">
         {/* Dynamic Background */}
         <div className="absolute inset-0">
           <motion.div
@@ -342,7 +360,7 @@ const AboutUs = () => {
       {/* Vision & Mission Section */}
 
       {/* Society Nature Section */}
-      <section className="relative py-20 lg:py-32 bg-white overflow-hidden">
+      <section id="about" className="relative py-20 lg:py-32 bg-white overflow-hidden">
         {/* Creative Background Elements */}
         <div className="absolute inset-0">
           {/* Abstract Wave Shapes */}
@@ -614,7 +632,7 @@ const AboutUs = () => {
       </section>
 
       {/* Foundation Section */}
-      <section className="relative py-20 lg:py-32 bg-gradient-to-br from-white via-slate-50 to-blue-50 overflow-hidden">
+      <section id="milestones" className="relative py-20 lg:py-32 bg-gradient-to-br from-white via-slate-50 to-blue-50 overflow-hidden">
         {/* Background Pattern */}
         <div className="absolute inset-0 opacity-5">
           <div className="h-full w-full bg-gradient-to-br from-blue-600 to-slate-800" style={{ backgroundImage: 'repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(59, 130, 246, 0.1) 35px, rgba(59, 130, 246, 0.1) 70px)' }}></div>
@@ -715,7 +733,7 @@ const AboutUs = () => {
       </section>
 
       {/* Vision & Mission Section */}
-      <section className="relative py-20 lg:py-32 bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 overflow-hidden">
+      <section id="vision" className="relative py-20 lg:py-32 bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 overflow-hidden">
         {/* Animated Background Elements */}
         <div className="absolute inset-0">
           <motion.div
@@ -930,8 +948,42 @@ const AboutUs = () => {
         </div>
       </section>
 
+      {/* Mission Section */}
+      <section id="mission" className="relative py-20 lg:py-32 bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 overflow-hidden">
+        {/* Animated Background Elements */}
+        <div className="absolute inset-0">
+          <motion.div
+            animate={{ 
+              scale: [1, 1.2, 1],
+              opacity: [0.1, 0.2, 0.1],
+            }}
+            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+            className="absolute bottom-20 left-20 w-72 h-72 bg-blue-500/10 rounded-full blur-3xl"
+          />
+        </div>
+        
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-4xl lg:text-6xl font-bold text-white mb-6">
+              {currentLang === 'ar' ? 'رسالتنا' : 'Our Mission'}
+            </h2>
+            <p className="text-lg text-blue-100 max-w-2xl mx-auto">
+              {currentLang === 'ar'
+                ? 'الجمعية الوطنية الرائدة التي تحتضن المهندسين من جميع التخصصات وتعمل على الإرتقاء بالمستوى المهني والتقني والعلمي للمهندسين.'
+                : 'The leading national society that embraces engineers from all disciplines and works to raise the professional, technical and scientific level of engineers.'
+              }
+            </p>
+          </motion.div>
+        </div>
+      </section>
+
       {/* Modern Goals Section */}
-      <section className="relative py-16 lg:py-24 bg-gradient-to-br from-slate-50 via-blue-50/20 to-slate-50/30 overflow-hidden">
+      <section id="goals" className="relative py-16 lg:py-24 bg-gradient-to-br from-slate-50 via-blue-50/20 to-slate-50/30 overflow-hidden">
         {/* Modern Background */}
         <div className="absolute inset-0">
           <div className="absolute inset-0 bg-gradient-to-br from-blue-900/5 via-transparent to-slate-900/5"></div>
@@ -1311,6 +1363,61 @@ const AboutUs = () => {
         </div>
       </section>
 
+      {/* Values Section */}
+      <section id="values" className="relative py-20 lg:py-32 bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 overflow-hidden">
+        {/* Dark Background Elements */}
+        <div className="absolute inset-0">
+          <motion.div
+            animate={{ 
+              scale: [1, 1.2, 1],
+              opacity: [0.1, 0.2, 0.1],
+            }}
+            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute top-1/3 left-1/4 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl"
+          />
+        </div>
+        
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-4xl lg:text-5xl font-bold text-white mb-6">
+              {currentLang === 'ar' ? 'قيمنا' : 'Our Values'}
+            </h2>
+            <p className="text-lg text-blue-100 max-w-2xl mx-auto">
+              {currentLang === 'ar'
+                ? 'المبادئ التي توجهنا في كل ما نفعله'
+                : 'The principles that guide us in everything we do'
+              }
+            </p>
+          </motion.div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {[
+              { icon: <Shield className="w-8 h-8" />, title: currentLang === 'ar' ? 'النزاهة' : 'Integrity', desc: currentLang === 'ar' ? 'الالتزام بأعلى معايير الأخلاق المهنية' : 'Commitment to highest professional ethics' },
+              { icon: <Users className="w-8 h-8" />, title: currentLang === 'ar' ? 'التعاون' : 'Collaboration', desc: currentLang === 'ar' ? 'العمل معاً لتحقيق أهداف مشتركة' : 'Working together to achieve common goals' },
+              { icon: <Rocket className="w-8 h-8" />, title: currentLang === 'ar' ? 'الابتكار' : 'Innovation', desc: currentLang === 'ar' ? 'تبني الأفكار الجديدة والحلول المبتكرة' : 'Embracing new ideas and innovative solutions' },
+              { icon: <Globe className="w-8 h-8" />, title: currentLang === 'ar' ? 'الاستدامة' : 'Sustainability', desc: currentLang === 'ar' ? 'حماية البيئة وتعزيز التنمية المستدامة' : 'Protecting the environment and promoting sustainable development' }
+            ].map((value, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+                className="bg-white/10 backdrop-blur-sm rounded-3xl p-8 text-center hover:bg-white/20 transition-all duration-300"
+              >
+                <div className="text-blue-300 mb-4 flex justify-center">{value.icon}</div>
+                <h3 className="text-xl font-semibold text-white mb-3">{value.title}</h3>
+                <p className="text-blue-100 text-sm">{value.desc}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Society Activities Section */}
       <section className="relative py-20 lg:py-32 bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 overflow-hidden">
         {/* Dark Background Elements */}
@@ -1484,7 +1591,7 @@ const AboutUs = () => {
       
       
       {/* Services Section */}
-      <section className="relative py-16 lg:py-24 bg-gradient-to-br from-slate-50 via-blue-50/20 to-slate-50/30 overflow-hidden">
+      <section id="services" className="relative py-16 lg:py-24 bg-gradient-to-br from-slate-50 via-blue-50/20 to-slate-50/30 overflow-hidden">
         {/* Modern Background */}
         <div className="absolute inset-0">
           <div className="absolute inset-0 bg-gradient-to-br from-blue-900/5 via-transparent to-slate-900/5"></div>
@@ -1600,7 +1707,7 @@ const AboutUs = () => {
       </section>
 
       {/* Contact Section */}
-      <section className="py-20 lg:py-32 bg-gradient-to-br from-gray-900 to-blue-900">
+      <section id="contact" className="py-20 lg:py-32 bg-gradient-to-br from-gray-900 to-blue-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -1636,6 +1743,12 @@ const AboutUs = () => {
           </div>
         </div>
       </section>
+
+      {/* Floating Sidebar Navigation */}
+      <FloatingSidebar 
+        sections={sidebarSections}
+        currentLang={currentLang as 'ar' | 'en'}
+      />
 
       <Footer />
     </div>
