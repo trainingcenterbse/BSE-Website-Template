@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { useSpring, animated } from '@react-spring/web';
 import { useInView } from 'react-intersection-observer';
-import * as anime from 'animejs';
+import { animate } from 'animejs';
 
 const AnimationTest = () => {
   const [ref, inView] = useInView({
@@ -22,12 +22,11 @@ const AnimationTest = () => {
   // Anime.js animation
   useEffect(() => {
     if (animeRef.current && inView) {
-      anime({
-        targets: animeRef.current,
+      animate(animeRef.current, {
         translateX: [-100, 0],
         opacity: [0, 1],
         duration: 1500,
-        easing: 'easeOutExpo',
+        ease: 'outExpo',
       });
     }
   }, [inView]);
