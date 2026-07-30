@@ -4,11 +4,14 @@ import { useSpring, animated } from "@react-spring/web";
 import { useInView } from "react-intersection-observer";
 import { Menu, X, Moon, Sun, Globe, Search, ArrowLeft, User, Award, Calendar, Briefcase, GraduationCap, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import MegaMenu from "@/components/MegaMenu";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDark, setIsDark] = useState(false);
-  const [currentLang, setCurrentLang] = useState('ar');
+  const [isMegaOpen, setIsMegaOpen] = useState(false);
+  const { lang: currentLang, toggleLang } = useLanguage();
   const [activeTab, setActiveTab] = useState<string | null>(null);
   const [activeSubItem, setActiveSubItem] = useState<string | null>(null);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -113,14 +116,8 @@ const Header = () => {
     if (isLangSwitching) return;
     
     setIsLangSwitching(true);
-    const newLang = currentLang === 'ar' ? 'en' : 'ar';
-    setCurrentLang(newLang);
-    localStorage.setItem('language', newLang);
-    
-    setTimeout(() => {
-      setIsLangSwitching(false);
-      window.location.reload();
-    }, 600);
+    toggleLang();
+    setTimeout(() => setIsLangSwitching(false), 600);
   };
 
   const toggleTheme = () => {
@@ -251,8 +248,11 @@ const Header = () => {
                 </AnimatePresence>
 
                 {/* Logo */}
-                <motion.a 
-                  href="/" 
+                <motion.button
+                  type="button"
+                  onClick={() => setIsMegaOpen((p) => !p)}
+                  aria-expanded={isMegaOpen}
+                  aria-label={currentLang === 'ar' ? 'فتح قائمة الموقع الكاملة' : 'Open full site menu'}
                   className="flex items-center gap-1.5 sm:gap-2 group relative"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
@@ -328,7 +328,7 @@ const Header = () => {
                       )}
                     </AnimatePresence>
                   </div>
-                </motion.a>
+                </motion.button>
               </div>
 
               {/* Center Navigation - Only visible in normal state */}
@@ -573,6 +573,7 @@ const Header = () => {
             </div>
           </div>
         </div>
+        <MegaMenu open={isMegaOpen} onClose={() => setIsMegaOpen(false)} />
       </motion.header>
 
       {/* Mobile Menu */}
