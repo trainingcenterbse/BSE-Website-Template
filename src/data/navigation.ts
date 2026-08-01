@@ -1,3 +1,7 @@
+import bseLogo from "@/assets/bse-logo.png";
+
+const logo = bseLogo;
+
 export interface NavItem {
   ar: string;
   en: string;
@@ -73,10 +77,8 @@ export interface RelatedSite {
 
 /** Websites affiliated with the Bahrain Society of Engineers */
 export const relatedSites: RelatedSite[] = [
-  { ar: "جمعية المهندسين البحرينية", en: "Bahrain Society of Engineers", url: "/", logo: "/favicon.ico" },
-  { ar: "مركز التدريب الهندسي", en: "Engineering Training Center", url: "/training-center", logo: "/favicon.ico" },
-  { ar: "مؤتمر الصيانة MAINTCON", en: "MAINTCON Conference", url: "/#events", logo: "/favicon.ico" },
-  { ar: "يوم المهندس البحريني", en: "Bahraini Engineer's Day", url: "/#events", logo: "/favicon.ico" },
-  { ar: "مجلة المهندس", en: "The Engineer Magazine", url: "/#news", logo: "/favicon.ico" },
-  { ar: "الاتحاد الهندسي الخليجي", en: "GCC Engineering Union", url: "/#about", logo: "/favicon.ico" },
+  { ar: "مركز التدريب", en: "Training Center", url: "/training-center", logo: logo },
+  { ar: "المؤتمرات", en: "Conferences", url: "/#events", logo: logo },
+  { ar: "المركز الإعلامي", en: "Media Center", url: "/#news", logo: logo },
+  { ar: "جائزة المهندس", en: "Engineer Award", url: "/#events", logo: logo },
 ];
