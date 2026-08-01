@@ -1,7 +1,10 @@
-import coinImg from "@/assets/bse-coin.png";
+import logoAsset from "@/assets/bse-logo.png.asset.json";
 
-/** 3D spinning coin bearing the society emblem */
+/** 3D spinning coin minted from the society emblem */
 const CoinLogo3D = ({ size = 260 }: { size?: number }) => {
+  const depth = Math.max(10, Math.round(size * 0.055));
+  const slabs = 14;
+
   return (
     <div
       className="coin-scene select-none"
@@ -9,22 +12,21 @@ const CoinLogo3D = ({ size = 260 }: { size?: number }) => {
       aria-hidden="true"
     >
       <div className="coin-spinner">
-        <img
-          src={coinImg}
-          alt=""
-          width={1024}
-          height={1024}
-          className="coin-face"
-          draggable={false}
-        />
-        <img
-          src={coinImg}
-          alt=""
-          width={1024}
-          height={1024}
-          className="coin-face coin-face--back"
-          draggable={false}
-        />
+        {/* coin thickness: stacked slabs between the two faces */}
+        {Array.from({ length: slabs }).map((_, i) => (
+          <div
+            key={i}
+            className="coin-edge"
+            style={{ transform: `translateZ(${-depth / 2 + (depth * i) / (slabs - 1)}px)` }}
+          />
+        ))}
+
+        <div className="coin-face" style={{ transform: `translateZ(${depth / 2}px)` }}>
+          <img src={logoAsset.url} alt="" className="coin-emblem" draggable={false} />
+        </div>
+        <div className="coin-face" style={{ transform: `rotateY(180deg) translateZ(${depth / 2}px)` }}>
+          <img src={logoAsset.url} alt="" className="coin-emblem" draggable={false} />
+        </div>
       </div>
       <div className="coin-shadow" />
 
@@ -35,31 +37,54 @@ const CoinLogo3D = ({ size = 260 }: { size?: number }) => {
           width: 100%;
           height: 100%;
           transform-style: preserve-3d;
-          animation: coin-spin 9s linear infinite;
-          filter: drop-shadow(0 18px 30px hsl(var(--primary) / 0.35));
+          animation: coin-spin 10s linear infinite;
+          filter: drop-shadow(0 22px 34px hsl(var(--primary) / 0.4));
         }
-        .coin-face {
+        .coin-face, .coin-edge {
           position: absolute;
           inset: 0;
-          width: 100%;
-          height: 100%;
-          object-fit: contain;
+          border-radius: 9999px;
+          transform-style: preserve-3d;
+        }
+        .coin-face {
+          display: grid;
+          place-items: center;
+          background:
+            radial-gradient(circle at 32% 28%, hsl(0 0% 100%), hsl(210 22% 88%) 46%, hsl(214 18% 74%) 74%, hsl(214 22% 62%) 100%);
+          box-shadow:
+            inset 0 0 0 ${Math.round(size * 0.028)}px hsl(214 60% 92%),
+            inset 0 0 0 ${Math.round(size * 0.034)}px hsl(217 60% 55% / 0.5),
+            inset 0 ${Math.round(size * 0.03)}px ${Math.round(size * 0.06)}px hsl(0 0% 100% / 0.8),
+            inset 0 -${Math.round(size * 0.03)}px ${Math.round(size * 0.07)}px hsl(217 40% 40% / 0.35);
           backface-visibility: hidden;
         }
-        .coin-face--back { transform: rotateY(180deg); }
+        .coin-emblem {
+          width: 68%;
+          height: 68%;
+          object-fit: contain;
+          filter: drop-shadow(0 1px 0 hsl(0 0% 100% / 0.9)) drop-shadow(0 -1px 1px hsl(217 60% 25% / 0.35));
+        }
+        .coin-edge {
+          background: linear-gradient(90deg,
+            hsl(214 25% 48%) 0%,
+            hsl(214 22% 66%) 18%,
+            hsl(210 20% 86%) 46%,
+            hsl(214 22% 64%) 76%,
+            hsl(214 28% 44%) 100%);
+        }
         .coin-shadow {
           position: absolute;
-          bottom: -6%;
+          bottom: -7%;
           width: 55%;
           height: 8%;
           border-radius: 9999px;
           background: hsl(var(--primary) / 0.35);
           filter: blur(14px);
-          animation: coin-shadow 9s ease-in-out infinite;
+          animation: coin-shadow 10s ease-in-out infinite;
         }
         @keyframes coin-spin {
-          from { transform: rotateY(0deg); }
-          to { transform: rotateY(360deg); }
+          from { transform: rotateX(-9deg) rotateY(0deg); }
+          to { transform: rotateX(-9deg) rotateY(360deg); }
         }
         @keyframes coin-shadow {
           0%, 100% { transform: scaleX(1); opacity: 0.5; }
