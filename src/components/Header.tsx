@@ -103,6 +103,13 @@ const Header = () => {
   };
 
   useEffect(() => {
+    if (!isMegaOpen) return;
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setIsMegaOpen(false);
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [isMegaOpen]);
+
+  useEffect(() => {
     const savedTheme = localStorage.getItem("theme");
     const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
     const shouldBeDark = savedTheme === "dark" || (!savedTheme && prefersDark);
