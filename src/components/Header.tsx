@@ -5,6 +5,7 @@ import { useInView } from "react-intersection-observer";
 import { Menu, X, Moon, Sun, Globe, Search, ArrowLeft, User, Award, Calendar, Briefcase, GraduationCap, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import MegaMenu from "@/components/MegaMenu";
+import logoAsset from "@/assets/bse-logo.png.asset.json";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 const Header = () => {
@@ -28,7 +29,7 @@ const Header = () => {
       title: currentLang === 'ar' ? 'عن الجمعية' : 'About Society',
       color: 'from-blue-600 to-blue-700',
       bgColor: 'bg-blue-600',
-      logo: '/favicon.ico',
+      logo: logoAsset.url,
       items: [
         { title: currentLang === 'ar' ? 'من نحن' : 'About Us' },
         { title: currentLang === 'ar' ? 'المؤسسون' : 'Founders' },
@@ -41,7 +42,7 @@ const Header = () => {
       title: currentLang === 'ar' ? 'المؤتمرات' : 'Conferences',
       color: 'from-purple-600 to-purple-700',
       bgColor: 'bg-purple-600',
-      logo: '/favicon.ico',
+      logo: logoAsset.url,
       items: [
         { title: currentLang === 'ar' ? 'المؤتمرات القادمة' : 'Upcoming Conferences' },
         { title: currentLang === 'ar' ? 'المؤتمرات السابقة' : 'Past Conferences' },
@@ -52,7 +53,7 @@ const Header = () => {
       title: currentLang === 'ar' ? 'مركز التدريب' : 'Training Center',
       color: 'from-green-600 to-green-700',
       bgColor: 'bg-green-600',
-      logo: '/favicon.ico',
+      logo: logoAsset.url,
       items: [
         { title: currentLang === 'ar' ? 'عن المركز' : 'About the Center' },
         { title: currentLang === 'ar' ? 'مجلس الأمناء' : 'Board of Trustees' },
@@ -64,7 +65,7 @@ const Header = () => {
       title: currentLang === 'ar' ? 'لجان الجمعية' : 'Society Committees',
       color: 'from-orange-600 to-orange-700',
       bgColor: 'bg-orange-600',
-      logo: '/favicon.ico',
+      logo: logoAsset.url,
       items: [
         { title: currentLang === 'ar' ? 'جميع اللجان' : 'All Committees' }
       ]
@@ -215,9 +216,13 @@ const Header = () => {
       >
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Main Header with Glassmorphism - Preserving Original Rounded Shape */}
-          <div className="bg-white/90 dark:bg-blue-900/90 backdrop-blur-xl rounded-full shadow-2xl border border-white/20 dark:border-blue-700/50 my-4 relative overflow-hidden">
+          <motion.div
+            layout
+            transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+            className={`bg-white/95 dark:bg-blue-900/95 backdrop-blur-xl shadow-2xl border border-white/20 dark:border-blue-700/50 my-4 relative overflow-hidden transition-[border-radius] duration-500 ${isMegaOpen ? 'rounded-[2rem]' : 'rounded-full'}`}
+          >
             {/* Animated Gradient Border */}
-            <div className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-700/10 via-blue-600/10 to-blue-700/10 animate-pulse"></div>
+            <div className="absolute inset-0 bg-gradient-to-r from-blue-700/10 via-blue-600/10 to-blue-700/10 animate-pulse"></div>
             
             <div className="relative flex items-center justify-between h-16 sm:h-18 lg:h-20 px-4 sm:px-6">
               {/* Left Section - Logo and Back Button */}
@@ -264,7 +269,7 @@ const Header = () => {
                     transition={{ duration: 2, repeat: Infinity }}
                   />
                   <motion.img 
-                    src="/favicon.ico" 
+                    src={logoAsset.url} 
                     alt="BSE Logo" 
                     className="w-10 h-10 sm:w-12 sm:h-12 lg:w-14 lg:h-14 relative z-10"
                     whileHover={{ scale: 1.1 }}
@@ -571,9 +576,9 @@ const Header = () => {
                 </button>
               </div>
             </div>
-          </div>
+            <MegaMenu open={isMegaOpen} onClose={() => setIsMegaOpen(false)} />
+          </motion.div>
         </div>
-        <MegaMenu open={isMegaOpen} onClose={() => setIsMegaOpen(false)} />
       </motion.header>
 
       {/* Mobile Menu */}
