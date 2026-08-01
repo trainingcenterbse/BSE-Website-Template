@@ -384,7 +384,7 @@ const HomeSections = () => {
                 </div>
                 <div className="flex flex-wrap gap-3">
                   <MoreButton href="/training-courses" variant="secondary" label={t("تصفح الدورات", "Browse courses")} />
-                  <MoreButton href="/training-center" variant="outline" label={t("مركز التدريب", "Training center")} />
+                  <MoreButton href="/training-center" variant="secondary" label={t("مركز التدريب", "Training center")} />
                 </div>
               </div>
             </Reveal>
