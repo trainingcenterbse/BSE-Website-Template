@@ -1,6 +1,6 @@
-import logoAsset from "@/assets/bse-logo.png.asset.json";
+import bseLogo from "@/assets/bse-logo.png";
 
-const logo = logoAsset.url;
+const logo = bseLogo;
 
 export interface NavItem {
   ar: string;

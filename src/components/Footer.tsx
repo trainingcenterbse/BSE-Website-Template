@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import logoAsset from "@/assets/bse-logo.png.asset.json";
+import bseLogo from "@/assets/bse-logo.png";
 import { MapPin, Phone, Mail } from "lucide-react";
 
 const Footer = () => {
@@ -28,7 +28,7 @@ const Footer = () => {
                 <div className="lg:col-span-2">
                   <div className="flex items-center gap-4 mb-6">
                     <motion.img 
-                      src={logoAsset.url} 
+                      src={bseLogo} 
                       alt={currentLang === 'ar' ? 'شعار جمعية المهندسين البحرينية' : 'Bahrain Society of Engineers Logo'}
                       className="w-16 h-16 relative z-10"
                       whileHover={{ scale: 1.1 }}
@@ -176,7 +176,7 @@ const Footer = () => {
               {/* Logo and Title */}
               <div className="text-center mb-6">
                 <motion.img 
-                  src={logoAsset.url} 
+                  src={bseLogo} 
                   alt={currentLang === 'ar' ? 'شعار جمعية المهندسين البحرينية' : 'BSE Logo'}
                   className="w-12 h-12 mx-auto mb-3"
                   whileHover={{ scale: 1.1 }}

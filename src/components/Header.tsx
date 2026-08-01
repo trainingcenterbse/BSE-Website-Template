@@ -5,7 +5,7 @@ import { useInView } from "react-intersection-observer";
 import { Menu, X, Moon, Sun, Globe, Search, ArrowLeft, User, Award, Calendar, Briefcase, GraduationCap, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import MegaMenu from "@/components/MegaMenu";
-import logoAsset from "@/assets/bse-logo.png.asset.json";
+import bseLogo from "@/assets/bse-logo.png";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 const Header = () => {
@@ -29,7 +29,7 @@ const Header = () => {
       title: currentLang === 'ar' ? 'عن الجمعية' : 'About Society',
       color: 'from-blue-600 to-blue-700',
       bgColor: 'bg-blue-600',
-      logo: logoAsset.url,
+      logo: bseLogo,
       items: [
         { title: currentLang === 'ar' ? 'من نحن' : 'About Us' },
         { title: currentLang === 'ar' ? 'المؤسسون' : 'Founders' },
@@ -42,7 +42,7 @@ const Header = () => {
       title: currentLang === 'ar' ? 'المؤتمرات' : 'Conferences',
       color: 'from-purple-600 to-purple-700',
       bgColor: 'bg-purple-600',
-      logo: logoAsset.url,
+      logo: bseLogo,
       items: [
         { title: currentLang === 'ar' ? 'المؤتمرات القادمة' : 'Upcoming Conferences' },
         { title: currentLang === 'ar' ? 'المؤتمرات السابقة' : 'Past Conferences' },
@@ -53,7 +53,7 @@ const Header = () => {
       title: currentLang === 'ar' ? 'مركز التدريب' : 'Training Center',
       color: 'from-green-600 to-green-700',
       bgColor: 'bg-green-600',
-      logo: logoAsset.url,
+      logo: bseLogo,
       items: [
         { title: currentLang === 'ar' ? 'عن المركز' : 'About the Center' },
         { title: currentLang === 'ar' ? 'مجلس الأمناء' : 'Board of Trustees' },
@@ -65,7 +65,7 @@ const Header = () => {
       title: currentLang === 'ar' ? 'لجان الجمعية' : 'Society Committees',
       color: 'from-orange-600 to-orange-700',
       bgColor: 'bg-orange-600',
-      logo: logoAsset.url,
+      logo: bseLogo,
       items: [
         { title: currentLang === 'ar' ? 'جميع اللجان' : 'All Committees' }
       ]
@@ -269,7 +269,7 @@ const Header = () => {
                     transition={{ duration: 2, repeat: Infinity }}
                   />
                   <motion.img 
-                    src={logoAsset.url} 
+                    src={bseLogo} 
                     alt="BSE Logo" 
                     className="w-10 h-10 sm:w-12 sm:h-12 lg:w-14 lg:h-14 relative z-10"
                     whileHover={{ scale: 1.1 }}

@@ -1,4 +1,4 @@
-import logoAsset from "@/assets/bse-logo.png.asset.json";
+import bseLogo from "@/assets/bse-logo.png";
 
 /** 3D spinning coin minted from the society emblem */
 const CoinLogo3D = ({ size = 260 }: { size?: number }) => {
@@ -22,10 +22,10 @@ const CoinLogo3D = ({ size = 260 }: { size?: number }) => {
         ))}
 
         <div className="coin-face" style={{ transform: `translateZ(${depth / 2}px)` }}>
-          <img src={logoAsset.url} alt="" className="coin-emblem" draggable={false} />
+          <img src={bseLogo} alt="" className="coin-emblem" draggable={false} />
         </div>
         <div className="coin-face" style={{ transform: `rotateY(180deg) translateZ(${depth / 2}px)` }}>
-          <img src={logoAsset.url} alt="" className="coin-emblem" draggable={false} />
+          <img src={bseLogo} alt="" className="coin-emblem" draggable={false} />
         </div>
       </div>
       <div className="coin-shadow" />
