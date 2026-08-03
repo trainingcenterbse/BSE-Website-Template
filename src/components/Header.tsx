@@ -221,13 +221,17 @@ const Header = () => {
         animate="visible"
         className="sticky top-4 z-40"
       >
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Main Header with Glassmorphism - Preserving Original Rounded Shape */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Main Header with Glassmorphism — morphs into the mega-menu surface */}
           <motion.div
-            layout
-            transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-            className={`bg-white/95 dark:bg-blue-900/95 backdrop-blur-xl shadow-2xl border border-white/20 dark:border-blue-700/50 my-4 relative overflow-hidden transition-[border-radius] duration-500 ${isMegaOpen ? 'rounded-[2rem]' : 'rounded-full'}`}
+            animate={{
+              maxWidth: isMegaOpen ? 1280 : 1152,
+              borderRadius: isMegaOpen ? 28 : 9999,
+            }}
+            transition={{ type: "spring", stiffness: 160, damping: 24, mass: 0.9 }}
+            className="mx-auto bg-white/95 dark:bg-blue-900/95 backdrop-blur-xl shadow-2xl border border-white/20 dark:border-blue-700/50 my-4 relative overflow-hidden"
           >
+
             {/* Animated Gradient Border */}
             <div className="absolute inset-0 bg-gradient-to-r from-blue-700/10 via-blue-600/10 to-blue-700/10 animate-pulse"></div>
             

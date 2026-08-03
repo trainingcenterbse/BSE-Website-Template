@@ -2,7 +2,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   ArrowLeft, ArrowRight, Users, Award, Calendar, GraduationCap,
-  Newspaper, Building2, Mail, Layers, MapPin, Phone, Clock, Ticket, Sparkles,
+  Newspaper, Building2, Mail, Layers, MapPin, Phone, Clock, Ticket, Sparkles, BookOpen, Download,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -298,7 +298,7 @@ const HomeSections = () => {
               </a>
             </Reveal>
 
-            <div id="articles" className="space-y-4">
+            <div className="space-y-4">
               {[
                 { ar: "التحول الرقمي في القطاع الهندسي", en: "Digital transformation in engineering", tagAr: "مقال", tagEn: "Article" },
                 { ar: "معايير السلامة في مواقع البناء", en: "Safety standards on construction sites", tagAr: "مقال", tagEn: "Article" },
@@ -322,8 +322,135 @@ const HomeSections = () => {
               ))}
             </div>
           </div>
+
+          {/* Sub-articles: editorial magazine grid */}
+          <div id="articles" className="mt-16">
+            <Reveal className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-8">
+              <div>
+                <span className="text-xs font-bold tracking-widest uppercase text-blue-300">
+                  {t("المقالات", "Articles")}
+                </span>
+                <h3 className="text-2xl md:text-3xl font-bold text-white mt-2">
+                  {t("مقالات وأقلام هندسية", "Engineering columns & insights")}
+                </h3>
+                <p className="text-blue-100/70 text-sm mt-2 max-w-xl">
+                  {t(
+                    "قراءات مهنية يكتبها مهندسون وخبراء في الاستدامة، إدارة المشاريع، والتقنيات الحديثة.",
+                    "Professional reads by engineers and experts on sustainability, project management and emerging technology."
+                  )}
+                </p>
+              </div>
+              <Button asChild variant="secondary" className="rounded-full w-fit">
+                <a href="/#articles">{t("كل المقالات", "All articles")}</a>
+              </Button>
+            </Reveal>
+
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+              {[
+                { ar: "الهندسة الخضراء ومدن المستقبل", en: "Green engineering and future cities", catAr: "استدامة", catEn: "Sustainability", authorAr: "م. أحمد الشيخ", authorEn: "Eng. Ahmed Alshaikh", min: 6, img: img.about },
+                { ar: "الذكاء الاصطناعي في إدارة الأصول", en: "AI in asset management", catAr: "تقنية", catEn: "Technology", authorAr: "م. نورة العلي", authorEn: "Eng. Noura Alali", min: 8, img: img.training },
+                { ar: "الصيانة التنبؤية: من النظرية للتطبيق", en: "Predictive maintenance in practice", catAr: "صيانة", catEn: "Maintenance", authorAr: "م. خالد المطوع", authorEn: "Eng. Khalid Almutawa", min: 5, img: img.events },
+              ].map((a, i) => (
+                <Reveal key={a.en}>
+                  <a
+                    href={`/article/${i + 1}`}
+                    className="group flex flex-col h-full rounded-3xl overflow-hidden border border-white/15 bg-white/5 backdrop-blur-sm hover:border-blue-400/60 transition-all"
+                  >
+                    <div className="relative h-40 overflow-hidden">
+                      <img
+                        src={a.img}
+                        alt={t(a.ar, a.en)}
+                        loading="lazy"
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                      />
+                      <span className="absolute top-3 start-3 text-[10px] font-bold px-3 py-1 rounded-full bg-blue-500 text-white">
+                        {t(a.catAr, a.catEn)}
+                      </span>
+                    </div>
+                    <div className="p-5 flex flex-col gap-3 flex-1">
+                      <h4 className="font-bold text-white leading-snug group-hover:text-blue-200 transition-colors">
+                        {t(a.ar, a.en)}
+                      </h4>
+                      <div className="mt-auto flex items-center justify-between text-[11px] text-blue-100/70">
+                        <span>{t(a.authorAr, a.authorEn)}</span>
+                        <span className="flex items-center gap-1">
+                          <Clock className="w-3 h-3" /> {a.min} {t("د قراءة", "min read")}
+                        </span>
+                      </div>
+                    </div>
+                  </a>
+                </Reveal>
+              ))}
+            </div>
+          </div>
+
+          {/* Society publications — Al Mohandis magazine */}
+          <div id="publications" className="mt-16 rounded-[2rem] border border-white/15 bg-white/5 backdrop-blur-md p-6 md:p-10">
+            <div className="grid lg:grid-cols-[1fr_1.1fr] gap-10 items-center">
+              <Reveal>
+                <span className="text-xs font-bold tracking-widest uppercase text-blue-300">
+                  {t("إصدارات الجمعية", "Society Publications")}
+                </span>
+                <h3 className="text-2xl md:text-3xl font-bold text-white mt-2 mb-3">
+                  {t("مجلة المهندس", "Al Mohandis Magazine")}
+                </h3>
+                <p className="text-blue-100/75 text-sm md:text-base leading-relaxed mb-6">
+                  {t(
+                    "المجلة الدورية لجمعية المهندسين البحرينية: تقارير مهنية، ملفات فنية، ومتابعة لأنشطة الجمعية وأخبار القطاع الهندسي في المملكة.",
+                    "The periodical of the Bahrain Society of Engineers: professional reports, technical features and coverage of the Society's activities and the Kingdom's engineering sector."
+                  )}
+                </p>
+                <div className="flex flex-wrap gap-3">
+                  <Button asChild variant="secondary" className="rounded-full">
+                    <a href="/#publications" className="flex items-center gap-2">
+                      <BookOpen className="w-4 h-4" />
+                      {t("اطّلع على أحدث أعداد مجلة المهندس", "Read the latest issues")}
+                    </a>
+                  </Button>
+                  <Button asChild variant="outline" className="rounded-full border-white/40 bg-transparent text-white hover:bg-white hover:text-blue-900">
+                    <a href="/#publications" className="flex items-center gap-2">
+                      <Download className="w-4 h-4" />
+                      {t("أرشيف الإصدارات", "Issue archive")}
+                    </a>
+                  </Button>
+                </div>
+              </Reveal>
+
+              <div className="grid grid-cols-3 gap-4">
+                {[
+                  { noAr: "العدد ٦٤", noEn: "Issue 64", dAr: "يونيو 2026", dEn: "Jun 2026", img: img.about },
+                  { noAr: "العدد ٦٣", noEn: "Issue 63", dAr: "مارس 2026", dEn: "Mar 2026", img: img.training },
+                  { noAr: "العدد ٦٢", noEn: "Issue 62", dAr: "ديسمبر 2025", dEn: "Dec 2025", img: img.events },
+                ].map((iss, i) => (
+                  <Reveal key={iss.noEn}>
+                    <a
+                      href="/#publications"
+                      className={`group block rounded-2xl overflow-hidden border border-white/20 shadow-2xl transition-transform duration-500 hover:-translate-y-2 ${
+                        i === 0 ? "lg:-translate-y-3 lg:hover:-translate-y-5" : ""
+                      }`}
+                    >
+                      <div className="relative aspect-[3/4]">
+                        <img src={iss.img} alt={t(iss.noAr, iss.noEn)} loading="lazy" className="absolute inset-0 w-full h-full object-cover" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-blue-950 via-blue-950/40 to-blue-900/30" />
+                        <div className="absolute inset-x-0 bottom-0 p-3">
+                          <p className="text-[11px] font-bold text-white">{t(iss.noAr, iss.noEn)}</p>
+                          <p className="text-[10px] text-blue-100/70">{t(iss.dAr, iss.dEn)}</p>
+                        </div>
+                        {i === 0 && (
+                          <span className="absolute top-2 end-2 text-[9px] font-bold px-2 py-0.5 rounded-full bg-blue-500 text-white">
+                            {t("الأحدث", "Latest")}
+                          </span>
+                        )}
+                      </div>
+                    </a>
+                  </Reveal>
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
       </section>
+
 
       {/* 3 — Training center: bento */}
       <section id="training" className="py-20 md:py-28 bg-muted/40">
@@ -395,6 +522,115 @@ const HomeSections = () => {
       {/* 4 — Events / conferences / programs */}
       <EventsSection />
 
+      {/* 5 — Board of Directors: editorial leadership grid */}
+      <section id="board" className="relative py-20 md:py-28 bg-gradient-to-b from-background via-muted/30 to-background overflow-hidden">
+        <div className="absolute top-1/3 -start-24 w-72 h-72 rounded-full bg-primary/10 blur-3xl" aria-hidden="true" />
+        <div className="relative max-w-6xl mx-auto px-4">
+          <SectionHead
+            center
+            eyebrow={t("مجلس الإدارة", "Board of Directors")}
+            title={t("القيادة التي تقود الجمعية", "The leadership steering the Society")}
+            desc={t(
+              "مجلس إدارة منتخب من الأعضاء يرسم السياسات ويشرف على البرامج والخدمات المقدمة للمهندسين في مملكة البحرين.",
+              "An elected board that sets policy and oversees the programs and services delivered to engineers in the Kingdom of Bahrain."
+            )}
+          />
+
+          <div className="mt-14 grid md:grid-cols-3 gap-6">
+            {[
+              { ar: "الرئيس", en: "President", nameAr: "رئيس مجلس الإدارة", nameEn: "Board President" },
+              { ar: "نائب الرئيس", en: "Vice President", nameAr: "نائب رئيس المجلس", nameEn: "Vice President" },
+              { ar: "الأمين العام", en: "Secretary General", nameAr: "الأمين العام للجمعية", nameEn: "Secretary General" },
+            ].map((p, i) => (
+              <Reveal key={p.en}>
+                <a
+                  href="/board-of-directors"
+                  className="group relative block rounded-[2rem] overflow-hidden border border-border bg-card hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-500"
+                >
+                  <div className="relative h-72 overflow-hidden">
+                    <img
+                      src={img.board}
+                      alt={t(p.nameAr, p.nameEn)}
+                      loading="lazy"
+                      className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/25 to-transparent opacity-90" />
+                    <span className="absolute top-4 end-4 text-[11px] font-bold px-3 py-1 rounded-full bg-background/90 text-primary">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <div className="absolute bottom-0 p-6">
+                      <p className="text-xs font-bold text-primary-foreground/80 mb-1">{t(p.ar, p.en)}</p>
+                      <h3 className="text-xl font-bold text-primary-foreground leading-snug">{t(p.nameAr, p.nameEn)}</h3>
+                    </div>
+                  </div>
+                </a>
+              </Reveal>
+            ))}
+          </div>
+
+          <div className="mt-6 grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {[
+              { ar: "أمين الصندوق", en: "Treasurer" },
+              { ar: "عضو مجلس إدارة", en: "Board member" },
+              { ar: "عضو مجلس إدارة", en: "Board member" },
+              { ar: "عضو مجلس إدارة", en: "Board member" },
+            ].map((m, i) => (
+              <Reveal key={`${m.en}-${i}`}>
+                <a
+                  href="/board-of-directors"
+                  className="flex items-center gap-4 rounded-3xl border border-border bg-card p-4 hover:border-primary/50 hover:bg-muted/50 transition-colors h-full"
+                >
+                  <div className="w-12 h-12 rounded-2xl bg-primary/10 grid place-items-center shrink-0">
+                    <Users className="w-5 h-5 text-primary" />
+                  </div>
+                  <div className="min-w-0">
+                    <p className="text-sm font-bold truncate">{t(m.ar, m.en)}</p>
+                    <p className="text-[11px] text-muted-foreground">{t("مجلس إدارة الجمعية", "Society board")}</p>
+                  </div>
+                </a>
+              </Reveal>
+            ))}
+          </div>
+
+          <Reveal className="mt-10 text-center">
+            <MoreButton href="/board-of-directors" label={t("جميع أعضاء المجلس", "All board members")} />
+          </Reveal>
+        </div>
+      </section>
+
+      {/* 8 — Committees: chips over image */}
+      <section id="committees" className="relative py-20 md:py-28 overflow-hidden">
+        <img src={img.committees} alt="" aria-hidden="true" loading="lazy" className="absolute inset-0 w-full h-full object-cover" />
+        <div className="absolute inset-0 bg-primary/90" />
+        <div className="relative max-w-6xl mx-auto px-4 text-center">
+          <Reveal>
+            <span className="text-xs font-bold tracking-widest uppercase text-primary-foreground/70">{t("اللجان", "Committees")}</span>
+            <h2 className="text-3xl md:text-4xl font-bold text-primary-foreground mt-3 mb-4">
+              {t("لجان متخصصة في كل تخصص هندسي", "Specialised committees for every discipline")}
+            </h2>
+            <p className="text-primary-foreground/80 max-w-2xl mx-auto">
+              {t(
+                "تعمل لجان الجمعية على تطوير التخصصات الهندسية عبر الفعاليات وورش العمل والدراسات المهنية.",
+                "The Society's committees advance each engineering discipline through events, workshops and professional studies."
+              )}
+            </p>
+          </Reveal>
+          <div className="flex flex-wrap justify-center gap-3 mt-10">
+            {[
+              { ar: "الهندسة المدنية", en: "Civil" }, { ar: "الكهربائية", en: "Electrical" },
+              { ar: "الميكانيكية", en: "Mechanical" }, { ar: "الكيميائية", en: "Chemical" },
+              { ar: "المعمارية", en: "Architecture" }, { ar: "الشباب", en: "Young Engineers" },
+            ].map((c) => (
+              <span key={c.en} className="px-5 py-2 rounded-full border border-primary-foreground/30 text-primary-foreground text-sm backdrop-blur-sm hover:bg-primary-foreground hover:text-primary transition-colors">
+                {t(c.ar, c.en)}
+              </span>
+            ))}
+          </div>
+          <Reveal className="mt-10">
+            <MoreButton href="/committees" variant="secondary" label={t("جميع اللجان", "All committees")} />
+          </Reveal>
+        </div>
+      </section>
       {/* 5 — Membership CTA */}
       <section id="membership" className="py-20 md:py-28 bg-primary text-primary-foreground relative overflow-hidden">
         <img src={img.membership} alt="" aria-hidden="true" loading="lazy" className="absolute inset-0 w-full h-full object-cover opacity-15" />
@@ -415,7 +651,6 @@ const HomeSections = () => {
           </Reveal>
         </div>
       </section>
-
       {/* 6 — Contact with live map */}
       <section id="contact" className="py-20 md:py-28 bg-background">
         <div className="max-w-6xl mx-auto px-4">
@@ -477,98 +712,6 @@ const HomeSections = () => {
               </div>
             </Reveal>
           </div>
-        </div>
-      </section>
-
-      {/* 7 — Board of Directors: dark numbered roster */}
-      <section id="board" className="py-20 md:py-28 bg-foreground text-background">
-        <div className="max-w-6xl mx-auto px-4">
-          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
-            <Reveal className="max-w-3xl">
-              <span className="inline-block text-xs font-bold tracking-widest uppercase mb-3 text-background/60">
-                {t("مجلس الإدارة", "Board of Directors")}
-              </span>
-              <h2 className="text-3xl md:text-4xl font-bold mb-4 leading-tight">
-                {t("القيادة التي تقود الجمعية", "The leadership steering the Society")}
-              </h2>
-              <p className="text-base md:text-lg leading-relaxed text-background/70">
-                {t(
-                  "مجلس إدارة منتخب من الأعضاء يتولى رسم السياسات والإشراف على البرامج والخدمات المقدمة للمهندسين.",
-                  "An elected board that sets policy and oversees the programs and services delivered to engineers."
-                )}
-              </p>
-            </Reveal>
-            <Reveal>
-              <Button asChild variant="secondary" className="rounded-full">
-                <a href="/board-of-directors">{t("عرض المجلس", "View the board")}</a>
-              </Button>
-            </Reveal>
-          </div>
-
-          <div className="mt-12 divide-y divide-background/15 border-y border-background/15">
-            {[
-              { ar: "الرئيس", en: "President" },
-              { ar: "نائب الرئيس", en: "Vice President" },
-              { ar: "الأمين العام", en: "Secretary General" },
-              { ar: "أمين الصندوق", en: "Treasurer" },
-              { ar: "أعضاء المجلس", en: "Board members" },
-            ].map((p, i) => (
-              <Reveal key={p.en}>
-                <a
-                  href="/board-of-directors"
-                  className="group flex items-center gap-5 py-5 hover:bg-background/5 transition-colors px-2 -mx-2 rounded-2xl"
-                >
-                  <span className="text-sm font-mono text-background/40 w-8">{String(i + 1).padStart(2, "0")}</span>
-                  <img
-                    src={img.board}
-                    alt=""
-                    aria-hidden="true"
-                    loading="lazy"
-                    className="w-14 h-14 rounded-full object-cover ring-2 ring-background/20 grayscale group-hover:grayscale-0 transition-all duration-500"
-                  />
-                  <div className="min-w-0">
-                    <p className="text-lg font-bold">{t(p.ar, p.en)}</p>
-                    <p className="text-xs text-background/60">{t("مجلس إدارة الجمعية", "Society board")}</p>
-                  </div>
-                  <ArrowRight className="w-5 h-5 ms-auto text-background/40 opacity-0 group-hover:opacity-100 transition-opacity rtl:rotate-180" />
-                </a>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* 8 — Committees: chips over image */}
-      <section id="committees" className="relative py-20 md:py-28 overflow-hidden">
-        <img src={img.committees} alt="" aria-hidden="true" loading="lazy" className="absolute inset-0 w-full h-full object-cover" />
-        <div className="absolute inset-0 bg-primary/90" />
-        <div className="relative max-w-6xl mx-auto px-4 text-center">
-          <Reveal>
-            <span className="text-xs font-bold tracking-widest uppercase text-primary-foreground/70">{t("اللجان", "Committees")}</span>
-            <h2 className="text-3xl md:text-4xl font-bold text-primary-foreground mt-3 mb-4">
-              {t("لجان متخصصة في كل تخصص هندسي", "Specialised committees for every discipline")}
-            </h2>
-            <p className="text-primary-foreground/80 max-w-2xl mx-auto">
-              {t(
-                "تعمل لجان الجمعية على تطوير التخصصات الهندسية عبر الفعاليات وورش العمل والدراسات المهنية.",
-                "The Society's committees advance each engineering discipline through events, workshops and professional studies."
-              )}
-            </p>
-          </Reveal>
-          <div className="flex flex-wrap justify-center gap-3 mt-10">
-            {[
-              { ar: "الهندسة المدنية", en: "Civil" }, { ar: "الكهربائية", en: "Electrical" },
-              { ar: "الميكانيكية", en: "Mechanical" }, { ar: "الكيميائية", en: "Chemical" },
-              { ar: "المعمارية", en: "Architecture" }, { ar: "الشباب", en: "Young Engineers" },
-            ].map((c) => (
-              <span key={c.en} className="px-5 py-2 rounded-full border border-primary-foreground/30 text-primary-foreground text-sm backdrop-blur-sm hover:bg-primary-foreground hover:text-primary transition-colors">
-                {t(c.ar, c.en)}
-              </span>
-            ))}
-          </div>
-          <Reveal className="mt-10">
-            <MoreButton href="/committees" variant="secondary" label={t("جميع اللجان", "All committees")} />
-          </Reveal>
         </div>
       </section>
     </>

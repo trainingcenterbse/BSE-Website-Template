@@ -25,15 +25,10 @@ const MegaMenu = ({ open, onClose }: MegaMenuProps) => {
           className="relative overflow-hidden"
         >
           <div className="border-t border-border/60 px-5 sm:px-8 py-6 md:py-8">
-            <div className="grid grid-cols-1 lg:grid-cols-[1fr_18rem] gap-8">
-              {/* Affiliated sites — right side in Arabic, left in English */}
-              <aside
-                className={`lg:border-border/60 ${
-                  lang === "ar"
-                    ? "lg:order-last lg:border-s lg:ps-8"
-                    : "lg:order-first lg:border-e lg:pe-8"
-                }`}
-              >
+            <div className="grid grid-cols-1 lg:grid-cols-[18rem_1fr] gap-8">
+              {/* Affiliated sites — always on the start side: right in Arabic, left in English */}
+              <aside className="lg:border-e lg:border-border/60 lg:pe-8">
+
                 <h3 className="text-sm font-bold text-foreground mb-4">
                   {t("مواقع الجمعية المرتبطة", "Affiliated Websites")}
                 </h3>
