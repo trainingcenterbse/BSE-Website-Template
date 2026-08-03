@@ -30,7 +30,7 @@ const Footer = () => {
                     <motion.img 
                       src={bseLogo} 
                       alt={currentLang === 'ar' ? 'شعار جمعية المهندسين البحرينية' : 'Bahrain Society of Engineers Logo'}
-                      className="w-16 h-16 relative z-10"
+                      className="w-16 h-16 rounded-full relative z-10"
                       whileHover={{ scale: 1.1 }}
                     />
                     <div>
@@ -178,7 +178,7 @@ const Footer = () => {
                 <motion.img 
                   src={bseLogo} 
                   alt={currentLang === 'ar' ? 'شعار جمعية المهندسين البحرينية' : 'BSE Logo'}
-                  className="w-12 h-12 mx-auto mb-3"
+                  className="w-12 h-12 mx-auto mb-3 rounded-full"
                   whileHover={{ scale: 1.1 }}
                 />
                 <h3 className="text-lg font-bold text-white mb-1">

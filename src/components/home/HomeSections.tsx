@@ -107,7 +107,7 @@ const EventsSection = () => {
         <SectionHead
           center
           eyebrow={t("المؤتمرات والفعاليات", "Conferences & Events")}
-          title={t("أجندة الجمعية: فعاليات، مؤتمرات وبرامج", "The Society's agenda: events, conferences and programs")}
+          title={t(" فعاليات، مؤتمرات وبرامج", "The Society's agenda: events, conferences and programs")}
           desc={t(
             "اختر التصنيف الذي يهمك واستعرض أهم ما تنظّمه الجمعية على مدار العام من لقاءات مهنية ومؤتمرات دولية وبرامج متخصصة.",
             "Pick a category and explore what the Society organises through the year — professional gatherings, international conferences and specialised programs."
@@ -598,10 +598,9 @@ const HomeSections = () => {
         </div>
       </section>
 
-      {/* 8 — Committees: chips over image */}
-      <section id="committees" className="relative py-20 md:py-28 overflow-hidden">
-        <img src={img.committees} alt="" aria-hidden="true" loading="lazy" className="absolute inset-0 w-full h-full object-cover" />
-        <div className="absolute inset-0 bg-primary/90" />
+      {/* 8 — Committees: chips over gradient */}
+      <section id="committees" className="relative py-20 md:py-28 overflow-hidden bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900">
+        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PHBhdGggZD0iTTM2IDM0djZoLTJ2LTZoLTJ2LTZoMnYtNmgydjZoMnY2aC0yek0wIDM0djZoLTJ2LTZIMHYtNmgydi02aDJ2NmgydjZIMHptMzYgMHY2aC0ydjZoLTJ2LTZoLTJ2LTZoMnYtNmgydjZoMnY2aC0yeiIvPjwvZz48L2c+PC9zdmc+')] opacity-20" />
         <div className="relative max-w-6xl mx-auto px-4 text-center">
           <Reveal>
             <span className="text-xs font-bold tracking-widest uppercase text-primary-foreground/70">{t("اللجان", "Committees")}</span>
@@ -610,9 +609,9 @@ const HomeSections = () => {
             </h2>
             <p className="text-primary-foreground/80 max-w-2xl mx-auto">
               {t(
-                "تعمل لجان الجمعية على تطوير التخصصات الهندسية عبر الفعاليات وورش العمل والدراسات المهنية.",
-                "The Society's committees advance each engineering discipline through events, workshops and professional studies."
-              )}
+              "تعمل لجان الجمعية على تطوير التخصصات الهندسية عبر الفعاليات وورش العمل والدراسات المهنية.",
+              "The Society's committees advance each engineering discipline through events, workshops and professional studies."
+            )}
             </p>
           </Reveal>
           <div className="flex flex-wrap justify-center gap-3 mt-10">

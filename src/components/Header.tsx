@@ -282,7 +282,7 @@ const Header = () => {
                   <motion.img 
                     src={bseLogo} 
                     alt="BSE Logo" 
-                    className="w-10 h-10 sm:w-12 sm:h-12 lg:w-14 lg:h-14 relative z-10"
+                    className="w-10 h-10 sm:w-12 sm:h-12 lg:w-14 lg:h-14 rounded-full relative z-10"
                     whileHover={{ scale: 1.1 }}
                     transition={{ type: "spring", stiffness: 400, damping: 10 }}
                   />
