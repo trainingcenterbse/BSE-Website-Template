@@ -225,14 +225,16 @@ const Header = () => {
           {/* Main Header with Glassmorphism — morphs into the mega-menu surface */}
           <motion.div
             animate={{
-              borderRadius: isMegaOpen ? 28 : 9999,
-              maxWidth: isMegaOpen ? 1280 : 1152,
+              borderRadius: isMegaOpen ? 16 : 9999,
             }}
             transition={{
-              borderRadius: { type: "spring", stiffness: 160, damping: 24, mass: 0.9 },
-              maxWidth: { type: "spring", stiffness: 160, damping: 24, mass: 0.9, delay: isMegaOpen ? 0.15 : 0 }
+              borderRadius: {
+                duration: 0.2,
+                ease: [0.4, 0, 0.2, 1],
+                delay: isMegaOpen ? 0 : 0.28
+              }
             }}
-            className="mx-auto bg-white/95 dark:bg-blue-900/95 backdrop-blur-xl shadow-2xl border border-white/20 dark:border-blue-700/50 my-4 relative overflow-hidden"
+            className="w-full mx-auto bg-white/95 dark:bg-blue-900/95 backdrop-blur-xl shadow-2xl border border-white/20 dark:border-blue-700/50 my-4 relative overflow-hidden"
           >
 
             {/* Animated Gradient Border */}

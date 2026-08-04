@@ -1,14 +1,15 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-import { Users, Building, Award, TrendingUp, Calendar, Target, Shield, Globe, ArrowRight, ArrowLeft, MapPin, Phone, Mail, Clock, Rocket, Eye, Heart, Star, CheckCircle, BookOpen, FileText, Briefcase, Radio, Handshake, ChevronDown } from "lucide-react";
+import { Users, Building, Award, TrendingUp, Calendar, Target, Shield, Globe, ArrowRight, ArrowLeft, MapPin, Phone, Mail, Clock, Rocket, Eye, Heart, Star, BookOpen, FileText, Briefcase, Radio, Handshake, Lightbulb, Network, Leaf } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import FloatingSidebar, { SidebarSection } from "@/components/FloatingSidebar";
 import CoinLogo3D from "@/components/CoinLogo3D";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const AboutUs = () => {
-  const [currentLang, setCurrentLang] = useState('ar');
+  const { lang: currentLang } = useLanguage();
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
@@ -981,384 +982,134 @@ const AboutUs = () => {
         </div>
       </section>
 
-      {/* Modern Goals Section */}
-      <section id="goals" className="relative py-16 lg:py-24 bg-gradient-to-br from-slate-50 via-blue-50/20 to-slate-50/30 overflow-hidden">
-        {/* Modern Background */}
-        <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-gradient-to-br from-blue-900/5 via-transparent to-slate-900/5"></div>
-          <motion.div
-            animate={{ 
-              scale: [1, 1.1, 1],
-              opacity: [0.1, 0.2, 0.1],
-            }}
-            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute top-1/3 left-1/4 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl"
-          />
-          <motion.div
-            animate={{ 
-              scale: [1, 1.2, 1],
-              opacity: [0.1, 0.15, 0.1],
-            }}
-            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-            className="absolute bottom-1/3 right-1/4 w-72 h-72 bg-slate-500/10 rounded-full blur-3xl"
-          />
-        </div>
-        
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, ease: "easeOut" }}
-            className="text-center mb-12"
-          >
+      {/* Goals & Strategy — institutional blueprint */}
+      <section id="goals" className="relative py-20 lg:py-32 bg-background overflow-hidden">
+        <div className="absolute inset-x-0 top-0 h-px bg-border" />
+        <div className="absolute inset-y-0 start-1/2 w-px bg-border/40 hidden lg:block" />
+
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid lg:grid-cols-[0.82fr_1.18fr] gap-12 lg:gap-20 items-end mb-16 lg:mb-24">
             <motion.div
-              initial={{ scale: 0.8, opacity: 0 }}
-              whileInView={{ scale: 1, opacity: 1 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="inline-block"
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.4 }}
+              transition={{ duration: 0.7 }}
             >
-              <div className="bg-gradient-to-r from-blue-600 to-slate-700 text-white px-4 py-1.5 rounded-full text-xs font-semibold mb-3 shadow-lg">
-                {currentLang === 'ar' ? 'منصتنا الاستراتيجية' : 'Our Strategic Platform'}
+              <div className="flex items-center gap-3 text-primary font-bold text-sm mb-5">
+                <span className="w-10 h-px bg-primary" />
+                {currentLang === 'ar' ? 'الإطار الاستراتيجي' : 'Strategic framework'}
               </div>
-            </motion.div>
-            <h2 className="text-3xl lg:text-5xl font-bold bg-gradient-to-r from-blue-900 to-slate-800 bg-clip-text text-transparent mb-4">
-              {currentLang === 'ar' ? 'أهدافنا واستراتيجيتنا' : 'Our Goals & Strategy'}
-            </h2>
-            <motion.div
-              initial={{ width: 0 }}
-              whileInView={{ width: "120px" }}
-              transition={{ duration: 1.2, delay: 0.4 }}
-              className="h-1 bg-gradient-to-r from-blue-600 to-slate-600 mx-auto mb-4"
-            />
-            <p className="text-sm text-gray-600 max-w-2xl mx-auto">
-              {currentLang === 'ar'
-                ? 'منصة متكاملة تعرض أهدافنا ورؤيتنا المستقبلية بطريقة عصرية وتفاعلية'
-                : 'An integrated platform displaying our goals and future vision in a modern and interactive way'
-              }
-            </p>
-          </motion.div>
-
-          {/* Key Objectives - Top Section */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.6 }}
-            className="mb-16"
-          >
-            <div className="text-center mb-8">
-              <div className="inline-block bg-gradient-to-r from-green-600 to-emerald-700 text-white px-6 py-2 rounded-full text-sm font-bold shadow-lg">
-                {currentLang === 'ar' ? 'أهدافنا الرئيسية' : 'Our Key Objectives'}
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-              {keyObjectives.map((objective, index) => (
-                <motion.div
-                  key={`key-${index}`}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.6, delay: 0.8 + index * 0.2 }}
-                  whileHover={{ 
-                    scale: 1.02,
-                    y: -5,
-                    boxShadow: "0 20px 40px -15px rgba(34, 197, 94, 0.3)"
-                  }}
-                  className="relative bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-6 border border-green-200/50 cursor-pointer group overflow-hidden"
-                >
-                  {/* Success Indicator */}
-                  <div className="absolute top-4 right-4">
-                    <motion.div
-                      initial={{ scale: 0 }}
-                      whileInView={{ scale: 1 }}
-                      transition={{ duration: 0.5, delay: 1.0 + index * 0.2 }}
-                      whileHover={{ rotate: [0, -10, 10, 0] }}
-                      className="w-8 h-8 bg-gradient-to-br from-green-500 to-emerald-600 rounded-full flex items-center justify-center"
-                    >
-                      <CheckCircle className="w-4 h-4 text-white" />
-                    </motion.div>
-                  </div>
-                  
-                  <h3 className="text-lg font-bold text-gray-900 mb-3 pr-12">{objective.title}</h3>
-                  <p className="text-gray-600 text-sm leading-relaxed">{objective.description}</p>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
-
-          {/* Interactive Orbital Display */}
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 1.2 }}
-            className="relative mb-16"
-          >
-            {/* Central Hub */}
-            <div className="relative h-96 flex items-center justify-center">
-              {/* Central Circle */}
-              <motion.div
-                animate={{ rotate: 360 }}
-                transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-                className="absolute w-32 h-32 bg-gradient-to-br from-blue-600 to-slate-700 rounded-full shadow-2xl flex items-center justify-center z-20"
-              >
-                <div className="text-white text-center">
-                  <div className="text-2xl font-bold mb-1">
-                    {currentLang === 'ar' ? 'أهدافنا' : 'Our Goals'}
-                  </div>
-                  <div className="text-xs opacity-80">
-                    {currentLang === 'ar' ? 'مركز التميز' : 'Excellence Hub'}
-                  </div>
-                </div>
-              </motion.div>
-
-              {/* Orbiting Elements */}
-              <div className="absolute inset-0">
-                {/* Society Objectives Orbit */}
-                <motion.div
-                  animate={{ rotate: 360 }}
-                  transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
-                  className="absolute inset-0"
-                >
-                  {[
-                    { angle: 0, title: currentLang === 'ar' ? 'الصناعية' : 'Industrial' },
-                    { angle: 60, title: currentLang === 'ar' ? 'الهندسة' : 'Engineering' },
-                    { angle: 120, title: currentLang === 'ar' ? 'الحقوق' : 'Rights' },
-                    { angle: 180, title: currentLang === 'ar' ? 'الزمالة' : 'Fellowship' },
-                    { angle: 240, title: currentLang === 'ar' ? 'التعاون' : 'Cooperation' },
-                    { angle: 300, title: currentLang === 'ar' ? 'الأبحاث' : 'Research' }
-                  ].map((item, index) => (
-                    <motion.div
-                      key={`society-orbit-${index}`}
-                      className="absolute w-20 h-20"
-                      style={{
-                        top: '50%',
-                        left: '50%',
-                        transform: `rotate(${item.angle}deg) translateX(140px) rotate(-${item.angle}deg)`
-                      }}
-                    >
-                      <motion.div
-                        whileHover={{ scale: 1.2, boxShadow: "0 10px 30px -10px rgba(59, 130, 246, 0.5)" }}
-                        className="w-full h-full bg-gradient-to-br from-blue-500 to-blue-600 rounded-full shadow-lg flex items-center justify-center cursor-pointer"
-                      >
-                        <span className="text-white text-xs font-bold text-center px-1">
-                          {item.title}
-                        </span>
-                      </motion.div>
-                    </motion.div>
-                  ))}
-                </motion.div>
-
-                {/* Strategic Goals Orbit */}
-                <motion.div
-                  animate={{ rotate: -360 }}
-                  transition={{ duration: 50, repeat: Infinity, ease: "linear" }}
-                  className="absolute inset-0"
-                >
-                  {strategicGoals.map((goal, index) => (
-                    <motion.div
-                      key={`strategic-orbit-${index}`}
-                      className="absolute w-16 h-16"
-                      style={{
-                        top: '50%',
-                        left: '50%',
-                        transform: `rotate(${index * 72}deg) translateX(100px) rotate(-${index * 72}deg)`
-                      }}
-                    >
-                      <motion.div
-                        whileHover={{ scale: 1.3, boxShadow: "0 10px 30px -10px rgba(71, 85, 105, 0.5)" }}
-                        className="w-full h-full bg-gradient-to-br from-slate-600 to-slate-700 rounded-full shadow-lg flex items-center justify-center cursor-pointer"
-                      >
-                        <div className="text-white/80 transform scale-75">
-                          {goal.icon}
-                        </div>
-                      </motion.div>
-                    </motion.div>
-                  ))}
-                </motion.div>
-              </div>
-
-              {/* Glow Effects */}
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-64 h-64 bg-blue-500/10 rounded-full blur-3xl"></div>
-              </div>
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-80 h-80 bg-slate-500/10 rounded-full blur-3xl"></div>
-              </div>
-            </div>
-
-            {/* Legend */}
-            <div className="flex justify-center gap-8 mt-8">
-              <div className="flex items-center gap-2">
-                <div className="w-4 h-4 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full"></div>
-                <span className="text-sm text-gray-600">
-                  {currentLang === 'ar' ? 'أهداف الجمعية' : 'Society Objectives'}
-                </span>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-4 h-4 bg-gradient-to-br from-slate-600 to-slate-700 rounded-full"></div>
-                <span className="text-sm text-gray-600">
-                  {currentLang === 'ar' ? 'أهداف استراتيجية' : 'Strategic Goals'}
-                </span>
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Detailed Cards Section */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
-            
-            {/* Society Objectives - Accordion Style */}
-            <motion.div
-              initial={{ opacity: 0, x: -50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 1, delay: 1.4 }}
-              className="bg-white/80 backdrop-blur-md rounded-2xl shadow-2xl border border-slate-200/50 overflow-hidden"
-            >
-              <div className="bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-4">
-                <h3 className="text-white font-bold text-lg text-center">
-                  {currentLang === 'ar' ? 'أهداف الجمعية' : 'Society Objectives'}
-                </h3>
-              </div>
-
-              <div className="p-6 space-y-3">
-                {[
-                  {
-                    title: currentLang === 'ar' ? 'تطوير النهضة الصناعية' : 'Industrial Development',
-                    description: currentLang === 'ar'
-                      ? 'المساهمة في تطوير النهضة الصناعية و العمرانية في البحرين.'
-                      : 'Contribute to the development of industrial and urban renaissance in Bahrain.',
-                    color: 'from-blue-500 to-blue-600'
-                  },
-                  {
-                    title: currentLang === 'ar' ? 'تنظيم مهنة الهندسة' : 'Engineering Organization',
-                    description: currentLang === 'ar'
-                      ? 'المساهمة في تنظيم قواعد مهنة الهندسة و رفع مستواها بالتعاون مع الجهات الأخرى المختصة.'
-                      : 'Contribute to organizing the rules of the engineering profession and raising its level in cooperation with other concerned authorities.',
-                    color: 'from-purple-500 to-purple-600'
-                  },
-                  {
-                    title: currentLang === 'ar' ? 'الحقوق المهنية' : 'Professional Rights',
-                    description: currentLang === 'ar'
-                      ? 'التعبير عن المصالح و الحقوق المهنية لأعضائها.'
-                      : 'Express the professional interests and rights of its members.',
-                    color: 'from-cyan-500 to-cyan-600'
-                  },
-                  {
-                    title: currentLang === 'ar' ? 'روابط الود والزمالة' : 'Friendship and Fellowship',
-                    description: currentLang === 'ar'
-                      ? 'توثيق روابط الود و الزمالة بين أعضائها.'
-                      : 'Strengthen bonds of friendship and fellowship among its members.',
-                    color: 'from-green-500 to-green-600'
-                  },
-                  {
-                    title: currentLang === 'ar' ? 'التعاون العلمي' : 'Scientific Cooperation',
-                    description: currentLang === 'ar'
-                      ? 'العمل علي توطيد الصلات و توثيق التعاون العلمي و الفني بين المهندسين في البحرين وبينهم و بين زملائهم في الدول العربية وباقي دول العالم.'
-                      : 'Work to strengthen relations and enhance scientific and technical cooperation between engineers in Bahrain and their colleagues in Arab countries and other countries of the world.',
-                    color: 'from-orange-500 to-orange-600'
-                  },
-                  {
-                    title: currentLang === 'ar' ? 'الأبحاث الهندسية' : 'Engineering Research',
-                    description: currentLang === 'ar'
-                      ? 'القيام بالأبحاث الهندسية العلمية و العملية وتشجيعها عن طريق النشر والمسابقات والمؤتمرات والمحاضرات والزيارات العلمية.'
-                      : 'Conduct scientific and practical engineering research and encourage it through publication, competitions, conferences, lectures, and scientific visits.',
-                    color: 'from-pink-500 to-pink-600'
-                  }
-                ].map((item, index) => (
-                  <motion.div
-                    key={`society-accordion-${index}`}
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.5, delay: 1.6 + index * 0.1 }}
-                    whileHover={{ 
-                      scale: 1.02,
-                      boxShadow: "0 5px 20px -5px rgba(0, 0, 0, 0.1)"
-                    }}
-                    className="group cursor-pointer"
-                  >
-                    <div className={`bg-gradient-to-r ${item.color} p-0.5 rounded-lg`}>
-                      <div className="bg-white rounded-lg p-4">
-                        <div className="flex items-center justify-between">
-                          <h4 className="text-sm font-bold text-gray-900 group-hover:text-blue-600 transition-colors duration-300">
-                            {item.title}
-                          </h4>
-                          <motion.div
-                            animate={{ rotate: 0 }}
-                            whileHover={{ rotate: 180 }}
-                            transition={{ duration: 0.3 }}
-                            className="w-5 h-5 text-gray-400 group-hover:text-blue-600 transition-colors duration-300"
-                          >
-                            <ChevronDown className="w-full h-full" />
-                          </motion.div>
-                        </div>
-                        <motion.div
-                          initial={{ height: 0, opacity: 0 }}
-                          whileHover={{ height: "auto", opacity: 1 }}
-                          transition={{ duration: 0.3 }}
-                          className="overflow-hidden"
-                        >
-                          <p className="text-xs text-gray-600 leading-relaxed mt-2">
-                            {item.description}
-                          </p>
-                        </motion.div>
-                      </div>
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
+              <h2 className="text-4xl lg:text-6xl font-bold text-foreground leading-tight">
+                {currentLang === 'ar' ? 'أهدافنا واستراتيجيتنا' : 'Our Goals & Strategy'}
+              </h2>
             </motion.div>
 
-            {/* Strategic Goals - Grid Style */}
             <motion.div
-              initial={{ opacity: 0, x: 50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 1, delay: 1.6 }}
-              className="bg-white/80 backdrop-blur-md rounded-2xl shadow-2xl border border-slate-200/50 overflow-hidden"
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.4 }}
+              transition={{ duration: 0.7, delay: 0.12 }}
+              className="border-s-2 border-primary ps-6 lg:ps-8"
             >
-              <div className="bg-gradient-to-r from-slate-700 to-slate-800 px-6 py-4">
-                <h3 className="text-white font-bold text-lg text-center">
-                  {currentLang === 'ar' ? 'أهدافنا الاستراتيجية' : 'Our Strategic Goals'}
-                </h3>
-              </div>
-
-              <div className="p-6 grid grid-cols-2 gap-4">
-                {strategicGoals.map((goal, index) => (
-                  <motion.div
-                    key={`strategic-grid-${index}`}
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.5, delay: 1.8 + index * 0.1 }}
-                    whileHover={{ 
-                      scale: 1.05,
-                      boxShadow: "0 10px 30px -10px rgba(0, 0, 0, 0.2)"
-                    }}
-                    className="relative group cursor-pointer rounded-xl overflow-hidden border border-slate-200/50 hover:border-slate-400/50 transition-all duration-300"
-                  >
-                    <div className="h-20 w-full relative bg-gradient-to-br from-slate-600 to-blue-600">
-                      <div className="absolute inset-0 bg-black/20"></div>
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="text-white/30 transform scale-125">
-                          {goal.icon}
-                        </div>
-                      </div>
-                    </div>
-                    
-                    <div className="p-3 bg-white/90 backdrop-blur-sm">
-                      <p className="text-xs font-medium text-gray-900 leading-relaxed group-hover:text-slate-600 transition-colors duration-300">
-                        {goal.goal}
-                      </p>
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
+              <p className="text-lg lg:text-xl text-muted-foreground leading-9">
+                {currentLang === 'ar'
+                  ? 'نحو قطاع هندسي بحريني أكثر تأثيراً وتنافسية؛ نربط تطوير المهندس بخدمة المجتمع، ونحوّل المعرفة والشراكات إلى أثر مهني مستدام.'
+                  : 'Toward a more influential and competitive Bahraini engineering sector—connecting engineer development with community service and turning knowledge and partnerships into lasting professional impact.'}
+              </p>
             </motion.div>
           </div>
 
-          {/* Bottom Progress Indicator */}
-          <motion.div
-            initial={{ scaleX: 0 }}
-            whileInView={{ scaleX: 1 }}
-            transition={{ duration: 1.5, delay: 2.4 }}
-            className="mt-16 h-px bg-gradient-to-r from-transparent via-blue-600/50 to-transparent origin-center"
-          />
+          <div className="grid lg:grid-cols-[1fr_0.9fr] gap-8 lg:gap-12 items-start">
+            <div>
+              <div className="flex items-center justify-between gap-4 mb-7">
+                <h3 className="text-2xl font-bold text-foreground">
+                  {currentLang === 'ar' ? 'أهداف الجمعية' : 'Society Objectives'}
+                </h3>
+                <span className="text-xs font-bold text-muted-foreground tracking-widest">01 — 06</span>
+              </div>
+
+              <div className="border-t border-border">
+                {[
+                  { icon: Building, title: currentLang === 'ar' ? 'تطوير النهضة الصناعية والعمرانية' : 'Industrial & Urban Development', description: currentLang === 'ar' ? 'المساهمة في تطوير النهضة الصناعية والعمرانية في مملكة البحرين.' : 'Contribute to Bahrain’s industrial and urban development.' },
+                  { icon: Shield, title: currentLang === 'ar' ? 'تنظيم مهنة الهندسة' : 'Engineering Profession Standards', description: currentLang === 'ar' ? 'المساهمة في تنظيم قواعد مهنة الهندسة ورفع مستواها بالتعاون مع الجهات المختصة.' : 'Help organize and advance engineering standards with the relevant authorities.' },
+                  { icon: Handshake, title: currentLang === 'ar' ? 'حماية المصالح والحقوق المهنية' : 'Professional Interests & Rights', description: currentLang === 'ar' ? 'التعبير عن المصالح والحقوق المهنية لأعضاء الجمعية.' : 'Represent the professional interests and rights of society members.' },
+                  { icon: Users, title: currentLang === 'ar' ? 'تعزيز روابط الزمالة' : 'Professional Fellowship', description: currentLang === 'ar' ? 'توثيق روابط الود والزمالة بين أعضاء الجمعية.' : 'Strengthen friendship and fellowship among society members.' },
+                  { icon: Network, title: currentLang === 'ar' ? 'توسيع التعاون العلمي والفني' : 'Scientific & Technical Cooperation', description: currentLang === 'ar' ? 'توطيد التعاون بين مهندسي البحرين وزملائهم عربياً ودولياً.' : 'Build cooperation between Bahrain’s engineers and peers regionally and globally.' },
+                  { icon: Lightbulb, title: currentLang === 'ar' ? 'دعم الأبحاث الهندسية' : 'Engineering Research', description: currentLang === 'ar' ? 'إجراء وتشجيع الأبحاث عبر النشر والمسابقات والمؤتمرات والمحاضرات والزيارات العلمية.' : 'Conduct and encourage research through publishing, competitions, conferences, lectures and scientific visits.' }
+                ].map((item, index) => {
+                  const Icon = item.icon;
+                  return (
+                    <motion.article
+                      key={item.title}
+                      initial={{ opacity: 0, x: currentLang === 'ar' ? 18 : -18 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true, amount: 0.6 }}
+                      transition={{ duration: 0.5, delay: index * 0.06 }}
+                      className="group grid grid-cols-[2.5rem_1fr_auto] gap-4 items-start py-6 border-b border-border"
+                    >
+                      <div className="w-10 h-10 flex items-center justify-center bg-secondary text-primary rounded-md group-hover:bg-primary group-hover:text-primary-foreground transition-colors duration-300">
+                        <Icon className="w-5 h-5" />
+                      </div>
+                      <div>
+                        <h4 className="font-bold text-foreground mb-2">{item.title}</h4>
+                        <p className="text-sm text-muted-foreground leading-7">{item.description}</p>
+                      </div>
+                      <span className="text-xs font-bold text-muted-foreground">{String(index + 1).padStart(2, '0')}</span>
+                    </motion.article>
+                  );
+                })}
+              </div>
+            </div>
+
+            <motion.aside
+              initial={{ opacity: 0, y: 32 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.7 }}
+              className="bg-primary text-primary-foreground p-7 lg:p-10 rounded-md lg:sticky lg:top-32"
+            >
+              <div className="flex items-center justify-between gap-4 pb-7 mb-2 border-b border-primary-foreground/20">
+                <div>
+                  <span className="block text-primary-foreground/70 text-xs font-bold mb-2">
+                    {currentLang === 'ar' ? 'أولويات العمل' : 'Action priorities'}
+                  </span>
+                  <h3 className="text-2xl font-bold">
+                    {currentLang === 'ar' ? 'المسارات الاستراتيجية' : 'Strategic Pathways'}
+                  </h3>
+                </div>
+                <Target className="w-9 h-9 text-primary-foreground/60" />
+              </div>
+
+              <div className="divide-y divide-primary-foreground/20">
+                {strategicGoals.map((goal, index) => (
+                  <motion.div
+                    key={`strategy-${index}`}
+                    initial={{ opacity: 0, y: 12 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.45, delay: 0.12 + index * 0.08 }}
+                    className="grid grid-cols-[auto_1fr] gap-4 py-6"
+                  >
+                    <span className="text-sm font-bold text-primary-foreground/50">0{index + 1}</span>
+                    <p className="text-sm lg:text-base leading-7">{goal.goal}</p>
+                  </motion.div>
+                ))}
+              </div>
+
+              <div className="grid grid-cols-2 gap-3 pt-7 border-t border-primary-foreground/20">
+                {keyObjectives.map((objective, index) => {
+                  const icons = [Rocket, Handshake, Lightbulb, Leaf];
+                  const Icon = icons[index] || Target;
+                  return (
+                    <div key={objective.title} className="flex items-center gap-2 text-xs font-bold text-primary-foreground/80">
+                      <Icon className="w-4 h-4 shrink-0" />
+                      <span>{objective.title}</span>
+                    </div>
+                  );
+                })}
+              </div>
+            </motion.aside>
+          </div>
         </div>
       </section>
 

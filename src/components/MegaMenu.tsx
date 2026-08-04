@@ -21,7 +21,10 @@ const MegaMenu = ({ open, onClose }: MegaMenuProps) => {
           initial={{ height: 0, opacity: 0 }}
           animate={{ height: "auto", opacity: 1 }}
           exit={{ height: 0, opacity: 0 }}
-          transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+          transition={{
+            height: { duration: open ? 0.48 : 0.3, delay: open ? 0.2 : 0, ease: [0.22, 1, 0.36, 1] },
+            opacity: { duration: open ? 0.3 : 0.18, delay: open ? 0.28 : 0 }
+          }}
           className="relative overflow-hidden"
         >
           <div className="border-t border-border/60 px-5 sm:px-8 py-6 md:py-8">
