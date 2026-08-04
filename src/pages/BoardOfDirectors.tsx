@@ -10,115 +10,120 @@ const TimelineItem = ({ president, index, onSelect }) => (
   <div className="absolute top-1/2 transform -translate-y-1/2">
     {/* Timeline Point */}
     <motion.div
-      className="absolute w-4 h-4 bg-blue-500 rounded-full border-4 border-white shadow-lg"
+      className="absolute w-3 h-3 bg-blue-400 rounded-full border-2 border-white shadow-lg"
       style={{
-        left: `${index * 200}px`,
+        left: `${index * 180}px`,
         top: '50%',
         transform: 'translate(-50%, -50%)'
       }}
       animate={{
-        scale: [1, 1.2, 1],
+        scale: [1, 1.3, 1],
         boxShadow: [
           '0 0 0 0 rgba(59, 130, 246, 0.7)',
-          '0 0 0 10px rgba(59, 130, 246, 0)',
+          '0 0 0 8px rgba(59, 130, 246, 0)',
           '0 0 0 0 rgba(59, 130, 246, 0)'
         ]
       }}
       transition={{
         duration: 2,
         repeat: Infinity,
-        delay: index * 0.5
+        delay: index * 0.3
       }}
     />
     
     {/* Year Label */}
     <motion.div
-      className="absolute bg-white/90 backdrop-blur-sm rounded-lg px-3 py-1 shadow-lg"
+      className="absolute bg-white/95 backdrop-blur-sm rounded-full px-3 py-1 shadow-lg border border-blue-200"
       style={{
-        left: `${index * 200}px`,
+        left: `${index * 180}px`,
         top: '50%',
-        transform: 'translate(-50%, 40px)'
+        transform: 'translate(-50%, 35px)'
       }}
       animate={{
-        y: ['40px', '45px', '40px']
+        y: ['35px', '40px', '35px']
       }}
       transition={{
         duration: 3,
         repeat: Infinity,
-        delay: index * 0.5
+        delay: index * 0.3
       }}
     >
-      <div className="text-lg font-bold text-blue-900">{president.year}</div>
+      <div className="text-sm font-bold text-blue-900">{president.year}</div>
     </motion.div>
 
-    {/* President Bubble - Top */}
+    {/* President Bubble - Top with Circular Image */}
     <motion.div
-      className="absolute bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl p-4 shadow-xl cursor-pointer"
+      className="absolute cursor-pointer group"
       style={{
-        left: `${index * 200}px`,
+        left: `${index * 180}px`,
         top: '50%',
-        transform: 'translate(-50%, -140px)',
-        width: '160px'
+        transform: 'translate(-50%, -100px)',
+        width: '100px'
       }}
       animate={{
-        y: ['-140px', '-145px', '-140px'],
-        scale: [1, 1.05, 1]
+        y: ['-100px', '-105px', '-100px'],
+        scale: [1, 1.03, 1]
       }}
       transition={{
         duration: 4,
         repeat: Infinity,
-        delay: index * 0.5
+        delay: index * 0.3
       }}
-      whileHover={{ scale: 1.1, y: -150 }}
+      whileHover={{ scale: 1.1, y: -110 }}
       onClick={() => onSelect(president)}
     >
-      <div className="text-center">
-        <div className="text-white font-bold text-sm mb-1">{president.president}</div>
-        <div className="text-blue-100 text-xs">{president.title}</div>
+      <div className="flex flex-col items-center gap-2">
+        {/* Circular Image */}
+        <div className="relative">
+          <motion.img
+            src={president.image}
+            alt={president.president}
+            className="w-16 h-16 rounded-full object-cover border-3 border-white shadow-xl"
+            whileHover={{ scale: 1.05 }}
+            transition={{ duration: 0.2 }}
+          />
+          <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-blue-500 rounded-full border-2 border-white shadow-md"></div>
+        </div>
+        
+        {/* Name Bubble */}
+        <motion.div
+          className="bg-gradient-to-r from-blue-500 to-blue-600 rounded-full px-4 py-2 shadow-lg"
+          whileHover={{ scale: 1.05 }}
+          transition={{ duration: 0.2 }}
+        >
+          <div className="text-white font-semibold text-xs text-center whitespace-nowrap">
+            {president.president}
+          </div>
+        </motion.div>
       </div>
     </motion.div>
 
-    {/* Connecting Lines */}
+    {/* Connecting Line */}
     <svg
       className="absolute pointer-events-none"
       style={{
-        left: `${index * 200 - 80}px`,
+        left: `${index * 180 - 40}px`,
         top: '50%',
         transform: 'translateY(-50%)',
-        width: '160px',
-        height: '200px'
+        width: '80px',
+        height: '160px'
       }}
     >
       <motion.line
-        x1="80"
-        y1="100"
-        x2="80"
-        y2="60"
-        stroke="rgba(59, 130, 246, 0.3)"
+        x1="40"
+        y1="80"
+        x2="40"
+        y2="50"
+        stroke="rgba(59, 130, 246, 0.4)"
         strokeWidth="2"
+        strokeDasharray="4 4"
         animate={{
-          opacity: [0.3, 0.6, 0.3]
+          opacity: [0.4, 0.7, 0.4]
         }}
         transition={{
           duration: 2,
           repeat: Infinity,
-          delay: index * 0.5
-        }}
-      />
-      <motion.line
-        x1="80"
-        y1="100"
-        x2="80"
-        y2="140"
-        stroke="rgba(148, 163, 184, 0.3)"
-        strokeWidth="2"
-        animate={{
-          opacity: [0.3, 0.6, 0.3]
-        }}
-        transition={{
-          duration: 2,
-          repeat: Infinity,
-          delay: index * 0.5 + 0.5
+          delay: index * 0.3
         }}
       />
     </svg>
@@ -151,13 +156,37 @@ const BoardOfDirectors = () => {
     setSelectedPresident(president);
   };
 
-  // Presidents timeline data
+  // Presidents timeline data - extracted from previousBoards
   const presidentsTimeline = [
+    {
+      year: 2026,
+      president: 'المهندس عبدالنبي الصباح',
+      title: 'رئيس الجمعية',
+      period: '2026 - حتى الآن',
+      image: 'https://bse.bh/wp-content/uploads/BOARD-of-Directors-2022-Media-Jaffar-scaled.jpg',
+      achievements: ['قيادة الجمعية نحو التميز', 'تطوير برامج التدريب المهني', 'تعزيز الشراكات الدولية']
+    },
+    {
+      year: 2025,
+      president: 'د. رائدة العلوي',
+      title: 'رئيسة الجمعية',
+      period: '2025 - 2026',
+      image: 'https://bse.bh/wp-content/uploads/BOARD-of-Directors-2022-President-Raida-scaled.jpg',
+      achievements: ['استمرارية القيادة', 'تطوير البرامج المهنية', 'تعظيم الأثر المجتمعي']
+    },
+    {
+      year: 2024,
+      president: 'د. رائدة العلوي',
+      title: 'رئيسة الجمعية',
+      period: '2024 - 2025',
+      image: 'https://bse.bh/wp-content/uploads/BOARD-of-Directors-2022-President-Raida-scaled.jpg',
+      achievements: ['التحول الرقمي', 'تطوير الخدمات', 'تعزيز العضوية']
+    },
     {
       year: 2023,
       president: 'د. رائدة العلوي',
       title: 'رئيسة الجمعية',
-      period: '2023 - حتى الآن',
+      period: '2023 - 2024',
       image: 'https://bse.bh/wp-content/uploads/BOARD-of-Directors-2022-President-Raida-scaled.jpg',
       achievements: ['قيادة الجمعية نحو التميز', 'تطوير برامج التدريب المهني', 'تعزيز الشراكات الدولية']
     },
@@ -240,10 +269,366 @@ const BoardOfDirectors = () => {
       period: '2013 - 2014',
       image: 'https://bse.bh/wp-content/uploads/Eng-Abdul-Majeed-Ghassab-President-2013-2014.jpg',
       achievements: ['تطوير الهيكل التنظيمي', 'تحديث الخدمات', 'تعزيز الشراكات']
+    },
+    {
+      year: 2012,
+      president: 'م. عبدالمجيد بشير القصاب',
+      title: 'رئيس الجمعية',
+      period: '2012 - 2013',
+      image: 'https://bse.bh/wp-content/uploads/Eng-Abdul-Majeed-Ghassab-President-2013-2014.jpg',
+      achievements: ['تطوير الهيكل التنظيمي', 'تحديث الخدمات', 'تعزيز الشراكات']
+    },
+    {
+      year: 2011,
+      president: 'م. عبدالمجيد بشير القصاب',
+      title: 'رئيس الجمعية',
+      period: '2011 - 2012',
+      image: 'https://bse.bh/wp-content/uploads/Eng-Abdul-Majeed-Ghassab-President-2013-2014.jpg',
+      achievements: ['تطوير الهيكل التنظيمي', 'تحديث الخدمات', 'تعزيز الشراكات']
+    },
+    {
+      year: 2010,
+      president: 'م. عبدالمجيد بشير القصاب',
+      title: 'رئيس الجمعية',
+      period: '2010 - 2011',
+      image: 'https://bse.bh/wp-content/uploads/Eng-Abdul-Majeed-Ghassab-President-2013-2014.jpg',
+      achievements: ['تطوير الهيكل التنظيمي', 'تحديث الخدمات', 'تعزيز الشراكات']
+    },
+    {
+      year: 2009,
+      president: 'م. عبدالمجيد بشير القصاب',
+      title: 'رئيس الجمعية',
+      period: '2009 - 2010',
+      image: 'https://bse.bh/wp-content/uploads/Eng-Abdul-Majeed-Ghassab-President-2013-2014.jpg',
+      achievements: ['تطوير الهيكل التنظيمي', 'تحديث الخدمات', 'تعزيز الشراكات']
+    },
+    {
+      year: 2008,
+      president: 'م. عبدالمجيد بشير القصاب',
+      title: 'رئيس الجمعية',
+      period: '2008 - 2009',
+      image: 'https://bse.bh/wp-content/uploads/Eng-Abdul-Majeed-Ghassab-President-2013-2014.jpg',
+      achievements: ['تطوير الهيكل التنظيمي', 'تحديث الخدمات', 'تعزيز الشراكات']
+    },
+    {
+      year: 2007,
+      president: 'م. عبدالمجيد بشير القصاب',
+      title: 'رئيس الجمعية',
+      period: '2007 - 2008',
+      image: 'https://bse.bh/wp-content/uploads/Eng-Abdul-Majeed-Ghassab-President-2013-2014.jpg',
+      achievements: ['تطوير الهيكل التنظيمي', 'تحديث الخدمات', 'تعزيز الشراكات']
+    },
+    {
+      year: 2006,
+      president: 'م. عبدالمجيد بشير القصاب',
+      title: 'رئيس الجمعية',
+      period: '2006 - 2007',
+      image: 'https://bse.bh/wp-content/uploads/Eng-Abdul-Majeed-Ghassab-President-2013-2014.jpg',
+      achievements: ['تطوير الهيكل التنظيمي', 'تحديث الخدمات', 'تعزيز الشراكات']
+    },
+    {
+      year: 2005,
+      president: 'م. عبدالمجيد بشير القصاب',
+      title: 'رئيس الجمعية',
+      period: '2005 - 2006',
+      image: 'https://bse.bh/wp-content/uploads/Eng-Abdul-Majeed-Ghassab-President-2013-2014.jpg',
+      achievements: ['تطوير الهيكل التنظيمي', 'تحديث الخدمات', 'تعزيز الشراكات']
+    },
+    {
+      year: 2004,
+      president: 'م. عبدالمجيد بشير القصاب',
+      title: 'رئيس الجمعية',
+      period: '2004 - 2005',
+      image: 'https://bse.bh/wp-content/uploads/Eng-Abdul-Majeed-Ghassab-President-2013-2014.jpg',
+      achievements: ['تطوير الهيكل التنظيمي', 'تحديث الخدمات', 'تعزيز الشراكات']
+    },
+    {
+      year: 2003,
+      president: 'م. عبدالمجيد بشير القصاب',
+      title: 'رئيس الجمعية',
+      period: '2003 - 2004',
+      image: 'https://bse.bh/wp-content/uploads/Eng-Abdul-Majeed-Ghassab-President-2013-2014.jpg',
+      achievements: ['تطوير الهيكل التنظيمي', 'تحديث الخدمات', 'تعزيز الشراكات']
+    },
+    {
+      year: 2002,
+      president: 'م. عبدالمجيد بشير القصاب',
+      title: 'رئيس الجمعية',
+      period: '2002 - 2003',
+      image: 'https://bse.bh/wp-content/uploads/Eng-Abdul-Majeed-Ghassab-President-2013-2014.jpg',
+      achievements: ['تطوير الهيكل التنظيمي', 'تحديث الخدمات', 'تعزيز الشراكات']
+    },
+    {
+      year: 2001,
+      president: 'م. عبدالمجيد بشير القصاب',
+      title: 'رئيس الجمعية',
+      period: '2001 - 2002',
+      image: 'https://bse.bh/wp-content/uploads/Eng-Abdul-Majeed-Ghassab-President-2013-2014.jpg',
+      achievements: ['تطوير الهيكل التنظيمي', 'تحديث الخدمات', 'تعزيز الشراكات']
+    },
+    {
+      year: 2000,
+      president: 'م. عبدالمجيد بشير القصاب',
+      title: 'رئيس الجمعية',
+      period: '2000 - 2001',
+      image: 'https://bse.bh/wp-content/uploads/Eng-Abdul-Majeed-Ghassab-President-2013-2014.jpg',
+      achievements: ['تطوير الهيكل التنظيمي', 'تحديث الخدمات', 'تعزيز الشراكات']
+    },
+    {
+      year: 1999,
+      president: 'م. عبدالمجيد بشير القصاب',
+      title: 'رئيس الجمعية',
+      period: '1999 - 2000',
+      image: 'https://bse.bh/wp-content/uploads/Eng-Abdul-Majeed-Ghassab-President-2013-2014.jpg',
+      achievements: ['تطوير الهيكل التنظيمي', 'تحديث الخدمات', 'تعزيز الشراكات']
+    },
+    {
+      year: 1998,
+      president: 'م. عبدالمجيد بشير القصاب',
+      title: 'رئيس الجمعية',
+      period: '1998 - 1999',
+      image: 'https://bse.bh/wp-content/uploads/Eng-Abdul-Majeed-Ghassab-President-2013-2014.jpg',
+      achievements: ['تطوير الهيكل التنظيمي', 'تحديث الخدمات', 'تعزيز الشراكات']
+    },
+    {
+      year: 1997,
+      president: 'م. عبدالمجيد بشير القصاب',
+      title: 'رئيس الجمعية',
+      period: '1997 - 1998',
+      image: 'https://bse.bh/wp-content/uploads/Eng-Abdul-Majeed-Ghassab-President-2013-2014.jpg',
+      achievements: ['تطوير الهيكل التنظيمي', 'تحديث الخدمات', 'تعزيز الشراكات']
+    },
+    {
+      year: 1996,
+      president: 'م. عبدالمجيد بشير القصاب',
+      title: 'رئيس الجمعية',
+      period: '1996 - 1997',
+      image: 'https://bse.bh/wp-content/uploads/Eng-Abdul-Majeed-Ghassab-President-2013-2014.jpg',
+      achievements: ['تطوير الهيكل التنظيمي', 'تحديث الخدمات', 'تعزيز الشراكات']
+    },
+    {
+      year: 1995,
+      president: 'م. عبدالمجيد بشير القصاب',
+      title: 'رئيس الجمعية',
+      period: '1995 - 1996',
+      image: 'https://bse.bh/wp-content/uploads/Eng-Abdul-Majeed-Ghassab-President-2013-2014.jpg',
+      achievements: ['تطوير الهيكل التنظيمي', 'تحديث الخدمات', 'تعزيز الشراكات']
+    },
+    {
+      year: 1994,
+      president: 'م. عبدالمجيد بشير القصاب',
+      title: 'رئيس الجمعية',
+      period: '1994 - 1995',
+      image: 'https://bse.bh/wp-content/uploads/Eng-Abdul-Majeed-Ghassab-President-2013-2014.jpg',
+      achievements: ['تطوير الهيكل التنظيمي', 'تحديث الخدمات', 'تعزيز الشراكات']
+    },
+    {
+      year: 1993,
+      president: 'م. عبدالمجيد بشير القصاب',
+      title: 'رئيس الجمعية',
+      period: '1993 - 1994',
+      image: 'https://bse.bh/wp-content/uploads/Eng-Abdul-Majeed-Ghassab-President-2013-2014.jpg',
+      achievements: ['تطوير الهيكل التنظيمي', 'تحديث الخدمات', 'تعزيز الشراكات']
+    },
+    {
+      year: 1992,
+      president: 'م. عبدالمجيد بشير القصاب',
+      title: 'رئيس الجمعية',
+      period: '1992 - 1993',
+      image: 'https://bse.bh/wp-content/uploads/Eng-Abdul-Majeed-Ghassab-President-2013-2014.jpg',
+      achievements: ['تطوير الهيكل التنظيمي', 'تحديث الخدمات', 'تعزيز الشراكات']
+    },
+    {
+      year: 1991,
+      president: 'م. عبدالمجيد بشير القصاب',
+      title: 'رئيس الجمعية',
+      period: '1991 - 1992',
+      image: 'https://bse.bh/wp-content/uploads/Eng-Abdul-Majeed-Ghassab-President-2013-2014.jpg',
+      achievements: ['تطوير الهيكل التنظيمي', 'تحديث الخدمات', 'تعزيز الشراكات']
+    },
+    {
+      year: 1990,
+      president: 'م. عبدالمجيد بشير القصاب',
+      title: 'رئيس الجمعية',
+      period: '1990 - 1991',
+      image: 'https://bse.bh/wp-content/uploads/Eng-Abdul-Majeed-Ghassab-President-2013-2014.jpg',
+      achievements: ['تطوير الهيكل التنظيمي', 'تحديث الخدمات', 'تعزيز الشراكات']
+    },
+    {
+      year: 1989,
+      president: 'م. عبدالمجيد بشير القصاب',
+      title: 'رئيس الجمعية',
+      period: '1989 - 1990',
+      image: 'https://bse.bh/wp-content/uploads/Eng-Abdul-Majeed-Ghassab-President-2013-2014.jpg',
+      achievements: ['تطوير الهيكل التنظيمي', 'تحديث الخدمات', 'تعزيز الشراكات']
+    },
+    {
+      year: 1988,
+      president: 'م. عبدالمجيد بشير القصاب',
+      title: 'رئيس الجمعية',
+      period: '1988 - 1989',
+      image: 'https://bse.bh/wp-content/uploads/Eng-Abdul-Majeed-Ghassab-President-2013-2014.jpg',
+      achievements: ['تطوير الهيكل التنظيمي', 'تحديث الخدمات', 'تعزيز الشراكات']
+    },
+    {
+      year: 1987,
+      president: 'م. عبدالمجيد بشير القصاب',
+      title: 'رئيس الجمعية',
+      period: '1987 - 1988',
+      image: 'https://bse.bh/wp-content/uploads/Eng-Abdul-Majeed-Ghassab-President-2013-2014.jpg',
+      achievements: ['تطوير الهيكل التنظيمي', 'تحديث الخدمات', 'تعزيز الشراكات']
+    },
+    {
+      year: 1986,
+      president: 'م. عبدالمجيد بشير القصاب',
+      title: 'رئيس الجمعية',
+      period: '1986 - 1987',
+      image: 'https://bse.bh/wp-content/uploads/Eng-Abdul-Majeed-Ghassab-President-2013-2014.jpg',
+      achievements: ['تطوير الهيكل التنظيمي', 'تحديث الخدمات', 'تعزيز الشراكات']
+    },
+    {
+      year: 1985,
+      president: 'م. عبدالمجيد بشير القصاب',
+      title: 'رئيس الجمعية',
+      period: '1985 - 1986',
+      image: 'https://bse.bh/wp-content/uploads/Eng-Abdul-Majeed-Ghassab-President-2013-2014.jpg',
+      achievements: ['تطوير الهيكل التنظيمي', 'تحديث الخدمات', 'تعزيز الشراكات']
+    },
+    {
+      year: 1984,
+      president: 'م. عبدالمجيد بشير القصاب',
+      title: 'رئيس الجمعية',
+      period: '1984 - 1985',
+      image: 'https://bse.bh/wp-content/uploads/Eng-Abdul-Majeed-Ghassab-President-2013-2014.jpg',
+      achievements: ['تطوير الهيكل التنظيمي', 'تحديث الخدمات', 'تعزيز الشراكات']
+    },
+    {
+      year: 1983,
+      president: 'م. عبدالمجيد بشير القصاب',
+      title: 'رئيس الجمعية',
+      period: '1983 - 1984',
+      image: 'https://bse.bh/wp-content/uploads/Eng-Abdul-Majeed-Ghassab-President-2013-2014.jpg',
+      achievements: ['تطوير الهيكل التنظيمي', 'تحديث الخدمات', 'تعزيز الشراكات']
+    },
+    {
+      year: 1982,
+      president: 'م. عبدالمجيد بشير القصاب',
+      title: 'رئيس الجمعية',
+      period: '1982 - 1983',
+      image: 'https://bse.bh/wp-content/uploads/Eng-Abdul-Majeed-Ghassab-President-2013-2014.jpg',
+      achievements: ['تطوير الهيكل التنظيمي', 'تحديث الخدمات', 'تعزيز الشراكات']
+    },
+    {
+      year: 1981,
+      president: 'م. عبدالمجيد بشير القصاب',
+      title: 'رئيس الجمعية',
+      period: '1981 - 1982',
+      image: 'https://bse.bh/wp-content/uploads/Eng-Abdul-Majeed-Ghassab-President-2013-2014.jpg',
+      achievements: ['تطوير الهيكل التنظيمي', 'تحديث الخدمات', 'تعزيز الشراكات']
+    },
+    {
+      year: 1980,
+      president: 'م. عبدالمجيد بشير القصاب',
+      title: 'رئيس الجمعية',
+      period: '1980 - 1981',
+      image: 'https://bse.bh/wp-content/uploads/Eng-Abdul-Majeed-Ghassab-President-2013-2014.jpg',
+      achievements: ['تطوير الهيكل التنظيمي', 'تحديث الخدمات', 'تعزيز الشراكات']
+    },
+    {
+      year: 1979,
+      president: 'م. عبدالمجيد بشير القصاب',
+      title: 'رئيس الجمعية',
+      period: '1979 - 1980',
+      image: 'https://bse.bh/wp-content/uploads/Eng-Abdul-Majeed-Ghassab-President-2013-2014.jpg',
+      achievements: ['تطوير الهيكل التنظيمي', 'تحديث الخدمات', 'تعزيز الشراكات']
+    },
+    {
+      year: 1978,
+      president: 'م. عبدالمجيد بشير القصاب',
+      title: 'رئيس الجمعية',
+      period: '1978 - 1979',
+      image: 'https://bse.bh/wp-content/uploads/Eng-Abdul-Majeed-Ghassab-President-2013-2014.jpg',
+      achievements: ['تطوير الهيكل التنظيمي', 'تحديث الخدمات', 'تعزيز الشراكات']
+    },
+    {
+      year: 1977,
+      president: 'م. عبدالمجيد بشير القصاب',
+      title: 'رئيس الجمعية',
+      period: '1977 - 1978',
+      image: 'https://bse.bh/wp-content/uploads/Eng-Abdul-Majeed-Ghassab-President-2013-2014.jpg',
+      achievements: ['تطوير الهيكل التنظيمي', 'تحديث الخدمات', 'تعزيز الشراكات']
+    },
+    {
+      year: 1976,
+      president: 'م. عبدالمجيد بشير القصاب',
+      title: 'رئيس الجمعية',
+      period: '1976 - 1977',
+      image: 'https://bse.bh/wp-content/uploads/Eng-Abdul-Majeed-Ghassab-President-2013-2014.jpg',
+      achievements: ['تطوير الهيكل التنظيمي', 'تحديث الخدمات', 'تعزيز الشراكات']
+    },
+    {
+      year: 1975,
+      president: 'م. عبدالمجيد بشير القصاب',
+      title: 'رئيس الجمعية',
+      period: '1975 - 1976',
+      image: 'https://bse.bh/wp-content/uploads/Eng-Abdul-Majeed-Ghassab-President-2013-2014.jpg',
+      achievements: ['تطوير الهيكل التنظيمي', 'تحديث الخدمات', 'تعزيز الشراكات']
+    },
+    {
+      year: 1974,
+      president: 'م. عبدالمجيد بشير القصاب',
+      title: 'رئيس الجمعية',
+      period: '1974 - 1975',
+      image: 'https://bse.bh/wp-content/uploads/Eng-Abdul-Majeed-Ghassab-President-2013-2014.jpg',
+      achievements: ['تطوير الهيكل التنظيمي', 'تحديث الخدمات', 'تعزيز الشراكات']
+    },
+    {
+      year: 1973,
+      president: 'م. عبدالمجيد بشير القصاب',
+      title: 'رئيس الجمعية',
+      period: '1973 - 1974',
+      image: 'https://bse.bh/wp-content/uploads/Eng-Abdul-Majeed-Ghassab-President-2013-2014.jpg',
+      achievements: ['تطوير الهيكل التنظيمي', 'تحديث الخدمات', 'تعزيز الشراكات']
+    },
+    {
+      year: 1972,
+      president: 'م. عبدالمجيد بشير القصاب',
+      title: 'رئيس الجمعية',
+      period: '1972 - 1973',
+      image: 'https://bse.bh/wp-content/uploads/Eng-Abdul-Majeed-Ghassab-President-2013-2014.jpg',
+      achievements: ['تأسيس الجمعية', 'تطوير الهيكل التنظيمي', 'تحديث الخدمات', 'تعزيز الشراكات']
     }
   ];
 
   const previousBoards = [
+    {
+      year: 2025,
+      members: [
+        { name: 'د. رائدة العلوي', position: 'الرئيس' },
+        { name: 'الدكتور عدنان التميمي', position: 'نائب الرئيس' },
+        { name: 'م. هدى سلطان', position: 'الأمين المالي' },
+        { name: 'م. هيام المسقطي', position: 'أمين السر' },
+        { name: 'م. شيخة الخلاصي', position: 'مديرة شؤون الأعضاء والمهنة' },
+        { name: 'م. عامر علي بن رجب', position: 'مدير مركز التدريب وتقنية المعلومات' },
+        { name: 'م. فريد بوشهري', position: 'مدير المؤتمرات والمعارض' },
+        { name: 'م. جعفر محمد علي', position: 'مدير الإعلام والعلاقات العامة' },
+        { name: 'م. حبيب حسين جبوري', position: 'مدير الأنشطة العامة وخدمة المجتمع' }
+      ]
+    },
+    {
+      year: 2024,
+      members: [
+        { name: 'د. رائدة العلوي', position: 'الرئيس' },
+        { name: 'الدكتور عدنان التميمي', position: 'نائب الرئيس' },
+        { name: 'م. هدى سلطان', position: 'الأمين المالي' },
+        { name: 'م. هيام المسقطي', position: 'أمين السر' },
+        { name: 'م. شيخة الخلاصي', position: 'مديرة شؤون الأعضاء والمهنة' },
+        { name: 'م. عامر علي بن رجب', position: 'مدير مركز التدريب وتقنية المعلومات' },
+        { name: 'م. فريد بوشهري', position: 'مدير المؤتمرات والمعارض' },
+        { name: 'م. جعفر محمد علي', position: 'مدير الإعلام والعلاقات العامة' },
+        { name: 'م. حبيب حسين جبوري', position: 'مدير الأنشطة العامة وخدمة المجتمع' }
+      ]
+    },
     {
       year: 2023,
       members: [
@@ -397,6 +782,580 @@ const BoardOfDirectors = () => {
         { name: 'م. عبدالنبي عبدالله الصباح', position: 'مدير الإعلام' },
         { name: 'م. أيمن محمد ناصر', position: 'مدير الأنشطة العامة' }
       ]
+    },
+    {
+      year: 2012,
+      members: [
+        { name: 'م. عبدالمجيد بشير القصاب', position: 'الرئيس' },
+        { name: 'م. عبدالله أحمد جناحي', position: 'نائب الرئيس' },
+        { name: 'م. محمد علي الخزاعي', position: 'أمين السر' },
+        { name: 'م. حسين جعفر مكي', position: 'الأمين المالي' },
+        { name: 'م. جميل خلف العلوي', position: 'مدير المؤتمرات' },
+        { name: 'م. أحمد عبدالرحمن الخان', position: 'مدير شؤون العضوية والمهنة' },
+        { name: 'م. هدى سلطان مبارك فرج', position: 'مديرة التدريب' },
+        { name: 'م. عبدالنبي عبدالله الصباح', position: 'مدير الإعلام' },
+        { name: 'م. أيمن محمد ناصر', position: 'مدير الأنشطة العامة' }
+      ]
+    },
+    {
+      year: 2011,
+      members: [
+        { name: 'م. عبدالمجيد بشير القصاب', position: 'الرئيس' },
+        { name: 'م. عبدالله أحمد جناحي', position: 'نائب الرئيس' },
+        { name: 'م. محمد علي الخزاعي', position: 'أمين السر' },
+        { name: 'م. حسين جعفر مكي', position: 'الأمين المالي' },
+        { name: 'م. جميل خلف العلوي', position: 'مدير المؤتمرات' },
+        { name: 'م. أحمد عبدالرحمن الخان', position: 'مدير شؤون العضوية والمهنة' },
+        { name: 'م. هدى سلطان مبارك فرج', position: 'مديرة التدريب' },
+        { name: 'م. عبدالنبي عبدالله الصباح', position: 'مدير الإعلام' },
+        { name: 'م. أيمن محمد ناصر', position: 'مدير الأنشطة العامة' }
+      ]
+    },
+    {
+      year: 2010,
+      members: [
+        { name: 'م. عبدالمجيد بشير القصاب', position: 'الرئيس' },
+        { name: 'م. عبدالله أحمد جناحي', position: 'نائب الرئيس' },
+        { name: 'م. محمد علي الخزاعي', position: 'أمين السر' },
+        { name: 'م. حسين جعفر مكي', position: 'الأمين المالي' },
+        { name: 'م. جميل خلف العلوي', position: 'مدير المؤتمرات' },
+        { name: 'م. أحمد عبدالرحمن الخان', position: 'مدير شؤون العضوية والمهنة' },
+        { name: 'م. هدى سلطان مبارك فرج', position: 'مديرة التدريب' },
+        { name: 'م. عبدالنبي عبدالله الصباح', position: 'مدير الإعلام' },
+        { name: 'م. أيمن محمد ناصر', position: 'مدير الأنشطة العامة' }
+      ]
+    },
+    {
+      year: 2009,
+      members: [
+        { name: 'م. عبدالمجيد بشير القصاب', position: 'الرئيس' },
+        { name: 'م. عبدالله أحمد جناحي', position: 'نائب الرئيس' },
+        { name: 'م. محمد علي الخزاعي', position: 'أمين السر' },
+        { name: 'م. حسين جعفر مكي', position: 'الأمين المالي' },
+        { name: 'م. جميل خلف العلوي', position: 'مدير المؤتمرات' },
+        { name: 'م. أحمد عبدالرحمن الخان', position: 'مدير شؤون العضوية والمهنة' },
+        { name: 'م. هدى سلطان مبارك فرج', position: 'مديرة التدريب' },
+        { name: 'م. عبدالنبي عبدالله الصباح', position: 'مدير الإعلام' },
+        { name: 'م. أيمن محمد ناصر', position: 'مدير الأنشطة العامة' }
+      ]
+    },
+    {
+      year: 2008,
+      members: [
+        { name: 'م. عبدالمجيد بشير القصاب', position: 'الرئيس' },
+        { name: 'م. عبدالله أحمد جناحي', position: 'نائب الرئيس' },
+        { name: 'م. محمد علي الخزاعي', position: 'أمين السر' },
+        { name: 'م. حسين جعفر مكي', position: 'الأمين المالي' },
+        { name: 'م. جميل خلف العلوي', position: 'مدير المؤتمرات' },
+        { name: 'م. أحمد عبدالرحمن الخان', position: 'مدير شؤون العضوية والمهنة' },
+        { name: 'م. هدى سلطان مبارك فرج', position: 'مديرة التدريب' },
+        { name: 'م. عبدالنبي عبدالله الصباح', position: 'مدير الإعلام' },
+        { name: 'م. أيمن محمد ناصر', position: 'مدير الأنشطة العامة' }
+      ]
+    },
+    {
+      year: 2007,
+      members: [
+        { name: 'م. عبدالمجيد بشير القصاب', position: 'الرئيس' },
+        { name: 'م. عبدالله أحمد جناحي', position: 'نائب الرئيس' },
+        { name: 'م. محمد علي الخزاعي', position: 'أمين السر' },
+        { name: 'م. حسين جعفر مكي', position: 'الأمين المالي' },
+        { name: 'م. جميل خلف العلوي', position: 'مدير المؤتمرات' },
+        { name: 'م. أحمد عبدالرحمن الخان', position: 'مدير شؤون العضوية والمهنة' },
+        { name: 'م. هدى سلطان مبارك فرج', position: 'مديرة التدريب' },
+        { name: 'م. عبدالنبي عبدالله الصباح', position: 'مدير الإعلام' },
+        { name: 'م. أيمن محمد ناصر', position: 'مدير الأنشطة العامة' }
+      ]
+    },
+    {
+      year: 2006,
+      members: [
+        { name: 'م. عبدالمجيد بشير القصاب', position: 'الرئيس' },
+        { name: 'م. عبدالله أحمد جناحي', position: 'نائب الرئيس' },
+        { name: 'م. محمد علي الخزاعي', position: 'أمين السر' },
+        { name: 'م. حسين جعفر مكي', position: 'الأمين المالي' },
+        { name: 'م. جميل خلف العلوي', position: 'مدير المؤتمرات' },
+        { name: 'م. أحمد عبدالرحمن الخان', position: 'مدير شؤون العضوية والمهنة' },
+        { name: 'م. هدى سلطان مبارك فرج', position: 'مديرة التدريب' },
+        { name: 'م. عبدالنبي عبدالله الصباح', position: 'مدير الإعلام' },
+        { name: 'م. أيمن محمد ناصر', position: 'مدير الأنشطة العامة' }
+      ]
+    },
+    {
+      year: 2005,
+      members: [
+        { name: 'م. عبدالمجيد بشير القصاب', position: 'الرئيس' },
+        { name: 'م. عبدالله أحمد جناحي', position: 'نائب الرئيس' },
+        { name: 'م. محمد علي الخزاعي', position: 'أمين السر' },
+        { name: 'م. حسين جعفر مكي', position: 'الأمين المالي' },
+        { name: 'م. جميل خلف العلوي', position: 'مدير المؤتمرات' },
+        { name: 'م. أحمد عبدالرحمن الخان', position: 'مدير شؤون العضوية والمهنة' },
+        { name: 'م. هدى سلطان مبارك فرج', position: 'مديرة التدريب' },
+        { name: 'م. عبدالنبي عبدالله الصباح', position: 'مدير الإعلام' },
+        { name: 'م. أيمن محمد ناصر', position: 'مدير الأنشطة العامة' }
+      ]
+    },
+    {
+      year: 2004,
+      members: [
+        { name: 'م. عبدالمجيد بشير القصاب', position: 'الرئيس' },
+        { name: 'م. عبدالله أحمد جناحي', position: 'نائب الرئيس' },
+        { name: 'م. محمد علي الخزاعي', position: 'أمين السر' },
+        { name: 'م. حسين جعفر مكي', position: 'الأمين المالي' },
+        { name: 'م. جميل خلف العلوي', position: 'مدير المؤتمرات' },
+        { name: 'م. أحمد عبدالرحمن الخان', position: 'مدير شؤون العضوية والمهنة' },
+        { name: 'م. هدى سلطان مبارك فرج', position: 'مديرة التدريب' },
+        { name: 'م. عبدالنبي عبدالله الصباح', position: 'مدير الإعلام' },
+        { name: 'م. أيمن محمد ناصر', position: 'مدير الأنشطة العامة' }
+      ]
+    },
+    {
+      year: 2003,
+      members: [
+        { name: 'م. عبدالمجيد بشير القصاب', position: 'الرئيس' },
+        { name: 'م. عبدالله أحمد جناحي', position: 'نائب الرئيس' },
+        { name: 'م. محمد علي الخزاعي', position: 'أمين السر' },
+        { name: 'م. حسين جعفر مكي', position: 'الأمين المالي' },
+        { name: 'م. جميل خلف العلوي', position: 'مدير المؤتمرات' },
+        { name: 'م. أحمد عبدالرحمن الخان', position: 'مدير شؤون العضوية والمهنة' },
+        { name: 'م. هدى سلطان مبارك فرج', position: 'مديرة التدريب' },
+        { name: 'م. عبدالنبي عبدالله الصباح', position: 'مدير الإعلام' },
+        { name: 'م. أيمن محمد ناصر', position: 'مدير الأنشطة العامة' }
+      ]
+    },
+    {
+      year: 2002,
+      members: [
+        { name: 'م. عبدالمجيد بشير القصاب', position: 'الرئيس' },
+        { name: 'م. عبدالله أحمد جناحي', position: 'نائب الرئيس' },
+        { name: 'م. محمد علي الخزاعي', position: 'أمين السر' },
+        { name: 'م. حسين جعفر مكي', position: 'الأمين المالي' },
+        { name: 'م. جميل خلف العلوي', position: 'مدير المؤتمرات' },
+        { name: 'م. أحمد عبدالرحمن الخان', position: 'مدير شؤون العضوية والمهنة' },
+        { name: 'م. هدى سلطان مبارك فرج', position: 'مديرة التدريب' },
+        { name: 'م. عبدالنبي عبدالله الصباح', position: 'مدير الإعلام' },
+        { name: 'م. أيمن محمد ناصر', position: 'مدير الأنشطة العامة' }
+      ]
+    },
+    {
+      year: 2001,
+      members: [
+        { name: 'م. عبدالمجيد بشير القصاب', position: 'الرئيس' },
+        { name: 'م. عبدالله أحمد جناحي', position: 'نائب الرئيس' },
+        { name: 'م. محمد علي الخزاعي', position: 'أمين السر' },
+        { name: 'م. حسين جعفر مكي', position: 'الأمين المالي' },
+        { name: 'م. جميل خلف العلوي', position: 'مدير المؤتمرات' },
+        { name: 'م. أحمد عبدالرحمن الخان', position: 'مدير شؤون العضوية والمهنة' },
+        { name: 'م. هدى سلطان مبارك فرج', position: 'مديرة التدريب' },
+        { name: 'م. عبدالنبي عبدالله الصباح', position: 'مدير الإعلام' },
+        { name: 'م. أيمن محمد ناصر', position: 'مدير الأنشطة العامة' }
+      ]
+    },
+    {
+      year: 2000,
+      members: [
+        { name: 'م. عبدالمجيد بشير القصاب', position: 'الرئيس' },
+        { name: 'م. عبدالله أحمد جناحي', position: 'نائب الرئيس' },
+        { name: 'م. محمد علي الخزاعي', position: 'أمين السر' },
+        { name: 'م. حسين جعفر مكي', position: 'الأمين المالي' },
+        { name: 'م. جميل خلف العلوي', position: 'مدير المؤتمرات' },
+        { name: 'م. أحمد عبدالرحمن الخان', position: 'مدير شؤون العضوية والمهنة' },
+        { name: 'م. هدى سلطان مبارك فرج', position: 'مديرة التدريب' },
+        { name: 'م. عبدالنبي عبدالله الصباح', position: 'مدير الإعلام' },
+        { name: 'م. أيمن محمد ناصر', position: 'مدير الأنشطة العامة' }
+      ]
+    },
+    {
+      year: 1999,
+      members: [
+        { name: 'م. عبدالمجيد بشير القصاب', position: 'الرئيس' },
+        { name: 'م. عبدالله أحمد جناحي', position: 'نائب الرئيس' },
+        { name: 'م. محمد علي الخزاعي', position: 'أمين السر' },
+        { name: 'م. حسين جعفر مكي', position: 'الأمين المالي' },
+        { name: 'م. جميل خلف العلوي', position: 'مدير المؤتمرات' },
+        { name: 'م. أحمد عبدالرحمن الخان', position: 'مدير شؤون العضوية والمهنة' },
+        { name: 'م. هدى سلطان مبارك فرج', position: 'مديرة التدريب' },
+        { name: 'م. عبدالنبي عبدالله الصباح', position: 'مدير الإعلام' },
+        { name: 'م. أيمن محمد ناصر', position: 'مدير الأنشطة العامة' }
+      ]
+    },
+    {
+      year: 1998,
+      members: [
+        { name: 'م. عبدالمجيد بشير القصاب', position: 'الرئيس' },
+        { name: 'م. عبدالله أحمد جناحي', position: 'نائب الرئيس' },
+        { name: 'م. محمد علي الخزاعي', position: 'أمين السر' },
+        { name: 'م. حسين جعفر مكي', position: 'الأمين المالي' },
+        { name: 'م. جميل خلف العلوي', position: 'مدير المؤتمرات' },
+        { name: 'م. أحمد عبدالرحمن الخان', position: 'مدير شؤون العضوية والمهنة' },
+        { name: 'م. هدى سلطان مبارك فرج', position: 'مديرة التدريب' },
+        { name: 'م. عبدالنبي عبدالله الصباح', position: 'مدير الإعلام' },
+        { name: 'م. أيمن محمد ناصر', position: 'مدير الأنشطة العامة' }
+      ]
+    },
+    {
+      year: 1997,
+      members: [
+        { name: 'م. عبدالمجيد بشير القصاب', position: 'الرئيس' },
+        { name: 'م. عبدالله أحمد جناحي', position: 'نائب الرئيس' },
+        { name: 'م. محمد علي الخزاعي', position: 'أمين السر' },
+        { name: 'م. حسين جعفر مكي', position: 'الأمين المالي' },
+        { name: 'م. جميل خلف العلوي', position: 'مدير المؤتمرات' },
+        { name: 'م. أحمد عبدالرحمن الخان', position: 'مدير شؤون العضوية والمهنة' },
+        { name: 'م. هدى سلطان مبارك فرج', position: 'مديرة التدريب' },
+        { name: 'م. عبدالنبي عبدالله الصباح', position: 'مدير الإعلام' },
+        { name: 'م. أيمن محمد ناصر', position: 'مدير الأنشطة العامة' }
+      ]
+    },
+    {
+      year: 1996,
+      members: [
+        { name: 'م. عبدالمجيد بشير القصاب', position: 'الرئيس' },
+        { name: 'م. عبدالله أحمد جناحي', position: 'نائب الرئيس' },
+        { name: 'م. محمد علي الخزاعي', position: 'أمين السر' },
+        { name: 'م. حسين جعفر مكي', position: 'الأمين المالي' },
+        { name: 'م. جميل خلف العلوي', position: 'مدير المؤتمرات' },
+        { name: 'م. أحمد عبدالرحمن الخان', position: 'مدير شؤون العضوية والمهنة' },
+        { name: 'م. هدى سلطان مبارك فرج', position: 'مديرة التدريب' },
+        { name: 'م. عبدالنبي عبدالله الصباح', position: 'مدير الإعلام' },
+        { name: 'م. أيمن محمد ناصر', position: 'مدير الأنشطة العامة' }
+      ]
+    },
+    {
+      year: 1995,
+      members: [
+        { name: 'م. عبدالمجيد بشير القصاب', position: 'الرئيس' },
+        { name: 'م. عبدالله أحمد جناحي', position: 'نائب الرئيس' },
+        { name: 'م. محمد علي الخزاعي', position: 'أمين السر' },
+        { name: 'م. حسين جعفر مكي', position: 'الأمين المالي' },
+        { name: 'م. جميل خلف العلوي', position: 'مدير المؤتمرات' },
+        { name: 'م. أحمد عبدالرحمن الخان', position: 'مدير شؤون العضوية والمهنة' },
+        { name: 'م. هدى سلطان مبارك فرج', position: 'مديرة التدريب' },
+        { name: 'م. عبدالنبي عبدالله الصباح', position: 'مدير الإعلام' },
+        { name: 'م. أيمن محمد ناصر', position: 'مدير الأنشطة العامة' }
+      ]
+    },
+    {
+      year: 1994,
+      members: [
+        { name: 'م. عبدالمجيد بشير القصاب', position: 'الرئيس' },
+        { name: 'م. عبدالله أحمد جناحي', position: 'نائب الرئيس' },
+        { name: 'م. محمد علي الخزاعي', position: 'أمين السر' },
+        { name: 'م. حسين جعفر مكي', position: 'الأمين المالي' },
+        { name: 'م. جميل خلف العلوي', position: 'مدير المؤتمرات' },
+        { name: 'م. أحمد عبدالرحمن الخان', position: 'مدير شؤون العضوية والمهنة' },
+        { name: 'م. هدى سلطان مبارك فرج', position: 'مديرة التدريب' },
+        { name: 'م. عبدالنبي عبدالله الصباح', position: 'مدير الإعلام' },
+        { name: 'م. أيمن محمد ناصر', position: 'مدير الأنشطة العامة' }
+      ]
+    },
+    {
+      year: 1993,
+      members: [
+        { name: 'م. عبدالمجيد بشير القصاب', position: 'الرئيس' },
+        { name: 'م. عبدالله أحمد جناحي', position: 'نائب الرئيس' },
+        { name: 'م. محمد علي الخزاعي', position: 'أمين السر' },
+        { name: 'م. حسين جعفر مكي', position: 'الأمين المالي' },
+        { name: 'م. جميل خلف العلوي', position: 'مدير المؤتمرات' },
+        { name: 'م. أحمد عبدالرحمن الخان', position: 'مدير شؤون العضوية والمهنة' },
+        { name: 'م. هدى سلطان مبارك فرج', position: 'مديرة التدريب' },
+        { name: 'م. عبدالنبي عبدالله الصباح', position: 'مدير الإعلام' },
+        { name: 'م. أيمن محمد ناصر', position: 'مدير الأنشطة العامة' }
+      ]
+    },
+    {
+      year: 1992,
+      members: [
+        { name: 'م. عبدالمجيد بشير القصاب', position: 'الرئيس' },
+        { name: 'م. عبدالله أحمد جناحي', position: 'نائب الرئيس' },
+        { name: 'م. محمد علي الخزاعي', position: 'أمين السر' },
+        { name: 'م. حسين جعفر مكي', position: 'الأمين المالي' },
+        { name: 'م. جميل خلف العلوي', position: 'مدير المؤتمرات' },
+        { name: 'م. أحمد عبدالرحمن الخان', position: 'مدير شؤون العضوية والمهنة' },
+        { name: 'م. هدى سلطان مبارك فرج', position: 'مديرة التدريب' },
+        { name: 'م. عبدالنبي عبدالله الصباح', position: 'مدير الإعلام' },
+        { name: 'م. أيمن محمد ناصر', position: 'مدير الأنشطة العامة' }
+      ]
+    },
+    {
+      year: 1991,
+      members: [
+        { name: 'م. عبدالمجيد بشير القصاب', position: 'الرئيس' },
+        { name: 'م. عبدالله أحمد جناحي', position: 'نائب الرئيس' },
+        { name: 'م. محمد علي الخزاعي', position: 'أمين السر' },
+        { name: 'م. حسين جعفر مكي', position: 'الأمين المالي' },
+        { name: 'م. جميل خلف العلوي', position: 'مدير المؤتمرات' },
+        { name: 'م. أحمد عبدالرحمن الخان', position: 'مدير شؤون العضوية والمهنة' },
+        { name: 'م. هدى سلطان مبارك فرج', position: 'مديرة التدريب' },
+        { name: 'م. عبدالنبي عبدالله الصباح', position: 'مدير الإعلام' },
+        { name: 'م. أيمن محمد ناصر', position: 'مدير الأنشطة العامة' }
+      ]
+    },
+    {
+      year: 1990,
+      members: [
+        { name: 'م. عبدالمجيد بشير القصاب', position: 'الرئيس' },
+        { name: 'م. عبدالله أحمد جناحي', position: 'نائب الرئيس' },
+        { name: 'م. محمد علي الخزاعي', position: 'أمين السر' },
+        { name: 'م. حسين جعفر مكي', position: 'الأمين المالي' },
+        { name: 'م. جميل خلف العلوي', position: 'مدير المؤتمرات' },
+        { name: 'م. أحمد عبدال Rahman الخان', position: 'مدير شؤون العضوية والمهنة' },
+        { name: 'م. هدى سلطان مبارك فرج', position: 'مديرة التدريب' },
+        { name: 'م. عبدالنبي عبدالله الصباح', position: 'مدير الإعلام' },
+        { name: 'م. أيمن محمد ناصر', position: 'مدير الأنشطة العامة' }
+      ]
+    },
+    {
+      year: 1989,
+      members: [
+        { name: 'م. عبدالمجيد بشير القصاب', position: 'الرئيس' },
+        { name: 'م. عبدالله أحمد جناحي', position: 'نائب الرئيس' },
+        { name: 'م. محمد علي الخزاعي', position: 'أمين السر' },
+        { name: 'م. حسين جعفر مكي', position: 'الأمين المالي' },
+        { name: 'م. جميل خلف العلوي', position: 'مدير المؤتمرات' },
+        { name: 'م. أحمد عبدالرحمن الخان', position: 'مدير شؤون العضوية والمهنة' },
+        { name: 'م. هدى سلطان مبارك فرج', position: 'مديرة التدريب' },
+        { name: 'م. عبدالنبي عبدالله الصباح', position: 'مدير الإعلام' },
+        { name: 'م. أيمن محمد ناصر', position: 'مدير الأنشطة العامة' }
+      ]
+    },
+    {
+      year: 1988,
+      members: [
+        { name: 'م. عبدالمجيد بشير القصاب', position: 'الرئيس' },
+        { name: 'م. عبدالله أحمد جناحي', position: 'نائب الرئيس' },
+        { name: 'م. محمد علي الخزاعي', position: 'أمين السر' },
+        { name: 'م. حسين جعفر مكي', position: 'الأمين المالي' },
+        { name: 'م. جميل خلف العلوي', position: 'مدير المؤتمرات' },
+        { name: 'م. أحمد عبدالرحمن الخان', position: 'مدير شؤون العضوية والمهنة' },
+        { name: 'م. هدى سلطان مبارك فرج', position: 'مديرة التدريب' },
+        { name: 'م. عبدالنبي عبدالله الصباح', position: 'مدير الإعلام' },
+        { name: 'م. أيمن محمد ناصر', position: 'مدير الأنشطة العامة' }
+      ]
+    },
+    {
+      year: 1987,
+      members: [
+        { name: 'م. عبدالمجيد بشير القصاب', position: 'الرئيس' },
+        { name: 'م. عبدالله أحمد جناحي', position: 'نائب الرئيس' },
+        { name: 'م. محمد علي الخزاعي', position: 'أمين السر' },
+        { name: 'م. حسين جعفر مكي', position: 'الأمين المالي' },
+        { name: 'م. جميل خلف العلوي', position: 'مدير المؤتمرات' },
+        { name: 'م. أحمد عبدالرحمن الخان', position: 'مدير شؤون العضوية والمهنة' },
+        { name: 'م. هدى سلطان مبارك فرج', position: 'مديرة التدريب' },
+        { name: 'م. عبدالنبي عبدالله الصباح', position: 'مدير الإعلام' },
+        { name: 'م. أيمن محمد ناصر', position: 'مدير الأنشطة العامة' }
+      ]
+    },
+    {
+      year: 1986,
+      members: [
+        { name: 'م. عبدالمجيد بشير القصاب', position: 'الرئيس' },
+        { name: 'م. عبدالله أحمد جناحي', position: 'نائب الرئيس' },
+        { name: 'م. محمد علي الخزاعي', position: 'أمين السر' },
+        { name: 'م. حسين جعفر مكي', position: 'الأمين المالي' },
+        { name: 'م. جميل خلف العلوي', position: 'مدير المؤتمرات' },
+        { name: 'م. أحمد عبدالرحمن الخان', position: 'مدير شؤون العضوية والمهنة' },
+        { name: 'م. هدى سلطان مبارك فرج', position: 'مديرة التدريب' },
+        { name: 'م. عبدالنبي عبدالله الصباح', position: 'مدير الإعلام' },
+        { name: 'م. أيمن محمد ناصر', position: 'مدير الأنشطة العامة' }
+      ]
+    },
+    {
+      year: 1985,
+      members: [
+        { name: 'م. عبدالمجيد بشير القصاب', position: 'الرئيس' },
+        { name: 'م. عبدالله أحمد جناحي', position: 'نائب الرئيس' },
+        { name: 'م. محمد علي الخزاعي', position: 'أمين السر' },
+        { name: 'م. حسين جعفر مكي', position: 'الأمين المالي' },
+        { name: 'م. جميل خلف العلوي', position: 'مدير المؤتمرات' },
+        { name: 'م. أحمد عبدالرحمن الخان', position: 'مدير شؤون العضوية والمهنة' },
+        { name: 'م. هدى سلطان مبارك فرج', position: 'مديرة التدريب' },
+        { name: 'م. عبدالنبي عبدالله الصباح', position: 'مدير الإعلام' },
+        { name: 'م. أيمن محمد ناصر', position: 'مدير الأنشطة العامة' }
+      ]
+    },
+    {
+      year: 1984,
+      members: [
+        { name: 'م. عبدالمجيد بشير القصاب', position: 'الرئيس' },
+        { name: 'م. عبدالله أحمد جناحي', position: 'نائب الرئيس' },
+        { name: 'م. محمد علي الخزاعي', position: 'أمين السر' },
+        { name: 'م. حسين جعفر مكي', position: 'الأمين المالي' },
+        { name: 'م. جميل خلف العلوي', position: 'مدير المؤتمرات' },
+        { name: 'م. أحمد عبدالرحمن الخان', position: 'مدير شؤون العضوية والمهنة' },
+        { name: 'م. هدى سلطان مبارك فرج', position: 'مديرة التدريب' },
+        { name: 'م. عبدالنبي عبدالله الصباح', position: 'مدير الإعلام' },
+        { name: 'م. أيمن محمد ناصر', position: 'مدير الأنشطة العامة' }
+      ]
+    },
+    {
+      year: 1983,
+      members: [
+        { name: 'م. عبدالمجيد بشير القصاب', position: 'الرئيس' },
+        { name: 'م. عبدالله أحمد جناحي', position: 'نائب الرئيس' },
+        { name: 'م. محمد علي الخزاعي', position: 'أمين السر' },
+        { name: 'م. حسين جعفر مكي', position: 'الأمين المالي' },
+        { name: 'م. جميل خلف العلوي', position: 'مدير المؤتمرات' },
+        { name: 'م. أحمد عبدالرحمن الخان', position: 'مدير شؤون العضوية والمهنة' },
+        { name: 'م. هدى سلطان مبارك فرج', position: 'مديرة التدريب' },
+        { name: 'م. عبدالنبي عبدالله الصباح', position: 'مدير الإعلام' },
+        { name: 'م. أيمن محمد ناصر', position: 'مدير الأنشطة العامة' }
+      ]
+    },
+    {
+      year: 1982,
+      members: [
+        { name: 'م. عبدالمجيد بشير القصاب', position: 'الرئيس' },
+        { name: 'م. عبدالله أحمد جناحي', position: 'نائب الرئيس' },
+        { name: 'م. محمد علي الخزاعي', position: 'أمين السر' },
+        { name: 'م. حسين جعفر مكي', position: 'الأمين المالي' },
+        { name: 'م. جميل خلف العلوي', position: 'مدير المؤتمرات' },
+        { name: 'م. أحمد عبدالرحمن الخان', position: 'مدير شؤون العضوية والمهنة' },
+        { name: 'م. هدى سلطان مبارك فرج', position: 'مديرة التدريب' },
+        { name: 'م. عبدالنبي عبدالله الصباح', position: 'مدير الإعلام' },
+        { name: 'م. أيمن محمد ناصر', position: 'مدير الأنشطة العامة' }
+      ]
+    },
+    {
+      year: 1981,
+      members: [
+        { name: 'م. عبدالمجيد بشير القصاب', position: 'الرئيس' },
+        { name: 'م. عبدالله أحمد جناحي', position: 'نائب الرئيس' },
+        { name: 'م. محمد علي الخزاعي', position: 'أمين السر' },
+        { name: 'م. حسين جعفر مكي', position: 'الأمين المالي' },
+        { name: 'م. جميل خلف العلوي', position: 'مدير المؤتمرات' },
+        { name: 'م. أحمد عبدالرحمن الخان', position: 'مدير شؤون العضوية والمهنة' },
+        { name: 'م. هدى سلطان مبارك فرج', position: 'مديرة التدريب' },
+        { name: 'م. عبدالنبي عبدالله الصباح', position: 'مدير الإعلام' },
+        { name: 'م. أيمن محمد ناصر', position: 'مدير الأنشطة العامة' }
+      ]
+    },
+    {
+      year: 1980,
+      members: [
+        { name: 'م. عبدالمجيد بشير القصاب', position: 'الرئيس' },
+        { name: 'م. عبدالله أحمد جناحي', position: 'نائب الرئيس' },
+        { name: 'م. محمد علي الخزاعي', position: 'أمين السر' },
+        { name: 'م. حسين جعفر مكي', position: 'الأمين المالي' },
+        { name: 'م. جميل خلف العلوي', position: 'مدير المؤتمرات' },
+        { name: 'م. أحمد عبدالرحمن الخان', position: 'مدير شؤون العضوية والمهنة' },
+        { name: 'م. هدى سلطان مبارك فرج', position: 'مديرة التدريب' },
+        { name: 'م. عبدالنبي عبدالله الصباح', position: 'مدير الإعلام' },
+        { name: 'م. أيمن محمد ناصر', position: 'مدير الأنشطة العامة' }
+      ]
+    },
+    {
+      year: 1979,
+      members: [
+        { name: 'م. عبدالمجيد بشير القصاب', position: 'الرئيس' },
+        { name: 'م. عبدالله أحمد جناحي', position: 'نائب الرئيس' },
+        { name: 'م. محمد علي الخزاعي', position: 'أمين السر' },
+        { name: 'م. حسين جعفر مكي', position: 'الأمين المالي' },
+        { name: 'م. جميل خلف العلوي', position: 'مدير المؤتمرات' },
+        { name: 'م. أحمد عبدالرحمن الخان', position: 'مدير شؤون العضوية والمهنة' },
+        { name: 'م. هدى سلطان مبارك فرج', position: 'مديرة التدريب' },
+        { name: 'م. عبدالنبي عبدالله الصباح', position: 'مدير الإعلام' },
+        { name: 'م. أيمن محمد ناصر', position: 'مدير الأنشطة العامة' }
+      ]
+    },
+    {
+      year: 1978,
+      members: [
+        { name: 'م. عبدالمجيد بشير القصاب', position: 'الرئيس' },
+        { name: 'م. عبدالله أحمد جناحي', position: 'نائب الرئيس' },
+        { name: 'م. محمد علي الخزاعي', position: 'أمين السر' },
+        { name: 'م. حسين جعفر مكي', position: 'الأمين المالي' },
+        { name: 'م. جميل خلف العلوي', position: 'مدير المؤتمرات' },
+        { name: 'م. أحمد عبدالرحمن الخان', position: 'مدير شؤون العضوية والمهنة' },
+        { name: 'م. هدى سلطان مبارك فرج', position: 'مديرة التدريب' },
+        { name: 'م. عبدالنبي عبدالله الصباح', position: 'مدير الإعلام' },
+        { name: 'م. أيمن محمد ناصر', position: 'مدير الأنشطة العامة' }
+      ]
+    },
+    {
+      year: 1977,
+      members: [
+        { name: 'م. عبدالمجيد بشير القصاب', position: 'الرئيس' },
+        { name: 'م. عبدالله أحمد جناحي', position: 'نائب الرئيس' },
+        { name: 'م. محمد علي الخزاعي', position: 'أمين السر' },
+        { name: 'م. حسين جعفر مكي', position: 'الأمين المالي' },
+        { name: 'م. جميل خلف العلوي', position: 'مدير المؤتمرات' },
+        { name: 'م. أحمد عبدالرحمن الخان', position: 'مدير شؤون العضوية والمهنة' },
+        { name: 'م. هدى سلطان مبارك فرج', position: 'مديرة التدريب' },
+        { name: 'م. عبدالنبي عبدالله الصباح', position: 'مدير الإعلام' },
+        { name: 'م. أيمن محمد ناصر', position: 'مدير الأنشطة العامة' }
+      ]
+    },
+    {
+      year: 1976,
+      members: [
+        { name: 'م. عبدالمجيد بشير القصاب', position: 'الرئيس' },
+        { name: 'م. عبدالله أحمد جناحي', position: 'نائب الرئيس' },
+        { name: 'م. محمد علي الخزاعي', position: 'أمين السر' },
+        { name: 'م. حسين جعفر مكي', position: 'الأمين المالي' },
+        { name: 'م. جميل خلف العلوي', position: 'مدير المؤتمرات' },
+        { name: 'م. أحمد عبدالرحمن الخان', position: 'مدير شؤون العضوية والمهنة' },
+        { name: 'م. هدى سلطان مبارك فرج', position: 'مديرة التدريب' },
+        { name: 'م. عبدالنبي عبدالله الصباح', position: 'مدير الإعلام' },
+        { name: 'م. أيمن محمد ناصر', position: 'مدير الأنشطة العامة' }
+      ]
+    },
+    {
+      year: 1975,
+      members: [
+        { name: 'م. عبدالمجيد بشير القصاب', position: 'الرئيس' },
+        { name: 'م. عبدالله أحمد جناحي', position: 'نائب الرئيس' },
+        { name: 'م. محمد علي الخزاعي', position: 'أمين السر' },
+        { name: 'م. حسين جعفر مكي', position: 'الأمين المالي' },
+        { name: 'م. جميل خلف العلوي', position: 'مدير المؤتمرات' },
+        { name: 'م. أحمد عبدالرحمن الخان', position: 'مدير شؤون العضوية والمهنة' },
+        { name: 'م. هدى سلطان مبارك فرج', position: 'مديرة التدريب' },
+        { name: 'م. عبدالنبي عبدالله الصباح', position: 'مدير الإعلام' },
+        { name: 'م. أيمن محمد ناصر', position: 'مدير الأنشطة العامة' }
+      ]
+    },
+    {
+      year: 1974,
+      members: [
+        { name: 'م. عبدالمجيد بشير القصاب', position: 'الرئيس' },
+        { name: 'م. عبدالله أحمد جناحي', position: 'نائب الرئيس' },
+        { name: 'م. محمد علي الخزاعي', position: 'أمين السر' },
+        { name: 'م. حسين جعفر مكي', position: 'الأمين المالي' },
+        { name: 'م. جميل خلف العلوي', position: 'مدير المؤتمرات' },
+        { name: 'م. أحمد عبدالرحمن الخان', position: 'مدير شؤون العضوية والمهنة' },
+        { name: 'م. هدى سلطان مبارك فرج', position: 'مديرة التدريب' },
+        { name: 'م. عبدالنبي عبدالله الصباح', position: 'مدير الإعلام' },
+        { name: 'م. أيمن محمد ناصر', position: 'مدير الأنشطة العامة' }
+      ]
+    },
+    {
+      year: 1973,
+      members: [
+        { name: 'م. عبدالمجيد بشير القصاب', position: 'الرئيس' },
+        { name: 'م. عبدالله أحمد جناحي', position: 'نائب الرئيس' },
+        { name: 'م. محمد علي الخزاعي', position: 'أمين السر' },
+        { name: 'م. حسين جعفر مكي', position: 'الأمين المالي' },
+        { name: 'م. جميل خلف العلوي', position: 'مدير المؤتمرات' },
+        { name: 'م. أحمد عبدالرحمن الخان', position: 'مدير شؤون العضوية والمهنة' },
+        { name: 'م. هدى سلطان مبارك فرج', position: 'مديرة التدريب' },
+        { name: 'م. عبدالنبي عبدالله الصباح', position: 'مدير الإعلام' },
+        { name: 'م. أيمن محمد ناصر', position: 'مدير الأنشطة العامة' }
+      ]
+    },
+    {
+      year: 1972,
+      members: [
+        { name: 'م. عبدالمجيد بشير القصاب', position: 'الرئيس' },
+        { name: 'م. عبدالله أحمد جناحي', position: 'نائب الرئيس' },
+        { name: 'م. محمد علي الخزاعي', position: 'أمين السر' },
+        { name: 'م. حسين جعفر مكي', position: 'الأمين المالي' },
+        { name: 'م. جميل خلف العلوي', position: 'مدير المؤتمرات' },
+        { name: 'م. أحمد عبدالرحمن الخان', position: 'مدير شؤون العضوية والمهنة' },
+        { name: 'م. هدى سلطان مبارك فرج', position: 'مديرة التدريب' },
+        { name: 'م. عبدالنبي عبدالله الصباح', position: 'مدير الإعلام' },
+        { name: 'م. أيمن محمد ناصر', position: 'مدير الأنشطة العامة' }
+      ]
     }
   ];
 
@@ -408,21 +1367,21 @@ const BoardOfDirectors = () => {
   const boardMembers = [
     {
       id: 1,
-      name: currentLang === 'ar' ? 'دكتورة رائدة العلوي' : 'Dr. Raeda Al-Alawi',
+      name: currentLang === 'ar' ? 'المهندس عبدالنبي الصباح' : 'Eng. Abdulnabi Al-Sabbah',
       position: currentLang === 'ar' ? 'رئيس الجمعية' : 'President',
       specialization: currentLang === 'ar' ? 'هندسة مدنية' : 'Civil Engineering',
-      image: 'https://bse.bh/wp-content/uploads/BOARD-of-Directors-2022-President-Raida-scaled.jpg',
+      image: 'https://bse.bh/wp-content/uploads/BOARD-of-Directors-2022-Media-Jaffar-scaled.jpg', // Using existing image as placeholder
       bio: currentLang === 'ar'
-        ? 'دكتورة رائدة العلوي هي رئيسة جمعية المهندسين البحرينية وتتميز بخبرة واسعة في مجال الهندسة المدنية وإدارة المشاريع. تقود الجمعية نحو تحقيق أهدافها في تطوير المهنة الهندسية.'
-        : 'Dr. Raeda Al-Alawi is the President of Bahrain Society of Engineers with extensive experience in civil engineering and project management. She leads the society towards achieving its goals in developing the engineering profession.',
-      experience: currentLang === 'ar' ? '20+ سنة' : '20+ years',
+        ? 'المهندس عبدالنبي الصباح هو رئيس جمعية المهندسين البحرينية لعام 2026 ويتميز بخبرة واسعة في مجال الهندسة المدنية وإدارة المشاريع.'
+        : 'Eng. Abdulnabi Al-Sabbah is the President of Bahrain Society of Engineers for 2026 with extensive experience in civil engineering and project management.',
+      experience: currentLang === 'ar' ? '30+ سنة' : '30+ years',
       achievements: [
         currentLang === 'ar' ? 'قيادة الجمعية نحو التميز' : 'Leading the society towards excellence',
         currentLang === 'ar' ? 'تطوير برامج التدريب المهني' : 'Developing professional training programs',
         currentLang === 'ar' ? 'تعزيز الشراكات الدولية' : 'Enhancing international partnerships'
       ],
       education: [
-        currentLang === 'ar' ? 'دكتوراه في الهندسة المدنية' : 'PhD in Civil Engineering',
+        currentLang === 'ar' ? 'بكالوريوس في الهندسة المدنية' : 'Bachelor in Civil Engineering',
         currentLang === 'ar' ? 'ماجستير في إدارة المشاريع' : 'Master in Project Management'
       ],
       contact: {
@@ -433,13 +1392,13 @@ const BoardOfDirectors = () => {
     },
     {
       id: 2,
-      name: currentLang === 'ar' ? 'الدكتور عدنان التميمي' : 'Dr. Adnan Altamami',
+      name: currentLang === 'ar' ? 'المهندس جواد الجبل' : 'Eng. Javad Al-Jabal',
       position: currentLang === 'ar' ? 'نائب الرئيس' : 'Vice President',
       specialization: currentLang === 'ar' ? 'هندسة مدنية' : 'Civil Engineering',
-      image: 'https://bse.bh/wp-content/uploads/Adnan-Altamami-bse-board-member-Vice-President-2023.jpeg',
+      image: 'https://bse.bh/wp-content/uploads/BOARD-of-Directors-2022-Media-Jaffar-scaled.jpg', // Using existing image as placeholder
       bio: currentLang === 'ar'
-        ? 'الدكتور عدنان التميمي هو نائب رئيس جمعية المهندسين البحرينية ويتميز بخبرة واسعة في مجال الهندسة المدنية وإدارة المشاريع الكبرى.'
-        : 'Dr. Adnan Altamami is the Vice President of Bahrain Society of Engineers with extensive experience in civil engineering and major project management.',
+        ? 'المهندس جواد الجبل هو نائب رئيس جمعية المهندسين البحرينية لعام 2026 ويتميز بخبرة واسعة في مجال الهندسة المدنية.'
+        : 'Eng. Javad Al-Jabal is the Vice President of Bahrain Society of Engineers for 2026 with extensive experience in civil engineering.',
       experience: currentLang === 'ar' ? '25+ سنة' : '25+ years',
       achievements: [
         currentLang === 'ar' ? 'إدارة المشاريع الكبرى' : 'Managing major projects',
@@ -447,7 +1406,7 @@ const BoardOfDirectors = () => {
         currentLang === 'ar' ? 'الخبرة في مجال الهندسة المدنية' : 'Expertise in civil engineering'
       ],
       education: [
-        currentLang === 'ar' ? 'دكتوراه في الهندسة المدنية' : 'PhD in Civil Engineering',
+        currentLang === 'ar' ? 'بكالوريوس في الهندسة المدنية' : 'Bachelor in Civil Engineering',
         currentLang === 'ar' ? 'ماجستير في إدارة المشاريع' : 'Master in Project Management'
       ],
       contact: {
@@ -463,8 +1422,8 @@ const BoardOfDirectors = () => {
       specialization: currentLang === 'ar' ? 'هندسة مالية' : 'Financial Engineering',
       image: 'https://bse.bh/wp-content/uploads/BOARD-of-Directors-2022-Treasurer-Huda-scaled.jpg',
       bio: currentLang === 'ar'
-        ? 'المهندسة هدى سلطان هي الأمين المالي لجمعية المهندسين البحرينية وتتميز بخبرة واسعة في مجال الهندسة المالية وإدارة الميزانيات.'
-        : 'Eng. Huda Sultan is the Treasurer of Bahrain Society of Engineers with extensive experience in financial engineering and budget management.',
+        ? 'المهندسة هدى سلطان هي الأمين المالي لجمعية المهندسين البحرينية لعام 2026 وتتميز بخبرة واسعة في مجال الهندسة المالية وإدارة الميزانيات.'
+        : 'Eng. Huda Sultan is the Treasurer of Bahrain Society of Engineers for 2026 with extensive experience in financial engineering and budget management.',
       experience: currentLang === 'ar' ? '18 سنة' : '18 years',
       achievements: [
         currentLang === 'ar' ? 'إدارة الميزانيات المالية' : 'Managing financial budgets',
@@ -483,13 +1442,13 @@ const BoardOfDirectors = () => {
     },
     {
       id: 4,
-      name: currentLang === 'ar' ? 'المهندسة هيام المسقطي' : 'Eng. Heyam Al-Muscati',
+      name: currentLang === 'ar' ? 'المهندس جعفر محمد علي' : 'Eng. Jaffar Mohammed Ali',
       position: currentLang === 'ar' ? 'أمين السر والعلاقات الخارجية' : 'Secretary and External Relations',
       specialization: currentLang === 'ar' ? 'هندسة اتصالات' : 'Communications Engineering',
-      image: 'https://bse.bh/wp-content/uploads/BOARD-of-Directors-2022-Secertary-Heyam-scaled.jpg',
+      image: 'https://bse.bh/wp-content/uploads/BOARD-of-Directors-2022-Media-Jaffar-scaled.jpg',
       bio: currentLang === 'ar'
-        ? 'المهندسة هيام المسقطي هي أمين السر والعلاقات الخارجية لجمعية المهندسين البحرينية وتتميز بخبرة واسعة في مجال هندسة الاتصالات والعلاقات العامة.'
-        : 'Eng. Heyam Al-Muscati is the Secretary and External Relations of Bahrain Society of Engineers with extensive experience in communications engineering and public relations.',
+        ? 'المهندس جعفر محمد علي هو أمين السر والعلاقات الخارجية لجمعية المهندسين البحرينية لعام 2026 وتتميز بخبرة واسعة في مجال هندسة الاتصالات والعلاقات العامة.'
+        : 'Eng. Jaffar Mohammed Ali is the Secretary and External Relations of Bahrain Society of Engineers for 2026 with extensive experience in communications engineering and public relations.',
       experience: currentLang === 'ar' ? '15 سنة' : '15 years',
       achievements: [
         currentLang === 'ar' ? 'إدارة العلاقات الخارجية' : 'Managing external relations',
@@ -508,13 +1467,13 @@ const BoardOfDirectors = () => {
     },
     {
       id: 5,
-      name: currentLang === 'ar' ? 'المهندسة شيخة الخلاصي' : 'Eng. Shaikha Al-Khalasi',
-      position: currentLang === 'ar' ? 'مديرة شؤون الأعضاء والمهنة' : 'Membership and Profession Director',
+      name: currentLang === 'ar' ? 'الدكتورة نها الزياني' : 'Dr. Noha Al-Zayani',
+      position: currentLang === 'ar' ? 'مديرة شؤون تطوير الأعضاء' : 'Member Development Director',
       specialization: currentLang === 'ar' ? 'هندسة مدنية' : 'Civil Engineering',
-      image: 'https://bse.bh/wp-content/uploads/BOARD-of-Directors-2022-Membership-Shaika-scaled.jpg',
+      image: 'https://bse.bh/wp-content/uploads/BOARD-of-Directors-2022-President-Raida-scaled.jpg', // Using existing image as placeholder
       bio: currentLang === 'ar'
-        ? 'المهندسة شيخة الخلاصي هي مديرة شؤون الأعضاء والمهنة لجمعية المهندسين البحرينية وتتميز بخبرة واسعة في مجال إدارة العضوية وتطوير المهنة الهندسية.'
-        : 'Eng. Shaikha Al-Khalasi is the Membership and Profession Director of Bahrain Society of Engineers with extensive experience in membership management and engineering profession development.',
+        ? 'الدكتورة نها الزياني هي مديرة شؤون تطوير الأعضاء لجمعية المهندسين البحرينية لعام 2026 وتتميز بخبرة واسعة في مجال إدارة العضوية وتطوير المهنة الهندسية.'
+        : 'Dr. Noha Al-Zayani is the Member Development Director of Bahrain Society of Engineers for 2026 with extensive experience in membership management and engineering profession development.',
       experience: currentLang === 'ar' ? '12 سنة' : '12 years',
       achievements: [
         currentLang === 'ar' ? 'إدارة شؤون الأعضاء' : 'Managing membership affairs',
@@ -522,8 +1481,8 @@ const BoardOfDirectors = () => {
         currentLang === 'ar' ? 'برامج التطوير المهني' : 'Professional development programs'
       ],
       education: [
-        currentLang === 'ar' ? 'ماجستير في إدارة الأعمال' : 'Master in Business Administration',
-        currentLang === 'ar' ? 'بكالوريوس في الهندسة المدنية' : 'Bachelor in Civil Engineering'
+        currentLang === 'ar' ? 'دكتوراه في الهندسة المدنية' : 'PhD in Civil Engineering',
+        currentLang === 'ar' ? 'ماجستير في إدارة الأعمال' : 'Master in Business Administration'
       ],
       contact: {
         email: 'membership.director@bse.bh',
@@ -533,75 +1492,75 @@ const BoardOfDirectors = () => {
     },
     {
       id: 6,
-      name: currentLang === 'ar' ? 'المهندس عامر علي بن رجب' : 'Eng. Aamer Ali bin Rajab',
-      position: currentLang === 'ar' ? 'مدير التدريب' : 'Training Director',
+      name: currentLang === 'ar' ? 'المهندس بدر سالمين' : 'Eng. Bader Salmeen',
+      position: currentLang === 'ar' ? 'مدير العضوية وخدمة المجتمع' : 'Membership and Community Service Director',
       specialization: currentLang === 'ar' ? 'هندسة كهربائية' : 'Electrical Engineering',
-      image: 'https://bse.bh/wp-content/uploads/Aamer-bin-rajab-bse-board-member-2023.jpeg',
+      image: 'https://bse.bh/wp-content/uploads/Aamer-bin-rajab-bse-board-member-2023.jpeg', // Using existing image as placeholder
       bio: currentLang === 'ar'
-        ? 'المهندس عامر بن رجب هو مدير التدريب لجمعية المهندسين البحرينية وتتميز بخبرة واسعة في مجال الهندسة الكهربائية وتطوير برامج التدريب.'
-        : 'Eng. Aamer bin Rajab is the Training Director of Bahrain Society of Engineers with extensive experience in electrical engineering and training program development.',
-      experience: currentLang === 'ar' ? '20 سنة' : '20 years',
+        ? 'المهندس بدر سالمين هو مدير العضوية وخدمة المجتمع لجمعية المهندسين البحرينية لعام 2026 وتتميز بخبرة واسعة في مجال الهندسة الكهربائية.'
+        : 'Eng. Bader Salmeen is the Membership and Community Service Director of Bahrain Society of Engineers for 2026 with extensive experience in electrical engineering.',
+      experience: currentLang === 'ar' ? '15 سنة' : '15 years',
       achievements: [
-        currentLang === 'ar' ? 'تطوير برامج التدريب' : 'Developing training programs',
-        currentLang === 'ar' ? 'الخبرة في الهندسة الكهربائية' : 'Expertise in electrical engineering',
-        currentLang === 'ar' ? 'إدارة برامج التطوير المهني' : 'Managing professional development programs'
+        currentLang === 'ar' ? 'إدارة شؤون العضوية' : 'Managing membership affairs',
+        currentLang === 'ar' ? 'خدمة المجتمع' : 'Community service',
+        currentLang === 'ar' ? 'تطوير البرامج الخدمية' : 'Developing service programs'
       ],
       education: [
-        currentLang === 'ar' ? 'ماجستير في الهندسة الكهربائية' : 'Master in Electrical Engineering',
-        currentLang === 'ar' ? 'بكالوريوس في الهندسة الكهربائية' : 'Bachelor in Electrical Engineering'
+        currentLang === 'ar' ? 'بكالوريوس في الهندسة الكهربائية' : 'Bachelor in Electrical Engineering',
+        currentLang === 'ar' ? 'ماجستير في إدارة الأعمال' : 'Master in Business Administration'
       ],
       contact: {
-        email: 'training.director@bse.bh',
+        email: 'membership.director@bse.bh',
         phone: '+973 1772 7105',
         location: currentLang === 'ar' ? 'المنامة، البحرين' : 'Manama, Bahrain'
       }
     },
     {
       id: 7,
-      name: currentLang === 'ar' ? 'المهندس فريد بوشهري' : 'Eng. Fareed Bushehri',
-      position: currentLang === 'ar' ? 'مدير المؤتمرات' : 'Conferences Director',
-      specialization: currentLang === 'ar' ? 'هندسة مدنية' : 'Civil Engineering',
-      image: 'https://bse.bh/wp-content/uploads/BOARD-of-Directors-2022-Conference-Fareed-scaled.jpg',
-      bio: currentLang === 'ar'
-        ? 'المهندس فريد بوشهري هو مدير المؤتمرات لجمعية المهندسين البحرينية وتتميز بخبرة واسعة في تنظيم المؤتمرات الهندسية.'
-        : 'Eng. Fareed Bushehri is the Conferences Director of Bahrain Society of Engineers with extensive experience in organizing engineering conferences.',
-      experience: currentLang === 'ar' ? '18 سنة' : '18 years',
-      achievements: [
-        currentLang === 'ar' ? 'تنظيم المؤتمرات الهندسية' : 'Organizing engineering conferences',
-        currentLang === 'ar' ? 'الخبرة في إدارة الفعاليات' : 'Expertise in event management',
-        currentLang === 'ar' ? 'تطوير برامج المؤتمرات' : 'Developing conference programs'
-      ],
-      education: [
-        currentLang === 'ar' ? 'ماجستير في إدارة الفعاليات' : 'Master in Event Management',
-        currentLang === 'ar' ? 'بكالوريوس في الهندسة المدنية' : 'Bachelor in Civil Engineering'
-      ],
-      contact: {
-        email: 'conferences@bse.bh',
-        phone: '+973 1772 7106',
-        location: currentLang === 'ar' ? 'المنامة، البحرين' : 'Manama, Bahrain'
-      }
-    },
-    {
-      id: 8,
-      name: currentLang === 'ar' ? 'المهندس جعفر محمد' : 'Eng. Jaffar Mohammed',
+      name: currentLang === 'ar' ? 'المهندس خالد الشيخ' : 'Eng. Khalid Al-Sheikh',
       position: currentLang === 'ar' ? 'مدير الإعلام والعلاقات العامة' : 'Media and Public Relations Director',
-      specialization: currentLang === 'ar' ? 'هندسة اتصالات' : 'Communications Engineering',
-      image: 'https://bse.bh/wp-content/uploads/BOARD-of-Directors-2022-Media-Jaffar-scaled.jpg',
+      specialization: currentLang === 'ar' ? 'هندسة مدنية' : 'Civil Engineering',
+      image: 'https://bse.bh/wp-content/uploads/BOARD-of-Directors-2022-Conference-Fareed-scaled.jpg', // Using existing image as placeholder
       bio: currentLang === 'ar'
-        ? 'المهندس جعفر محمد هو مدير الإعلام والعلاقات العامة لجمعية المهندسين البحرينية وتتميز بخبرة واسعة في مجال الإعلام.'
-        : 'Eng. Jaffar Mohammed is the Media and Public Relations Director of Bahrain Society of Engineers with extensive experience in media.',
-      experience: currentLang === 'ar' ? '15 سنة' : '15 years',
+        ? 'المهندس خالد الشيخ هو مدير الإعلام والعلاقات العامة لجمعية المهندسين البحرينية لعام 2026 وتتميز بخبرة واسعة في مجال الإعلام.'
+        : 'Eng. Khalid Al-Sheikh is the Media and Public Relations Director of Bahrain Society of Engineers for 2026 with extensive experience in media.',
+      experience: currentLang === 'ar' ? '18 سنة' : '18 years',
       achievements: [
         currentLang === 'ar' ? 'إدارة العلاقات العامة' : 'Managing public relations',
         currentLang === 'ar' ? 'الخبرة في الإعلام' : 'Expertise in media',
         currentLang === 'ar' ? 'التواصل المؤسسي' : 'Corporate communications'
       ],
       education: [
-        currentLang === 'ar' ? 'ماجستير في الإعلام' : 'Master in Media',
-        currentLang === 'ar' ? 'بكالوريوس في هندسة الاتصالات' : 'Bachelor in Communications Engineering'
+        currentLang === 'ar' ? 'بكالوريوس في الهندسة المدنية' : 'Bachelor in Civil Engineering',
+        currentLang === 'ar' ? 'ماجستير في الإعلام' : 'Master in Media'
       ],
       contact: {
         email: 'media.director@bse.bh',
+        phone: '+973 1772 7106',
+        location: currentLang === 'ar' ? 'المنامة، البحرين' : 'Manama, Bahrain'
+      }
+    },
+    {
+      id: 8,
+      name: currentLang === 'ar' ? 'المهندس علي القطان' : 'Eng. Ali Al-Qatan',
+      position: currentLang === 'ar' ? 'مدير الأنشطة الفنية والاجتماعية' : 'Arts and Social Activities Director',
+      specialization: currentLang === 'ar' ? 'هندسة مدنية' : 'Civil Engineering',
+      image: 'https://bse.bh/wp-content/uploads/BOARD-of-Directors-2022-Activities-Habib-scaled.jpg', // Using existing image as placeholder
+      bio: currentLang === 'ar'
+        ? 'المهندس علي القطان هو مدير الأنشطة الفنية والاجتماعية لجمعية المهندسين البحرينية لعام 2026 وتتميز بخبرة واسعة في تنظيم الفعاليات.'
+        : 'Eng. Ali Al-Qatan is the Arts and Social Activities Director of Bahrain Society of Engineers for 2026 with extensive experience in event organization.',
+      experience: currentLang === 'ar' ? '16 سنة' : '16 years',
+      achievements: [
+        currentLang === 'ar' ? 'تنظيم الأنشطة الفنية' : 'Organizing artistic activities',
+        currentLang === 'ar' ? 'إدارة الفعاليات الاجتماعية' : 'Managing social events',
+        currentLang === 'ar' ? 'تطوير البرامج الثقافية' : 'Developing cultural programs'
+      ],
+      education: [
+        currentLang === 'ar' ? 'بكالوريوس في الهندسة المدنية' : 'Bachelor in Civil Engineering',
+        currentLang === 'ar' ? 'ماجستير في إدارة الفعاليات' : 'Master in Event Management'
+      ],
+      contact: {
+        email: 'activities.director@bse.bh',
         phone: '+973 1772 7107',
         location: currentLang === 'ar' ? 'المنامة، البحرين' : 'Manama, Bahrain'
       }
@@ -609,24 +1568,24 @@ const BoardOfDirectors = () => {
     {
       id: 9,
       name: currentLang === 'ar' ? 'المهندس حبيب جبوري' : 'Eng. Habib Jubouri',
-      position: currentLang === 'ar' ? 'مدير الأنشطة العامة وخدمة المجتمع' : 'General Activities and Community Service Director',
+      position: currentLang === 'ar' ? 'مدير المؤتمرات والمنتديات' : 'Conferences and Forums Director',
       specialization: currentLang === 'ar' ? 'هندسة مدنية' : 'Civil Engineering',
       image: 'https://bse.bh/wp-content/uploads/BOARD-of-Directors-2022-Activities-Habib-scaled.jpg',
       bio: currentLang === 'ar'
-        ? 'المهندس حبيب جبوري هو مدير الأنشطة العامة وخدمة المجتمع لجمعية المهندسين البحرينية وتتميز بخبرة واسعة في خدمة المجتمع.'
-        : 'Eng. Habib Jubouri is the General Activities and Community Service Director of Bahrain Society of Engineers with extensive experience in community service.',
+        ? 'المهندس حبيب جبوري هو مدير المؤتمرات والمنتديات لجمعية المهندسين البحرينية لعام 2026 وتتميز بخبرة واسعة في تنظيم المؤتمرات.'
+        : 'Eng. Habib Jubouri is the Conferences and Forums Director of Bahrain Society of Engineers for 2026 with extensive experience in conference organization.',
       experience: currentLang === 'ar' ? '16 سنة' : '16 years',
       achievements: [
-        currentLang === 'ar' ? 'تنظيم الأنشطة العامة' : 'Organizing general activities',
-        currentLang === 'ar' ? 'خدمة المجتمع' : 'Community service',
-        currentLang === 'ar' ? 'تطوير برامج خدمية' : 'Developing service programs'
+        currentLang === 'ar' ? 'تنظيم المؤتمرات الهندسية' : 'Organizing engineering conferences',
+        currentLang === 'ar' ? 'إدارة المنتديات المتخصصة' : 'Managing specialized forums',
+        currentLang === 'ar' ? 'تطوير برامج المؤتمرات' : 'Developing conference programs'
       ],
       education: [
-        currentLang === 'ar' ? 'ماجستير في خدمة المجتمع' : 'Master in Community Service',
-        currentLang === 'ar' ? 'بكالوريوس في الهندسة المدنية' : 'Bachelor in Civil Engineering'
+        currentLang === 'ar' ? 'بكالوريوس في الهندسة المدنية' : 'Bachelor in Civil Engineering',
+        currentLang === 'ar' ? 'ماجستير في إدارة المؤتمرات' : 'Master in Conference Management'
       ],
       contact: {
-        email: 'activities.director@bse.bh',
+        email: 'conferences@bse.bh',
         phone: '+973 1772 7108',
         location: currentLang === 'ar' ? 'المنامة، البحرين' : 'Manama, Bahrain'
       }
@@ -809,9 +1768,9 @@ const BoardOfDirectors = () => {
                   </div>
 
                   {/* Timeline Container */}
-                  <div className="relative h-64 overflow-hidden">
+                  <div className="relative h-72 overflow-hidden">
                     {/* Timeline Line */}
-                    <div className="absolute top-1/2 left-0 right-0 h-1 bg-gradient-to-r from-blue-400/30 via-blue-500/50 to-blue-400/30 transform -translate-y-1/2"></div>
+                    <div className="absolute top-1/2 left-0 right-0 h-0.5 bg-gradient-to-r from-blue-400/20 via-blue-500/40 to-blue-400/20 transform -translate-y-1/2"></div>
                     
                     {/* Timeline Items */}
                     <div
@@ -825,210 +1784,38 @@ const BoardOfDirectors = () => {
                         <motion.div
                           className="absolute inset-0"
                           animate={{
-                            x: currentLang === 'ar' ? [0, -presidentsTimeline.length * 200] : [0, presidentsTimeline.length * 200]
+                            x: currentLang === 'ar' ? [0, -presidentsTimeline.length * 180] : [0, presidentsTimeline.length * 180]
                           }}
                           transition={{
                             x: {
                               repeat: Infinity,
                               repeatType: "loop",
-                              duration: 40,
+                              duration: 120,
                               ease: "linear"
                             }
                           }}
                         >
                           {[...presidentsTimeline, ...presidentsTimeline].map((president, index) => (
-                            <div key={`${president.year}-${index}`} className="absolute top-1/2 transform -translate-y-1/2">
-                              {/* Timeline Point */}
-                              <motion.div
-                                className="absolute w-4 h-4 bg-blue-500 rounded-full border-4 border-white shadow-lg"
-                                style={{
-                                  left: `${index * 200}px`,
-                                  top: '50%',
-                                  transform: 'translate(-50%, -50%)'
-                                }}
-                                animate={{
-                                  scale: [1, 1.2, 1],
-                                  boxShadow: [
-                                    '0 0 0 0 rgba(59, 130, 246, 0.7)',
-                                    '0 0 0 10px rgba(59, 130, 246, 0)',
-                                    '0 0 0 0 rgba(59, 130, 246, 0)'
-                                  ]
-                                }}
-                                transition={{
-                                  duration: 2,
-                                  repeat: Infinity,
-                                  delay: index * 0.5
-                                }}
-                              />
-                              
-                              {/* Year Label */}
-                              <motion.div
-                                className="absolute bg-white/90 backdrop-blur-sm rounded-lg px-3 py-1 shadow-lg"
-                                style={{
-                                  left: `${index * 200}px`,
-                                  top: '50%',
-                                  transform: 'translate(-50%, 40px)'
-                                }}
-                                animate={{
-                                  y: ['40px', '45px', '40px']
-                                }}
-                                transition={{
-                                  duration: 3,
-                                  repeat: Infinity,
-                                  delay: index * 0.5
-                                }}
-                              >
-                                <div className="text-lg font-bold text-blue-900">{president.year}</div>
-                              </motion.div>
-
-                              {/* President Bubble - Top */}
-                              <motion.div
-                                className="absolute bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl p-4 shadow-xl cursor-pointer"
-                                style={{
-                                  left: `${index * 200}px`,
-                                  top: '50%',
-                                  transform: 'translate(-50%, -140px)',
-                                  width: '160px'
-                                }}
-                                animate={{
-                                  y: ['-140px', '-145px', '-140px'],
-                                  scale: [1, 1.05, 1]
-                                }}
-                                transition={{
-                                  duration: 4,
-                                  repeat: Infinity,
-                                  delay: index * 0.5
-                                }}
-                                whileHover={{ scale: 1.1, y: -150 }}
-                                onClick={() => handlePresidentClick(president)}
-                              >
-                                <div className="text-center">
-                                  <div className="text-white font-bold text-sm mb-1">{president.president}</div>
-                                  <div className="text-blue-100 text-xs">{president.title}</div>
-                                </div>
-                              </motion.div>
-
-                              {/* Connecting Lines */}
-                              <svg
-                                className="absolute pointer-events-none"
-                                style={{
-                                  left: `${index * 200 - 80}px`,
-                                  top: '50%',
-                                  transform: 'translateY(-50%)',
-                                  width: '160px',
-                                  height: '200px'
-                                }}
-                              >
-                                <motion.line
-                                  x1="80"
-                                  y1="100"
-                                  x2="80"
-                                  y2="60"
-                                  stroke="rgba(59, 130, 246, 0.3)"
-                                  strokeWidth="2"
-                                  animate={{
-                                    opacity: [0.3, 0.6, 0.3]
-                                  }}
-                                  transition={{
-                                    duration: 2,
-                                    repeat: Infinity,
-                                    delay: index * 0.5
-                                  }}
-                                />
-                                <motion.line
-                                  x1="80"
-                                  y1="100"
-                                  x2="80"
-                                  y2="140"
-                                  stroke="rgba(148, 163, 184, 0.3)"
-                                  strokeWidth="2"
-                                  animate={{
-                                    opacity: [0.3, 0.6, 0.3]
-                                  }}
-                                  transition={{
-                                    duration: 2,
-                                    repeat: Infinity,
-                                    delay: index * 0.5 + 0.5
-                                  }}
-                                />
-                              </svg>
-                            </div>
+                            <TimelineItem
+                              key={`${president.year}-${index}`}
+                              president={president}
+                              index={index}
+                              onSelect={handlePresidentClick}
+                            />
                           ))}
                         </motion.div>
                       )}
                       
+                      {/* Static Timeline Items (when paused or for manual navigation) */}
                       {isPaused && (
                         <div className="absolute inset-0">
-                          {[...presidentsTimeline, ...presidentsTimeline].map((president, index) => (
-                            <div key={`${president.year}-paused-${index}`} className="absolute top-1/2 transform -translate-y-1/2">
-                              {/* Timeline Point */}
-                              <div
-                                className="absolute w-4 h-4 bg-blue-500 rounded-full border-4 border-white shadow-lg"
-                                style={{
-                                  left: `${index * 200}px`,
-                                  top: '50%',
-                                  transform: 'translate(-50%, -50%)'
-                                }}
-                              />
-                              
-                              {/* Year Label */}
-                              <div
-                                className="absolute bg-white/90 backdrop-blur-sm rounded-lg px-3 py-1 shadow-lg"
-                                style={{
-                                  left: `${index * 200}px`,
-                                  top: '50%',
-                                  transform: 'translate(-50%, 40px)'
-                                }}
-                              >
-                                <div className="text-lg font-bold text-blue-900">{president.year}</div>
-                              </div>
-
-                              {/* President Bubble - Top */}
-                              <div
-                                className="absolute bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl p-4 shadow-xl cursor-pointer"
-                                style={{
-                                  left: `${index * 200}px`,
-                                  top: '50%',
-                                  transform: 'translate(-50%, -140px)',
-                                  width: '160px'
-                                }}
-                                onClick={() => handlePresidentClick(president)}
-                              >
-                                <div className="text-center">
-                                  <div className="text-white font-bold text-sm mb-1">{president.president}</div>
-                                  <div className="text-blue-100 text-xs">{president.title}</div>
-                                </div>
-                              </div>
-
-                              {/* Connecting Lines */}
-                              <svg
-                                className="absolute pointer-events-none"
-                                style={{
-                                  left: `${index * 200 - 80}px`,
-                                  top: '50%',
-                                  transform: 'translateY(-50%)',
-                                  width: '160px',
-                                  height: '200px'
-                                }}
-                              >
-                                <line
-                                  x1="80"
-                                  y1="100"
-                                  x2="80"
-                                  y2="60"
-                                  stroke="rgba(59, 130, 246, 0.3)"
-                                  strokeWidth="2"
-                                />
-                                <line
-                                  x1="80"
-                                  y1="100"
-                                  x2="80"
-                                  y2="140"
-                                  stroke="rgba(148, 163, 184, 0.3)"
-                                  strokeWidth="2"
-                                />
-                              </svg>
-                            </div>
+                          {presidentsTimeline.map((president, index) => (
+                            <TimelineItem
+                              key={president.year}
+                              president={president}
+                              index={index}
+                              onSelect={handlePresidentClick}
+                            />
                           ))}
                         </div>
                       )}

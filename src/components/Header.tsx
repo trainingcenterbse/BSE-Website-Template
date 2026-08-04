@@ -97,9 +97,9 @@ const Header = () => {
   };
 
   const tabVariants = {
-    hidden: { scale: 0.8, opacity: 0 },
-    visible: { scale: 1, opacity: 1 },
-    exit: { scale: 0.8, opacity: 0 }
+    hidden: { opacity: 0, y: -10 },
+    visible: { opacity: 1, y: 0 },
+    exit: { opacity: 0, y: -10 }
   };
 
   useEffect(() => {
@@ -225,10 +225,13 @@ const Header = () => {
           {/* Main Header with Glassmorphism — morphs into the mega-menu surface */}
           <motion.div
             animate={{
-              maxWidth: isMegaOpen ? 1280 : 1152,
               borderRadius: isMegaOpen ? 28 : 9999,
+              maxWidth: isMegaOpen ? 1280 : 1152,
             }}
-            transition={{ type: "spring", stiffness: 160, damping: 24, mass: 0.9 }}
+            transition={{
+              borderRadius: { type: "spring", stiffness: 160, damping: 24, mass: 0.9 },
+              maxWidth: { type: "spring", stiffness: 160, damping: 24, mass: 0.9, delay: isMegaOpen ? 0.15 : 0 }
+            }}
             className="mx-auto bg-white/95 dark:bg-blue-900/95 backdrop-blur-xl shadow-2xl border border-white/20 dark:border-blue-700/50 my-4 relative overflow-hidden"
           >
 
@@ -243,9 +246,9 @@ const Header = () => {
                   {activeTab && (
                     <motion.button
                       key="back-button"
-                      initial={{ scale: 0, opacity: 0 }}
-                      animate={{ scale: 1, opacity: 1 }}
-                      exit={{ scale: 0, opacity: 0 }}
+                      initial={{ opacity: 0, x: -10 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: -10 }}
                       transition={{ duration: 0.3 }}
                       onClick={handleBack}
                       className="p-1.5 rounded-full relative group overflow-hidden"
@@ -294,11 +297,11 @@ const Header = () => {
                       {!activeTab && (
                         <motion.div
                           key="association-name"
-                          initial={{ opacity: 1, scale: 1 }}
+                          initial={{ opacity: 1, y: 0 }}
                           exit={{ 
                             opacity: 0, 
-                            scale: 0.3,
-                            transition: { duration: 0.8, ease: "easeInOut" }
+                            y: -10,
+                            transition: { duration: 0.3, ease: "easeInOut" }
                           }}
                           className="flex flex-col"
                         >
@@ -322,18 +325,18 @@ const Header = () => {
                           key={`tab-name-${activeTab}-${activeSubItem}`}
                           initial={{ 
                             opacity: 0, 
-                            scale: 0.3,
-                            transition: { duration: 0.8, ease: "easeInOut" }
+                            y: 10,
+                            transition: { duration: 0.3, ease: "easeInOut" }
                           }}
                           animate={{ 
                             opacity: 1, 
-                            scale: 1,
-                            transition: { duration: 0.8, ease: "easeInOut" }
+                            y: 0,
+                            transition: { duration: 0.3, ease: "easeInOut" }
                           }}
                           exit={{ 
                             opacity: 0, 
-                            scale: 0.3,
-                            transition: { duration: 0.8, ease: "easeInOut" }
+                            y: 10,
+                            transition: { duration: 0.3, ease: "easeInOut" }
                           }}
                           className="flex flex-col"
                         >
@@ -352,9 +355,9 @@ const Header = () => {
                 {!activeTab && !isSearchOpen && (
                   <motion.nav
                     key="normal-nav"
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.9 }}
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
                     transition={{ duration: 0.3 }}
                     className="hidden md:flex items-center gap-1 relative flex-shrink-0"
                   >

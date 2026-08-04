@@ -5,6 +5,7 @@ import { Users, Building, Award, TrendingUp, Calendar, Target, Shield, Globe, Ar
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import FloatingSidebar, { SidebarSection } from "@/components/FloatingSidebar";
+import CoinLogo3D from "@/components/CoinLogo3D";
 
 const AboutUs = () => {
   const [currentLang, setCurrentLang] = useState('ar');
@@ -513,19 +514,17 @@ const AboutUs = () => {
                         />
                       ))}
                       
-                      {/* Center Text */}
+                      {/* Center Logo - 3D Coin */}
                       <motion.div
-                        initial={{ scale: 0 }}
-                        whileInView={{ scale: 1 }}
+                        initial={{ scale: 0, opacity: 0 }}
+                        whileInView={{ scale: 1, opacity: 1 }}
                         transition={{ duration: 0.8, delay: 1, type: "spring" }}
                         className="absolute inset-0 flex items-center justify-center"
                       >
                         <div className="text-center">
-                          <div className="text-3xl font-bold bg-gradient-to-r from-blue-900 to-blue-600 bg-clip-text text-transparent">
-                            BSE
-                          </div>
-                          <div className="text-sm text-gray-600 mt-1">
-                            {currentLang === 'ar' ? '1972' : 'Since 1972'}
+                          <CoinLogo3D size={180} autoRotate={false} />
+                          <div className="text-sm text-gray-600 mt-4 font-semibold">
+                            {currentLang === 'ar' ? 'منذ 1972' : 'Since 1972'}
                           </div>
                         </div>
                       </motion.div>

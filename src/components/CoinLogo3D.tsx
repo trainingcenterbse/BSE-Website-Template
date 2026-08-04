@@ -8,7 +8,7 @@ import bseLogo from "@/assets/bse-logo.png";
 const RADIUS = 1;
 const THICKNESS = 0.16;
 
-const Coin = () => {
+const Coin = ({ autoRotate = true }: { autoRotate?: boolean }) => {
   const group = useRef<THREE.Group>(null);
   const logo = useLoader(TextureLoader, bseLogo);
 
@@ -17,9 +17,9 @@ const Coin = () => {
     logo.anisotropy = 8;
   }, [logo]);
 
-  // slow, calm rotation: one full turn every ~26 seconds
+  // slow, calm rotation: one full turn every ~26 seconds (only if autoRotate is true)
   useFrame((_, delta) => {
-    if (group.current) group.current.rotation.y += delta * ((Math.PI * 2) / 26);
+    if (autoRotate && group.current) group.current.rotation.y += delta * ((Math.PI * 2) / 26);
   });
 
   return (
@@ -53,7 +53,7 @@ const Coin = () => {
 };
 
 /** Real-time 3D coin minted from the society emblem (three.js / react-three-fiber) */
-const CoinLogo3D = ({ size = 320 }: { size?: number }) => (
+const CoinLogo3D = ({ size = 320, autoRotate = true }: { size?: number; autoRotate?: boolean }) => (
   <div style={{ width: size, height: size }} className="select-none" aria-hidden="true">
     <Canvas
       dpr={[1, 2]}
@@ -67,7 +67,7 @@ const CoinLogo3D = ({ size = 320 }: { size?: number }) => (
       <spotLight position={[0, 4, 3]} angle={0.6} intensity={1.6} penumbra={1} />
       <Suspense fallback={null}>
         <Float speed={0.8} rotationIntensity={0.08} floatIntensity={0.35}>
-          <Coin />
+          <Coin autoRotate={autoRotate} />
         </Float>
         <ContactShadows position={[0, -1.5, 0]} opacity={0.3} scale={6} blur={2.8} far={3} />
       </Suspense>
