@@ -517,13 +517,13 @@ const AboutUs = () => {
                       
                       {/* Center Logo - 3D Coin */}
                       <motion.div
-                        initial={{ scale: 0, opacity: 0 }}
-                        whileInView={{ scale: 1, opacity: 1 }}
-                        transition={{ duration: 0.8, delay: 1, type: "spring" }}
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.9, delay: 0.2 }}
                         className="absolute inset-0 flex items-center justify-center"
                       >
                         <div className="text-center">
-                          <CoinLogo3D size={180} autoRotate={false} />
+                          <CoinLogo3D size={200} autoRotate={false} />
                           <div className="text-sm text-gray-600 mt-4 font-semibold">
                             {currentLang === 'ar' ? 'منذ 1972' : 'Since 1972'}
                           </div>

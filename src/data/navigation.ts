@@ -19,6 +19,14 @@ export interface NavGroup {
 
 export const navGroups: NavGroup[] = [
   {
+    id: "home",
+    ar: "الرئيسية",
+    en: "Home",
+    items: [
+      { ar: "الرئيسية", en: "Home", path: "/" },
+    ],
+  },
+  {
     id: "about",
     ar: "عن الجمعية",
     en: "About the Society",
@@ -32,24 +40,11 @@ export const navGroups: NavGroup[] = [
     ],
   },
   {
-    id: "training",
-    ar: "مركز التدريب",
-    en: "Training Center",
-    items: [
-      { ar: "مركز التدريب", en: "Training Center", path: "/training-center" },
-      { ar: "عن المركز", en: "About the Center", path: "/about-training-center" },
-      { ar: "مجلس الأمناء", en: "Board of Trustees", path: "/training-trustees" },
-      { ar: "الاعتمادات الدولية", en: "International Accreditations", path: "/training-accreditations" },
-      { ar: "الدورات التدريبية", en: "Training Courses", path: "/training-courses" },
-    ],
-  },
-  {
     id: "media",
     ar: "الأخبار والفعاليات",
     en: "News & Events",
     items: [
       { ar: "آخر الأخبار", en: "Latest News", path: "/#news" },
-      { ar: "الفعاليات والمؤتمرات", en: "Events & Conferences", path: "/#events" },
       { ar: "المقالات", en: "Articles", path: "/#articles" },
       { ar: "دليل الهوية", en: "Style Guide", path: "/style-guide" },
     ],
