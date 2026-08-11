@@ -36,7 +36,6 @@ export const navGroups: NavGroup[] = [
       { ar: "مجلس الإدارة", en: "Board of Directors", path: "/board-of-directors" },
       { ar: "الأنظمة واللوائح", en: "Bylaws & Regulations", path: "/systems-regulations" },
       { ar: "تقارير الجمعية العمومية", en: "General Assembly Reports", path: "/general-assembly-reports" },
-      { ar: "لجان الجمعية", en: "Society Committees", path: "/committees" },
     ],
   },
   {
@@ -55,7 +54,9 @@ export const navGroups: NavGroup[] = [
     en: "Members & Services",
     items: [
       { ar: "مركز العضوية", en: "Membership Center", path: "/#membership" },
+      { ar: "لجان الجمعية", en: "Society Committees", path: "/committees" },
       { ar: "خدمات الجمعية", en: "Society Services", path: "/#services" },
+      { ar: "برنامج المنح", en: "Scholarships", path: "/scholarships" },
       { ar: "تواصل معنا", en: "Contact Us", path: "/contact" },
       { ar: "سياسة الخصوصية", en: "Privacy Policy", path: "/privacy" },
       { ar: "الشروط والأحكام", en: "Terms & Conditions", path: "/terms" },
