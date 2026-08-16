@@ -1,5 +1,11 @@
 # Welcome to your Lovable project
 
+<!-- 
+Development & Code by Ultra Cube Team
+www.ucubetech.com
+https://github.com/ultra-cube
+-->
+
 ## Project info
 
 **URL**: https://lovable.dev/projects/7410f81b-8218-4f2d-bb32-1ba1f84eabb2

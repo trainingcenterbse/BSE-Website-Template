@@ -1,5 +1,11 @@
 # FloatingSidebar Component
 
+<!-- 
+Development & Code by Ultra Cube Team
+www.ucubetech.com
+https://github.com/ultra-cube
+-->
+
 A reusable, elegant floating sidebar navigation component for React applications with TypeScript support.
 
 ## Features

@@ -1,3 +1,7 @@
+// Development & Code by Ultra Cube Team
+// www.ucubetech.com
+// https://github.com/ultra-cube
+
 import React, { createContext, useContext, useEffect, useState, useCallback } from "react";
 
 export type Lang = "ar" | "en";

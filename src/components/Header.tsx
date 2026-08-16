@@ -1,3 +1,7 @@
+// Development & Code by Ultra Cube Team
+// www.ucubetech.com
+// https://github.com/ultra-cube
+
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useSpring, animated } from "@react-spring/web";

@@ -1,3 +1,7 @@
+// Development & Code by Ultra Cube Team
+// www.ucubetech.com
+// https://github.com/ultra-cube
+
 import { motion } from "framer-motion";
 import bseLogo from "@/assets/bse-logo.png";
 import { MapPin, Phone, Mail } from "lucide-react";
