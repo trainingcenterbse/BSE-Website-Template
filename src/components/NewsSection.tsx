@@ -1,265 +1,517 @@
-import { motion } from "framer-motion";
-import { Calendar, ArrowRight, FileText, MessageSquare } from "lucide-react";
+import { useState, useEffect, useCallback } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import {
+  FileText, RefreshCw, Search, X, ExternalLink, Calendar,
+  Zap, Filter, ArrowRight, ArrowLeft, ChevronRight,
+} from "lucide-react";
+import {
+  BSENewsArticle,
+  getCachedNews,
+  filterByCategory,
+  searchNews,
+  loadNews,
+  categoryLabels,
+  getMagazines,
+  getNewsletters,
+  fetchLatestNews,
+} from "@/services/bseNewsService";
+import { useLanguage } from "@/contexts/LanguageContext";
 
-interface NewsSectionProps {
-  currentLang: string;
-}
+type Category = BSENewsArticle["category"] | "all";
 
-const NewsSection = ({ currentLang }: NewsSectionProps) => {
-  const news = [
-    {
-      id: 1,
-      title: currentLang === 'ar' ? 'إطلاق برنامج التدريب المهني الجديد' : 'Launch of New Professional Training Program',
-      description: currentLang === 'ar' ? 'برنامج تدريبي متطور يهدف إلى تطوير المهارات الهندسية للشباب' : 'Advanced training program aimed at developing engineering skills for youth',
-      date: '2024-12-15',
-      image: 'https://images.unsplash.com/photo-1557804506-669a67965ba0?w=800&h=400&fit=crop',
-      category: currentLang === 'ar' ? 'تدريب' : 'Training',
-      featured: true
-    },
-    {
-      id: 2,
-      title: currentLang === 'ar' ? 'شراكة استراتيجية مع وزارة الأشغال' : 'Strategic Partnership with Ministry of Works',
-      description: currentLang === 'ar' ? 'تعاون لتطوير المعايير الهندسية الوطنية' : 'Cooperation to develop national engineering standards',
-      date: '2024-12-10',
-      image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&h=400&fit=crop',
-      category: currentLang === 'ar' ? 'شراكات' : 'Partnerships',
-      featured: false
-    },
-    {
-      id: 3,
-      title: currentLang === 'ar' ? 'توقيع اتفاقية تعاون مع جامعة البحرين' : 'Cooperation Agreement with University of Bahrain',
-      description: currentLang === 'ar' ? 'برنامج مشترك للأبحاث الهندسية المبتكرة' : 'Joint program for innovative engineering research',
-      date: '2024-12-08',
-      image: 'https://images.unsplash.com/photo-1559028012-cad4cdaa89f1?w=800&h=400&fit=crop',
-      category: currentLang === 'ar' ? 'أبحاث' : 'Research',
-      featured: false
-    },
-    {
-      id: 4,
-      title: currentLang === 'ar' ? 'تكريم الفائزين في مسابقة الابتكار الهندسي' : 'Awarding Winners of Engineering Innovation Competition',
-      description: currentLang === 'ar' ? 'تكريم المشاريع المبتكرة للمهندسين الشباب' : 'Honoring innovative projects by young engineers',
-      date: '2024-12-05',
-      image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=400&fit=crop',
-      category: currentLang === 'ar' ? 'جوائز' : 'Awards',
-      featured: false
-    }
-  ];
+const CATEGORIES: { id: Category; ar: string; en: string }[] = [
+  { id: "all", ar: "الكل", en: "All" },
+  { id: "conference", ar: "مؤتمرات", en: "Conferences" },
+  { id: "training", ar: "تدريب", en: "Training" },
+  { id: "partnership", ar: "شراكات", en: "Partnerships" },
+  { id: "award", ar: "جوائز", en: "Awards" },
+  { id: "general", ar: "عام", en: "General" },
+  { id: "magazine", ar: "مجلة", en: "Magazine" },
+  { id: "newsletter", ar: "نشرة", en: "Newsletter" },
+];
 
-  const getCategoryColor = (category: string) => {
-    switch (category) {
-      case 'تدريب':
-      case 'Training':
-        return 'bg-blue-100 text-blue-600';
-      case 'شراكات':
-      case 'Partnerships':
-        return 'bg-green-100 text-green-600';
-      case 'أبحاث':
-      case 'Research':
-        return 'bg-purple-100 text-purple-600';
-      case 'جوائز':
-      case 'Awards':
-        return 'bg-yellow-100 text-yellow-600';
-      default:
-        return 'bg-gray-100 text-gray-600';
-    }
-  };
+// ─── Skeleton Card ─────────────────────────────────────────────────────────────
+const SkeletonCard = () => (
+  <div className="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 animate-pulse">
+    <div className="w-full h-48 bg-gray-200" />
+    <div className="p-5 space-y-3">
+      <div className="h-3 bg-gray-200 rounded-full w-1/3" />
+      <div className="h-4 bg-gray-200 rounded-full w-full" />
+      <div className="h-4 bg-gray-200 rounded-full w-4/5" />
+      <div className="h-3 bg-gray-100 rounded-full w-1/2" />
+    </div>
+  </div>
+);
+
+// ─── Featured Article Card ────────────────────────────────────────────────────
+const FeaturedCard = ({
+  article,
+  lang,
+}: {
+  article: BSENewsArticle;
+  lang: "ar" | "en";
+}) => {
+  const cat = categoryLabels[article.category];
+  const [imgError, setImgError] = useState(false);
 
   return (
-    <section className="py-20 lg:py-32 bg-gradient-to-br from-gray-50 via-white to-blue-50 relative overflow-hidden">
-      {/* Background Pattern */}
-      <div className="absolute inset-0">
-        <div className="absolute top-10 right-10 w-72 h-72 bg-blue-200/20 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-10 left-10 w-96 h-96 bg-indigo-200/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
+    <motion.a
+      href={article.url}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="group relative block overflow-hidden rounded-3xl shadow-xl"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6 }}
+      whileHover={{ y: -4 }}
+    >
+      {/* Image */}
+      <div className="relative h-72 md:h-96 overflow-hidden">
+        <img
+          src={imgError ? "https://bse.bh/wp-content/uploads/BSE-Building-Juffair.jpg" : article.image}
+          alt={lang === "ar" ? article.titleAr : article.titleEn}
+          onError={() => setImgError(true)}
+          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
       </div>
-      
+
+      {/* Content Overlay */}
+      <div className="absolute inset-0 flex flex-col justify-end p-6 md:p-8">
+        <div className="flex items-center gap-3 mb-3">
+          <span className={`text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full ${cat.bg} ${cat.color}`}>
+            {lang === "ar" ? cat.ar : cat.en}
+          </span>
+          <span className="text-white/70 text-sm flex items-center gap-1">
+            <Calendar className="w-3.5 h-3.5" />
+            {article.displayDate}
+          </span>
+        </div>
+        <h3 className="text-white text-xl md:text-2xl font-bold leading-snug mb-2 line-clamp-2">
+          {lang === "ar" ? article.titleAr : article.titleEn}
+        </h3>
+        <p className="text-white/80 text-sm line-clamp-2 mb-4">
+          {lang === "ar" ? article.descriptionAr : article.descriptionEn}
+        </p>
+        <div className="flex items-center gap-2 text-blue-300 text-sm font-semibold group-hover:text-white transition-colors">
+          <ExternalLink className="w-4 h-4" />
+          {lang === "ar" ? "اقرأ المزيد" : "Read more"}
+        </div>
+      </div>
+    </motion.a>
+  );
+};
+
+// ─── Standard Article Card ────────────────────────────────────────────────────
+const ArticleCard = ({
+  article,
+  lang,
+  delay = 0,
+}: {
+  article: BSENewsArticle;
+  lang: "ar" | "en";
+  delay?: number;
+}) => {
+  const cat = categoryLabels[article.category];
+  const [imgError, setImgError] = useState(false);
+
+  return (
+    <motion.a
+      href={article.url}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="group flex flex-col bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl border border-gray-100 hover:border-blue-200 transition-all duration-300"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, delay }}
+      whileHover={{ y: -4 }}
+    >
+      {/* Image */}
+      <div className="relative h-48 overflow-hidden flex-shrink-0">
+        <img
+          src={imgError ? "https://bse.bh/wp-content/uploads/BSE-Building-Juffair.jpg" : article.image}
+          alt={lang === "ar" ? article.titleAr : article.titleEn}
+          onError={() => setImgError(true)}
+          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+        />
+        <div className="absolute top-3 start-3">
+          <span className={`text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-full shadow-sm ${cat.bg} ${cat.color}`}>
+            {lang === "ar" ? cat.ar : cat.en}
+          </span>
+        </div>
+      </div>
+
+      {/* Content */}
+      <div className="p-5 flex flex-col flex-1">
+        <div className="flex items-center gap-1.5 text-gray-400 text-xs mb-2">
+          <Calendar className="w-3.5 h-3.5" />
+          {article.displayDate}
+        </div>
+        <h3 className="text-gray-900 font-bold text-base leading-snug mb-2 line-clamp-2 group-hover:text-blue-700 transition-colors">
+          {lang === "ar" ? article.titleAr : article.titleEn}
+        </h3>
+        <p className="text-gray-500 text-sm leading-relaxed line-clamp-2 flex-1">
+          {lang === "ar" ? article.descriptionAr : article.descriptionEn}
+        </p>
+        <div className="mt-4 flex items-center gap-1.5 text-blue-600 text-sm font-semibold opacity-0 group-hover:opacity-100 transition-opacity">
+          {lang === "ar" ? "اقرأ المزيد" : "Read more"}
+          {lang === "ar" ? <ArrowLeft className="w-4 h-4" /> : <ArrowRight className="w-4 h-4" />}
+        </div>
+      </div>
+    </motion.a>
+  );
+};
+
+// ─── Main NewsSection Component ───────────────────────────────────────────────
+
+interface NewsSectionProps {
+  currentLang?: string; // legacy prop – use LanguageContext instead
+  compact?: boolean;    // show fewer items (for home page)
+}
+
+const NewsSection = ({ compact = false }: NewsSectionProps) => {
+  const { lang, t } = useLanguage();
+  const Arrow = lang === "ar" ? ArrowLeft : ArrowRight;
+
+  const [articles, setArticles] = useState<BSENewsArticle[]>(() => getCachedNews());
+  const [isLive, setIsLive] = useState(false);
+  const [isRefreshing, setIsRefreshing] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [activeCategory, setActiveCategory] = useState<Category>("all");
+  const [searchQuery, setSearchQuery] = useState("");
+
+  // Try to load live news on mount
+  useEffect(() => {
+    let mounted = true;
+    (async () => {
+      const result = await loadNews();
+      if (mounted) {
+        setArticles(result.articles);
+        setIsLive(result.isLive);
+      }
+    })();
+    return () => { mounted = false; };
+  }, []);
+
+  // Manual refresh
+  const handleRefresh = useCallback(async () => {
+    setIsRefreshing(true);
+    setIsLoading(true);
+    try {
+      const liveNews = await fetchLatestNews();
+      setArticles(liveNews);
+      setIsLive(true);
+    } catch (error) {
+      console.error('Failed to refresh news:', error);
+      setArticles(getCachedNews());
+      setIsLive(false);
+    } finally {
+      setIsRefreshing(false);
+      setIsLoading(false);
+    }
+  }, []);
+
+  // Filter & search
+  const filtered = searchNews(
+    filterByCategory(articles, activeCategory),
+    searchQuery,
+    lang
+  );
+
+  const featured = filtered.find((a) => a.featured);
+  const rest = filtered.filter((a) => !a.featured);
+  const visibleRest = compact ? rest.slice(0, 3) : rest;
+
+  return (
+    <section
+      id="news"
+      className="py-20 lg:py-32 bg-gradient-to-br from-slate-50 via-white to-blue-50 relative overflow-hidden"
+    >
+      {/* Decorative blobs */}
+      <div className="absolute top-0 right-0 w-96 h-96 bg-blue-200/20 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-80 h-80 bg-indigo-200/20 rounded-full blur-3xl pointer-events-none" />
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-        <motion.div 
-          initial={{ opacity: 0, y: 30 }}
+
+        {/* ── Section Header ── */}
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-16"
+          viewport={{ once: true }}
+          transition={{ duration: 0.7 }}
+          className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12"
         >
-          <div className="inline-flex items-center justify-center mb-6">
-            <div className="h-px w-20 bg-gradient-to-r from-transparent to-blue-600"></div>
-            <div className="mx-8">
-              <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-slate-600 rounded-2xl flex items-center justify-center shadow-lg">
-                <FileText className="w-8 h-8 text-white" />
+          <div>
+            {/* Live badge */}
+            <div className="flex items-center gap-2 mb-3">
+              <div className="flex items-center gap-2 bg-white border border-blue-200 rounded-full px-3 py-1.5 shadow-sm">
+                <span className={`w-2 h-2 rounded-full ${isLive ? "bg-green-500 animate-pulse" : "bg-amber-400"}`} />
+                <Zap className="w-3.5 h-3.5 text-blue-600" />
+                <span className="text-xs font-bold text-blue-700">
+                  {isLive
+                    ? t("مباشر من BSE", "Live from BSE")
+                    : t("من الأرشيف المعتمد", "Verified Archive")}
+                </span>
               </div>
             </div>
-            <div className="h-px w-20 bg-gradient-to-r from-blue-600 to-transparent"></div>
+
+            <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-700 to-slate-700 bg-clip-text text-transparent">
+              {t("أحدث الأخبار", "Latest News")}
+            </h2>
+            <p className="text-lg text-gray-500 mt-2 max-w-xl">
+              {t(
+                "تابع آخر أخبار جمعية المهندسين البحرينية وفعالياتها",
+                "Follow the latest news and events from the Bahrain Society of Engineers"
+              )}
+            </p>
           </div>
-          
-          <h2 className="text-4xl lg:text-6xl font-bold bg-gradient-to-r from-blue-600 to-slate-700 bg-clip-text text-transparent mb-4">
-            {currentLang === 'ar' ? 'أحدث الأخبار' : 'Latest News'}
-          </h2>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            {currentLang === 'ar' ? 'تابع آخر أخبار الجمعية وإنجازاتنا' : 'Follow the latest news and our achievements'}
-          </p>
+
+          {/* Controls */}
+          <div className="flex items-center gap-3 flex-shrink-0">
+            <button
+              onClick={handleRefresh}
+              disabled={isRefreshing}
+              className="flex items-center gap-2 px-4 py-2 text-sm font-semibold bg-white border border-blue-200 text-blue-700 rounded-full hover:bg-blue-50 transition-colors shadow-sm disabled:opacity-50"
+              aria-label={t("تحديث الأخبار", "Refresh news")}
+            >
+              <RefreshCw className={`w-4 h-4 ${isRefreshing ? "animate-spin" : ""}`} />
+              {t("تحديث", "Refresh")}
+            </button>
+            {!compact && (
+              <a
+                href="https://www.bse.bh/ar/news"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 px-4 py-2 text-sm font-semibold bg-blue-700 text-white rounded-full hover:bg-blue-800 transition-colors shadow-sm"
+              >
+                {t("جميع الأخبار", "All news")}
+                <ChevronRight className="w-4 h-4 rtl:rotate-180" />
+              </a>
+            )}
+          </div>
         </motion.div>
-        
-        {/* Creative Grid Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Featured News - Large Card */}
+
+        {/* ── Filters & Search ── */}
+        {!compact && (
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            whileHover={{ scale: 1.02 }}
-            transition={{ duration: 0.6 }}
-            className="lg:col-span-2 bg-white rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 overflow-hidden group cursor-pointer"
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="flex flex-col sm:flex-row gap-4 mb-10"
           >
-            <div className="relative h-64 overflow-hidden">
-              <img src={news[0].image} alt="Featured News" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-              <div className="absolute top-4 left-4">
-                <span className="px-4 py-2 rounded-full text-sm font-bold bg-yellow-400 text-yellow-900">
-                  {currentLang === 'ar' ? 'خبر رئيسي' : 'Featured'}
-                </span>
-              </div>
-              <div className="absolute bottom-4 left-4 right-4">
-                <h3 className="text-2xl font-bold text-white mb-2 group-hover:text-yellow-300 transition-colors">
-                  {news[0].title}
-                </h3>
-                <div className="flex items-center text-white/80 text-sm">
-                  <Calendar className="w-4 h-4 mr-2" />
-                  <span>{news[0].date}</span>
-                </div>
-              </div>
+            {/* Category filters */}
+            <div className="flex items-center gap-2 flex-wrap">
+              <Filter className="w-4 h-4 text-gray-400 flex-shrink-0" />
+              {CATEGORIES.map((c) => (
+                <button
+                  key={c.id}
+                  onClick={() => setActiveCategory(c.id)}
+                  className={`px-3 py-1.5 text-sm font-semibold rounded-full transition-all duration-200 ${
+                    activeCategory === c.id
+                      ? "bg-blue-700 text-white shadow-md"
+                      : "bg-white border border-gray-200 text-gray-600 hover:border-blue-300 hover:text-blue-700"
+                  }`}
+                >
+                  {lang === "ar" ? c.ar : c.en}
+                </button>
+              ))}
             </div>
-            <div className="p-6">
-              <p className="text-gray-600 mb-4 line-clamp-2">{news[0].description}</p>
-              <div className="flex items-center text-blue-600 group-hover:text-blue-700 transition-colors">
-                <span className="font-semibold">
-                  {currentLang === 'ar' ? 'اقرأ المزيد' : 'Read More'}
-                </span>
-                <ArrowRight className="w-4 h-4 mr-2 group-hover:translate-x-2 transition-transform" />
-              </div>
+
+            {/* Search */}
+            <div className="relative flex-1 max-w-xs ms-auto">
+              <Search className="absolute start-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder={t("ابحث في الأخبار...", "Search news...")}
+                className="w-full ps-9 pe-9 py-2 text-sm border border-gray-200 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-300 focus:border-blue-400 bg-white"
+              />
+              {searchQuery && (
+                <button
+                  onClick={() => setSearchQuery("")}
+                  className="absolute end-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              )}
             </div>
           </motion.div>
-          
-          {/* Side News - Three Smaller Cards */}
-          <div className="space-y-4">
-            {news.slice(1, 4).map((item, index) => (
-              <motion.div
-                key={item.id}
-                initial={{ opacity: 0, x: 50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                whileHover={{ scale: 1.02 }}
-                transition={{ duration: 0.6, delay: index * 0.2 }}
-                className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-500 overflow-hidden group cursor-pointer"
-              >
-                <div className="flex h-32">
-                  <div className="w-32 h-32 flex-shrink-0">
-                    <img src={item.image} alt={item.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                  </div>
-                  <div className="flex-1 p-4">
-                    <div className="flex items-center mb-2">
-                      <span className={`px-2 py-1 rounded text-xs font-semibold ${getCategoryColor(item.category)}`}>
-                        {item.category}
-                      </span>
-                      <span className="text-xs text-gray-500 mr-auto">{item.date}</span>
-                    </div>
-                    <h3 className="font-bold text-gray-900 mb-2 line-clamp-2 group-hover:text-blue-600 transition-colors">
-                      {item.title}
-                    </h3>
-                    <div className="flex items-center text-blue-600 text-sm group-hover:text-blue-700 transition-colors">
-                      <span>{currentLang === 'ar' ? 'اقرأ' : 'Read'}</span>
-                      <ArrowRight className="w-3 h-3 mr-1" />
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
+        )}
 
-        {/* All News Grid */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="mt-16"
-        >
-          <h3 className="text-2xl font-bold text-gray-900 mb-8 text-center">
-            {currentLang === 'ar' ? 'جميع الأخبار' : 'All News'}
-          </h3>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {news.map((item, index) => (
-              <motion.div
-                key={item.id}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                whileHover={{ scale: 1.02, y: -5 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-500 overflow-hidden group cursor-pointer"
-              >
-                <div className="relative h-40 overflow-hidden">
-                  <img src={item.image} alt={item.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
-                  <div className="absolute top-3 right-3">
-                    <span className={`px-2 py-1 rounded text-xs font-semibold ${getCategoryColor(item.category)}`}>
-                      {item.category}
-                    </span>
-                  </div>
-                </div>
-                
-                <div className="p-4">
-                  <h4 className="font-bold text-gray-900 mb-2 line-clamp-2 group-hover:text-blue-600 transition-colors">
-                    {item.title}
-                  </h4>
-                  <p className="text-gray-600 text-sm mb-3 line-clamp-2">
-                    {item.description}
-                  </p>
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center text-gray-500 text-xs">
-                      <Calendar className="w-3 h-3 mr-1" />
-                      <span>{item.date}</span>
-                    </div>
-                    <div className="flex items-center text-blue-600 text-sm group-hover:text-blue-700 transition-colors">
-                      <span>{currentLang === 'ar' ? 'اقرأ' : 'Read'}</span>
-                      <ArrowRight className="w-3 h-3 mr-1" />
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
+        {/* ── Content Grid ── */}
+        {isLoading ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {Array.from({ length: 6 }).map((_, i) => <SkeletonCard key={i} />)}
           </div>
-        </motion.div>
+        ) : filtered.length === 0 ? (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="text-center py-20 text-gray-500"
+          >
+            <FileText className="w-12 h-12 mx-auto mb-4 text-gray-300" />
+            <p className="text-lg font-semibold">{t("لا توجد نتائج", "No results found")}</p>
+            <p className="text-sm mt-1">{t("حاول تغيير مصطلح البحث أو الفئة", "Try changing your search term or category")}</p>
+          </motion.div>
+        ) : (
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={`${activeCategory}-${searchQuery}`}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              {/* Featured article (full width) */}
+              {featured && !compact && (
+                <div className="mb-8">
+                  <FeaturedCard article={featured} lang={lang} />
+                </div>
+              )}
 
-        {/* Newsletter CTA */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-          className="text-center mt-16"
-        >
-          <div className="bg-gradient-to-r from-blue-600 to-slate-600 rounded-3xl p-12 shadow-2xl">
-            <div className="max-w-2xl mx-auto">
-              <div className="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center mx-auto mb-6">
-                <MessageSquare className="w-8 h-8 text-white" />
+              {/* Grid of remaining articles */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {(compact ? filtered.slice(0, 3) : visibleRest).map((article, i) => (
+                  <ArticleCard key={article.id} article={article} lang={lang} delay={i * 0.08} />
+                ))}
               </div>
-              <h3 className="text-3xl font-bold text-white mb-4">
-                {currentLang === 'ar' ? 'اشترك في نشرتنا الإخبارية' : 'Subscribe to Our Newsletter'}
-              </h3>
-              <p className="text-blue-100 mb-8">
-                {currentLang === 'ar' 
-                  ? 'احصل على آخر الأخبار والفعاليات مباشرة في بريدك الإلكتروني'
-                  : 'Get the latest news and events directly in your email'
-                }
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
-                <input
-                  type="email"
-                  placeholder={currentLang === 'ar' ? 'بريدك الإلكتروني' : 'Your email'}
-                  className="flex-1 px-6 py-3 rounded-full text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-white/50"
-                />
-                <button className="bg-white text-blue-600 px-8 py-3 rounded-full font-bold hover:bg-blue-50 transition-all duration-300 shadow-lg hover:shadow-xl">
-                  {currentLang === 'ar' ? 'اشترك' : 'Subscribe'}
-                </button>
-              </div>
+            </motion.div>
+          </AnimatePresence>
+        )}
+
+        {/* ── Publications Banner ── */}
+        {!compact && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="mt-16"
+          >
+            <div className="flex items-center gap-3 mb-6">
+              <div className="h-px flex-1 bg-gradient-to-r from-transparent to-gray-200" />
+              <span className="text-xs font-bold tracking-widest uppercase text-gray-400 px-3">
+                {t("إصدارات الجمعية", "BSE Publications")}
+              </span>
+              <div className="h-px flex-1 bg-gradient-to-l from-transparent to-gray-200" />
             </div>
-          </div>
-        </motion.div>
+
+            <div className="grid md:grid-cols-2 gap-5">
+              {/* Al-Mohandis Magazine */}
+              <motion.a
+                href="https://bse.bh/ar/al-mohandis-magazine/"
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ y: -4 }}
+                className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#0d2456] to-[#1a4a9e] p-6 flex items-center gap-5 shadow-lg hover:shadow-xl transition-all duration-300"
+              >
+                {/* Decorative circle */}
+                <div className="absolute -right-8 -top-8 w-32 h-32 bg-white/5 rounded-full" />
+                <div className="absolute -right-4 -top-4 w-20 h-20 bg-white/5 rounded-full" />
+
+                <div className="w-16 h-20 bg-white/15 rounded-xl flex items-center justify-center flex-shrink-0 shadow-inner border border-white/20 relative overflow-hidden">
+                  <div className="absolute inset-0 bg-gradient-to-b from-amber-400/20 to-transparent" />
+                  <span className="text-white text-2xl font-black relative z-10">م</span>
+                </div>
+
+                <div className="flex-1 min-w-0">
+                  <span className="text-blue-300 text-xs font-bold uppercase tracking-widest block mb-1">
+                    {t("المجلة الدورية", "Periodical Magazine")}
+                  </span>
+                  <h3 className="text-white font-bold text-xl mb-1">
+                    {t("مجلة المهندس", "Al-Mohandis Magazine")}
+                  </h3>
+                  <p className="text-blue-200/80 text-sm line-clamp-2">
+                    {t(
+                      "المجلة الدورية لجمعية المهندسين البحرينية — تقارير مهنية، ملفات فنية، وأخبار القطاع",
+                      "The periodical of BSE — professional reports, technical features and sector news"
+                    )}
+                  </p>
+                  <div className="flex items-center gap-1.5 mt-3 text-amber-300 text-sm font-semibold group-hover:text-white transition-colors">
+                    <ExternalLink className="w-3.5 h-3.5" />
+                    {t("تصفح الأعداد", "Browse issues")}
+                  </div>
+                </div>
+              </motion.a>
+
+              {/* Al-Mohandis Times */}
+              <motion.a
+                href="https://bse.bh/ar/al-mohandis-times/"
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ y: -4 }}
+                className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-teal-800 to-teal-600 p-6 flex items-center gap-5 shadow-lg hover:shadow-xl transition-all duration-300"
+              >
+                {/* Decorative */}
+                <div className="absolute -right-8 -top-8 w-32 h-32 bg-white/5 rounded-full" />
+                <div className="absolute -right-4 -top-4 w-20 h-20 bg-white/5 rounded-full" />
+
+                <div className="w-16 h-20 bg-white/15 rounded-xl flex items-center justify-center flex-shrink-0 shadow-inner border border-white/20 relative overflow-hidden">
+                  <div className="absolute inset-0 bg-gradient-to-b from-emerald-400/20 to-transparent" />
+                  <span className="text-white text-2xl font-black relative z-10">T</span>
+                </div>
+
+                <div className="flex-1 min-w-0">
+                  <span className="text-teal-200 text-xs font-bold uppercase tracking-widest block mb-1">
+                    {t("النشرة الإخبارية", "Newsletter")}
+                  </span>
+                  <h3 className="text-white font-bold text-xl mb-1">
+                    {t("المهندس تايمز", "Al-Mohandis Times")}
+                  </h3>
+                  <p className="text-teal-100/80 text-sm line-clamp-2">
+                    {t(
+                      "النشرة الدورية لأخبار الجمعية — فعاليات، شراكات، وتحديثات التدريب",
+                      "BSE periodic newsletter — events, partnerships and training updates"
+                    )}
+                  </p>
+                  <div className="flex items-center gap-1.5 mt-3 text-emerald-300 text-sm font-semibold group-hover:text-white transition-colors">
+                    <ExternalLink className="w-3.5 h-3.5" />
+                    {t("تصفح الأعداد", "Browse issues")}
+                  </div>
+                </div>
+              </motion.a>
+            </div>
+          </motion.div>
+        )}
+
+        {/* ── View All CTA ── */}
+        {compact && (
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+            className="mt-12 flex flex-wrap justify-center gap-4"
+          >
+            <a
+              href="https://www.bse.bh/ar/news"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-blue-700 to-blue-600 text-white font-bold rounded-full shadow-lg hover:shadow-xl hover:from-blue-800 hover:to-blue-700 transition-all duration-300"
+            >
+              {t("جميع الأخبار", "All news")}
+              <Arrow className="w-5 h-5" />
+            </a>
+            <a
+              href="https://bse.bh/ar/al-mohandis-magazine/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-white border border-blue-200 text-blue-700 font-semibold rounded-full shadow-sm hover:bg-blue-50 transition-all duration-300"
+            >
+              {t("مجلة المهندس", "Al-Mohandis Mag")}
+            </a>
+            <a
+              href="https://bse.bh/ar/al-mohandis-times/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-white border border-teal-200 text-teal-700 font-semibold rounded-full shadow-sm hover:bg-teal-50 transition-all duration-300"
+            >
+              {t("المهندس تايمز", "Al-Mohandis Times")}
+            </a>
+          </motion.div>
+        )}
       </div>
     </section>
   );

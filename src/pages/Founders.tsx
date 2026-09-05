@@ -4,9 +4,11 @@ import { useInView } from "react-intersection-observer";
 import { Users, Award, Calendar, BookOpen, Star, Heart, ArrowRight, Mail, Phone, MapPin, GraduationCap, Shield, ChevronLeft, ChevronRight } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const Founders = () => {
-  const [currentLang, setCurrentLang] = useState('ar');
+  const { lang, t } = useLanguage();
+  const currentLang = lang;
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {

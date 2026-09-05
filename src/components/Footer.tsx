@@ -5,9 +5,11 @@
 import { motion } from "framer-motion";
 import bseLogo from "@/assets/bse-logo.png";
 import { MapPin, Phone, Mail } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const Footer = () => {
-  const currentLang = 'ar'; // This should come from context or props
+  const { lang, t } = useLanguage();
+  const currentLang = lang;
 
   return (
     <>
@@ -87,26 +89,26 @@ const Footer = () => {
                     {currentLang === 'ar' ? 'روابط سريعة' : 'Quick Links'}
                   </h4>
                   <ul className="space-y-3">
-                    <li><a href="/about" className="text-blue-200 hover:text-white transition-colors duration-300">{currentLang === 'ar' ? 'من نحن' : 'About Us'}</a></li>
-                    <li><a href="/vision-mission" className="text-blue-200 hover:text-white transition-colors duration-300">{currentLang === 'ar' ? 'المهمة والرؤية' : 'Vision & Mission'}</a></li>
-                    <li><a href="/board" className="text-blue-200 hover:text-white transition-colors duration-300">{currentLang === 'ar' ? 'مجلس الإدارة' : 'Board of Directors'}</a></li>
-                    <li><a href="/membership" className="text-blue-200 hover:text-white transition-colors duration-300">{currentLang === 'ar' ? 'العضوية' : 'Membership'}</a></li>
+                    <li><a href="/about-us" className="text-blue-200 hover:text-white transition-colors duration-300">{currentLang === 'ar' ? 'من نحن' : 'About Us'}</a></li>
+                    <li><a href="/founders" className="text-blue-200 hover:text-white transition-colors duration-300">{currentLang === 'ar' ? 'المؤسسون 1972' : 'Founders 1972'}</a></li>
+                    <li><a href="/board-of-directors" className="text-blue-200 hover:text-white transition-colors duration-300">{currentLang === 'ar' ? 'مجلس الإدارة' : 'Board of Directors'}</a></li>
+                    <li><a href="/training-courses" className="text-blue-200 hover:text-white transition-colors duration-300">{currentLang === 'ar' ? 'الدورات التدريبية' : 'Training Courses'}</a></li>
                     <li><a href="/contact" className="text-blue-200 hover:text-white transition-colors duration-300">{currentLang === 'ar' ? 'تواصل معنا' : 'Contact Us'}</a></li>
                   </ul>
                 </div>
                 
-                {/* Useful Links */}
+                {/* Useful Links & Publications */}
                 <div>
                   <h4 className="text-lg font-semibold text-white mb-6 flex items-center">
                     <div className="w-2 h-2 bg-blue-400 rounded-full mr-3"></div>
-                    {currentLang === 'ar' ? 'روابط مفيدة' : 'Useful Links'}
+                    {currentLang === 'ar' ? 'إصدارات ومواقع' : 'Publications & Links'}
                   </h4>
                   <ul className="space-y-3">
-                    <li><a href="#" className="text-blue-200 hover:text-white transition-colors duration-300">{currentLang === 'ar' ? 'مجلس تنظيم مزاولة المهن الهندسية' : 'Engineering Professions Regulatory Council'}</a></li>
-                    <li><a href="#" className="text-blue-200 hover:text-white transition-colors duration-300">{currentLang === 'ar' ? 'اتحاد المهندسين العرب' : 'Arab Engineers Union'}</a></li>
-                    <li><a href="#" className="text-blue-200 hover:text-white transition-colors duration-300">{currentLang === 'ar' ? 'الاتحاد العالمي للهندسة' : 'World Federation of Engineering Organizations'}</a></li>
-                    <li><a href="#" className="text-blue-200 hover:text-white transition-colors duration-300">{currentLang === 'ar' ? 'جمعيات المهندسين الخليجية' : 'Gulf Engineering Societies'}</a></li>
-                    <li><a href="/training" className="text-blue-200 hover:text-white transition-colors duration-300">{currentLang === 'ar' ? 'مركز التدريب' : 'Training Center'}</a></li>
+                    <li><a href="https://bse.bh/ar/al-mohandis-magazine/" target="_blank" rel="noopener noreferrer" className="text-blue-200 hover:text-white transition-colors duration-300">{currentLang === 'ar' ? 'مجلة المهندس' : 'Al-Mohandis Magazine'}</a></li>
+                    <li><a href="https://bse.bh/ar/al-mohandis-times/" target="_blank" rel="noopener noreferrer" className="text-blue-200 hover:text-white transition-colors duration-300">{currentLang === 'ar' ? 'المهندس تايمز' : 'Al-Mohandis Times'}</a></li>
+                    <li><a href="/training-center" className="text-blue-200 hover:text-white transition-colors duration-300">{currentLang === 'ar' ? 'مركز التدريب المعتمد' : 'Accredited Training Center'}</a></li>
+                    <li><a href="/committees" className="text-blue-200 hover:text-white transition-colors duration-300">{currentLang === 'ar' ? 'اللجان الهندسية' : 'Engineering Committees'}</a></li>
+                    <li><a href="https://www.bse.bh" target="_blank" rel="noopener noreferrer" className="text-blue-200 hover:text-white transition-colors duration-300">{currentLang === 'ar' ? 'الموقع الرسمي bse.bh' : 'Official Site bse.bh'}</a></li>
                   </ul>
                 </div>
                 
@@ -127,14 +129,14 @@ const Footer = () => {
                           }
                         </p>
                         <p className="text-blue-200 text-sm">
-                          {currentLang === 'ar' ? 'المنامة، مملكة البحرين' : 'Manama, Kingdom of Bahrain'}
+                          {currentLang === 'ar' ? 'الجفير، البحرين' : 'Juffair, Bahrain'}
                         </p>
                       </div>
                     </div>
                     <div className="flex items-center gap-3">
                       <Phone className="w-5 h-5 text-blue-400 flex-shrink-0" />
-                      <a href="tel:+97317553133" className="text-blue-200 text-sm hover:text-white transition-colors duration-300">
-                        +973 1755 3133
+                      <a href="tel:+97317727100" className="text-blue-200 text-sm hover:text-white transition-colors duration-300">
+                        +973 1772 7100
                       </a>
                     </div>
                     <div className="flex items-center gap-3">
@@ -203,9 +205,9 @@ const Footer = () => {
                 
                 {/* Contact Info */}
                 <div className="text-xs text-gray-400 space-y-1">
-                  <p>+973 1755 3133</p>
+                  <p>+973 1772 7100</p>
                   <p>info@bse.bh</p>
-                  <p>{currentLang === 'ar' ? 'المنامة، البحرين' : 'Manama, Bahrain'}</p>
+                  <p>{currentLang === 'ar' ? 'الجفير، البحرين' : 'Juffair, Bahrain'}</p>
                 </div>
                 
                 {/* Social Media */}

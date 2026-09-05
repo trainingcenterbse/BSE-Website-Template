@@ -77,8 +77,8 @@ export interface RelatedSite {
 
 /** Websites affiliated with the Bahrain Society of Engineers */
 export const relatedSites: RelatedSite[] = [
-  { ar: "مركز التدريب", en: "Training Center", url: "https://bsetc.bse.bh", logo: "/training-logo.png" },
-  { ar: "المؤتمرات", en: "Conferences", url: "https://event.bse.bh", logo: logo },
+  { ar: "مركز التدريب", en: "Training Center", url: "https://training.bse.bh", logo: "/training-logo.png" },
+  { ar: "المؤتمرات", en: "BSE Event", url: "https://event.bse.bh", logo: logo },
   { ar: "المركز الإعلامي", en: "Media Center", url: "https://bse.bh", logo: logo },
   { ar: "جائزة المهندس", en: "Engineer Award", url: "https://award.bse.bh", logo: "/award-logo.png" },
 ];

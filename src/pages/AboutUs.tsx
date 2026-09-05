@@ -7,6 +7,7 @@ import Footer from "@/components/Footer";
 import FloatingSidebar, { SidebarSection } from "@/components/FloatingSidebar";
 import CoinLogo3D from "@/components/CoinLogo3D";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { bseObjectives, bseInfo, membershipCategories } from "@/data/bseOfficialData";
 
 const AboutUs = () => {
   const { lang: currentLang } = useLanguage();
@@ -39,10 +40,10 @@ const AboutUs = () => {
   });
 
   const stats = [
-    { icon: Users, value: "5000+", label: currentLang === 'ar' ? 'عضو' : 'Members' },
-    { icon: Building, value: "50+", label: currentLang === 'ar' ? 'شريك' : 'Partners' },
-    { icon: Award, value: "200+", label: currentLang === 'ar' ? 'حدث' : 'Events' },
-    { icon: TrendingUp, value: "45", label: currentLang === 'ar' ? 'سنة' : 'Years' }
+    { icon: Users, value: `+${bseInfo.membersCount}`, label: currentLang === 'ar' ? 'عضو' : 'Members' },
+    { icon: Building, value: `+${bseInfo.partnersCount}`, label: currentLang === 'ar' ? 'شريك' : 'Partners' },
+    { icon: Award, value: `+${bseInfo.eventsCount}`, label: currentLang === 'ar' ? 'حدث' : 'Events' },
+    { icon: TrendingUp, value: `${bseInfo.yearsCount}`, label: currentLang === 'ar' ? 'سنة' : 'Years' }
   ];
 
   const milestones = [
@@ -93,43 +94,22 @@ const AboutUs = () => {
     }
   ];
 
-  const strategicGoals = [
-    {
-      icon: <Rocket className="w-8 h-8" />,
-      goal: currentLang === 'ar' 
-        ? 'توفير أعلى الخدمات لأعضاء الجمعية لضمان الفائدة القصوى للمهندسين.' 
-        : 'Provide the highest services to society members to ensure maximum benefit for engineers.',
-      color: 'from-blue-600 to-blue-700'
-    },
-    {
-      icon: <Globe className="w-8 h-8" />,
-      goal: currentLang === 'ar' 
-        ? 'تمكين المهندس الوطني لأن يكون الخيار الأول لدعم الاقتصاد الوطني والتنمية المستدامة.' 
-        : 'Empower the national engineer to be the first choice to support the national economy and sustainable development.',
-      color: 'from-blue-600 to-blue-700'
-    },
-    {
-      icon: <Award className="w-8 h-8" />,
-      goal: currentLang === 'ar' 
-        ? 'ريادة المهندس البحريني نحو مجتمع هندسي تنافسي عالمي.' 
-        : 'Lead the Bahraini engineer towards a globally competitive engineering society.',
-      color: 'from-blue-600 to-blue-700'
-    },
-    {
-      icon: <Users className="w-8 h-8" />,
-      goal: currentLang === 'ar' 
-        ? 'كسب الاحترام والاعتراف من حيث الالتزام نحو المهنة والأعضاء والمجتمع.' 
-        : 'Gain respect and recognition through commitment to the profession, members, and society.',
-      color: 'from-blue-600 to-blue-700'
-    },
-    {
-      icon: <Target className="w-8 h-8" />,
-      goal: currentLang === 'ar' 
-        ? 'رفع مستوى العمل الهندسي في القطاعين العام والخاص.' 
-        : 'Raise the level of engineering work in the public and private sectors.',
-      color: 'from-blue-600 to-blue-700'
-    }
-  ];
+  const strategicGoals = bseObjectives.map((obj, index) => ({
+    icon: <div className="w-8 h-8 flex items-center justify-center">
+      {obj.icon === 'Target' && <Target className="w-8 h-8" />}
+      {obj.icon === 'Users' && <Users className="w-8 h-8" />}
+      {obj.icon === 'Award' && <Award className="w-8 h-8" />}
+      {obj.icon === 'Building' && <Building className="w-8 h-8" />}
+      {obj.icon === 'Globe' && <Globe className="w-8 h-8" />}
+      {obj.icon === 'BookOpen' && <BookOpen className="w-8 h-8" />}
+      {obj.icon === 'Calendar' && <Calendar className="w-8 h-8" />}
+      {obj.icon === 'Shield' && <Shield className="w-8 h-8" />}
+      {obj.icon === 'Briefcase' && <Briefcase className="w-8 h-8" />}
+      {obj.icon === 'Star' && <Star className="w-8 h-8" />}
+    </div>,
+    goal: currentLang === 'ar' ? obj.ar : obj.en,
+    color: 'from-blue-600 to-blue-700'
+  }));
 
   const coreValues = [
     {
