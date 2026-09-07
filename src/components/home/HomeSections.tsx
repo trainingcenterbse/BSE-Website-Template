@@ -6,6 +6,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
+import MembershipCTASection from "@/components/MembershipCTASection";
 import imgSkyline from "@/assets/hero-skyline.jpg";
 import imgConference from "@/assets/hero-conference.jpg";
 import imgTraining from "@/assets/hero-training.jpg";
@@ -197,7 +198,7 @@ const EventsSection = () => {
 };
 
 const HomeSections = () => {
-  const { t } = useLanguage();
+  const { lang, t } = useLanguage();
 
   return (
     <>
@@ -631,25 +632,9 @@ const HomeSections = () => {
         </div>
       </section>
       {/* 5 — Membership CTA */}
-      <section id="membership" className="py-20 md:py-28 bg-primary text-primary-foreground relative overflow-hidden">
-        <img src={img.membership} alt="" aria-hidden="true" loading="lazy" className="absolute inset-0 w-full h-full object-cover opacity-15" />
-        <div className="relative max-w-4xl mx-auto px-4 text-center">
-          <Reveal>
-            <span className="text-xs font-bold tracking-widest uppercase text-primary-foreground/70">{t("العضوية", "Membership")}</span>
-            <h2 className="text-3xl md:text-5xl font-bold mt-3 mb-4">{t("انضم إلى مجتمع المهندسين", "Join the engineering community")}</h2>
-            <p className="text-primary-foreground/80 max-w-2xl mx-auto mb-8">
-              {t(
-                "عضوية الجمعية تمنحك حضور الفعاليات، وخصومات الدورات، والوصول إلى شبكة مهنية واسعة داخل البحرين وخارجها.",
-                "Membership gives you access to events, course discounts and a wide professional network inside and beyond Bahrain."
-              )}
-            </p>
-            <div className="flex flex-wrap justify-center gap-3">
-              <MoreButton href="/contact" variant="secondary" label={t("اطلب العضوية", "Apply for membership")} />
-              <MoreButton href="/about-us" variant="outline" label={t("مزايا العضوية", "Membership benefits")} />
-            </div>
-          </Reveal>
-        </div>
-      </section>
+      <div id="membership">
+        <MembershipCTASection currentLang={lang} />
+      </div>
       {/* 6 — Contact with live map */}
       <section id="contact" className="py-20 md:py-28 bg-background">
         <div className="max-w-6xl mx-auto px-4">
