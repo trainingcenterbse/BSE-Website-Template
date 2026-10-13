@@ -111,27 +111,22 @@ export const SearchFilterSection = ({
   reports
 }: SearchFilterSectionProps) => {
   return (
-    <section id="search" className="py-16 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-12"
-        >
-          <h2 className="text-4xl lg:text-6xl font-bold bg-gradient-to-r from-slate-600 to-blue-600 bg-clip-text text-transparent mb-4">
+    <section id="search" className="bp-section bp-section--paper">
+      <div className="bp-shell">
+        <Reveal className="mb-12">
+          <h2>
             {currentLang === 'ar' ? 'التقارير السنوية' : 'Annual Reports'}
           </h2>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+          <p className="bp-section-intro">
             {currentLang === 'ar' ? 'جميع تقارير الجمعية العمومية متاحة للتحميل والمراجعة' : 'All general assembly reports are available for download and review'}
           </p>
-        </motion.div>
+        </Reveal>
 
-        <div className="bg-white rounded-3xl shadow-2xl p-8 mb-12 border border-gray-100">
+        <div className="bp-compare-card !p-6 mb-12">
           <div className="mb-6">
             <div className={`relative transition-all duration-300 ${isSearchFocused ? 'scale-[1.02]' : ''}`}>
               <div className="absolute inset-y-0 right-0 flex items-center pr-4">
-                <Search className={`w-6 h-6 transition-colors duration-300 ${isSearchFocused ? 'text-blue-600' : 'text-gray-400'}`} />
+                <Search className={`w-5 h-5 transition-colors duration-300 ${isSearchFocused ? 'text-[var(--bse-blue)]' : 'text-[var(--bse-muted)]'}`} />
               </div>
               <input
                 type="text"
@@ -140,35 +135,35 @@ export const SearchFilterSection = ({
                 onChange={(e) => setSearchTerm(e.target.value)}
                 onFocus={() => setIsSearchFocused(true)}
                 onBlur={() => setIsSearchFocused(false)}
-                className={`w-full pr-12 pl-4 py-4 text-lg border-2 rounded-2xl transition-all duration-300 ${
+                className={`w-full pr-12 pl-4 py-3 text-sm border transition-all duration-300 ${
                   isSearchFocused 
-                    ? 'border-blue-500 bg-blue-50/30 shadow-lg' 
-                    : 'border-gray-200 bg-gray-50/50 hover:border-gray-300'
-                } focus:outline-none focus:ring-4 focus:ring-blue-500/20`}
+                    ? 'border-[var(--bse-blue)] bg-[var(--bse-sky)]/30 shadow-sm' 
+                    : 'border-[var(--bse-line)] bg-[var(--bse-paper)] hover:border-[var(--bse-blue)]/50'
+                } focus:outline-none focus:border-[var(--bse-blue)] rounded`}
               />
               {searchTerm && (
                 <button
                   onClick={() => setSearchTerm('')}
-                  className="absolute left-4 top-1/2 -translate-y-1/2 p-2 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors duration-200"
+                  className="absolute left-4 top-1/2 -translate-y-1/2 p-1.5 rounded-full bg-[var(--bse-line)] hover:bg-[var(--bse-muted)]/20 transition-colors duration-200"
                 >
-                  <X className="w-4 h-4 text-gray-600" />
+                  <X className="w-3.5 h-3.5 text-[var(--bse-muted)]" />
                 </button>
               )}
             </div>
           </div>
 
-          <div className="flex items-center justify-between mb-6">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
             <button
               onClick={() => setShowAdvancedFilters(!showAdvancedFilters)}
-              className="flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-blue-600 to-slate-600 hover:from-blue-700 hover:to-slate-700 text-white rounded-2xl font-medium shadow-lg hover:shadow-xl transition-all duration-300"
+              className="flex items-center gap-2 px-4 py-2 bg-[var(--bse-navy)] hover:bg-[var(--bse-blue)] text-white text-xs font-bold rounded transition-all shadow-sm"
             >
-              <Filter className="w-5 h-5" />
+              <Filter className="w-4 h-4" />
               <span>{currentLang === 'ar' ? 'الفلاتر المتقدمة' : 'Advanced Filters'}</span>
-              <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${showAdvancedFilters ? 'rotate-180' : ''}`} />
+              <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-300 ${showAdvancedFilters ? 'rotate-180' : ''}`} />
             </button>
 
-            <div className="flex items-center gap-2 px-4 py-2 bg-blue-50 rounded-xl">
-              <span className="text-blue-600 font-medium">
+            <div className="flex items-center gap-2 px-3 py-1.5 bg-[var(--bse-sky)]/50 rounded border border-[var(--bse-line)]">
+              <span className="text-[var(--bse-blue)] font-mono text-xs font-bold">
                 {filteredReportsCount} {currentLang === 'ar' ? 'نتيجة' : 'results'}
               </span>
             </div>
@@ -180,16 +175,16 @@ export const SearchFilterSection = ({
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.3 }}
-              className="grid grid-cols-1 md:grid-cols-3 gap-6 p-6 bg-gradient-to-br from-blue-50/50 to-slate-50/50 rounded-2xl border border-blue-100"
+              className="grid grid-cols-1 sm:grid-cols-3 gap-4 p-4 bg-[var(--bse-paper)] rounded border border-[var(--bse-line)]"
             >
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  {currentLang === 'ar' ? 'السنة' : 'Year'}
+                <label className="block text-xs font-bold text-[var(--bse-muted)] mb-2 font-mono">
+                  {currentLang === 'ar' ? 'السنة' : 'YEAR'}
                 </label>
                 <select
                   value={filterYear}
                   onChange={(e) => setFilterYear(e.target.value)}
-                  className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white"
+                  className="w-full px-3 py-2 text-xs border border-[var(--bse-line)] rounded focus:outline-none focus:border-[var(--bse-blue)] bg-white"
                 >
                   <option value="all">{currentLang === 'ar' ? 'جميع السنوات' : 'All Years'}</option>
                   {reports.map(report => (
@@ -199,13 +194,13 @@ export const SearchFilterSection = ({
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  {currentLang === 'ar' ? 'اللغة' : 'Language'}
+                <label className="block text-xs font-bold text-[var(--bse-muted)] mb-2 font-mono">
+                  {currentLang === 'ar' ? 'اللغة' : 'LANGUAGE'}
                 </label>
                 <select
                   value={filterLanguage}
                   onChange={(e) => setFilterLanguage(e.target.value)}
-                  className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white"
+                  className="w-full px-3 py-2 text-xs border border-[var(--bse-line)] rounded focus:outline-none focus:border-[var(--bse-blue)] bg-white"
                 >
                   <option value="all">{currentLang === 'ar' ? 'جميع اللغات' : 'All Languages'}</option>
                   <option value="english">{currentLang === 'ar' ? 'الإنجليزية' : 'English'}</option>
@@ -214,8 +209,8 @@ export const SearchFilterSection = ({
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  {currentLang === 'ar' ? 'إجراءات سريعة' : 'Quick Actions'}
+                <label className="block text-xs font-bold text-[var(--bse-muted)] mb-2 font-mono">
+                  {currentLang === 'ar' ? 'إجراءات' : 'ACTIONS'}
                 </label>
                 <div className="flex gap-2">
                   <button
@@ -224,13 +219,13 @@ export const SearchFilterSection = ({
                       setFilterYear('all');
                       setFilterLanguage('all');
                     }}
-                    className="flex-1 px-4 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl font-medium transition-colors duration-200"
+                    className="flex-1 px-3 py-2 bg-[var(--bse-paper)] hover:bg-[var(--bse-sky)]/30 text-[var(--bse-ink)] text-xs font-bold rounded border border-[var(--bse-line)] transition-colors duration-200"
                   >
                     {currentLang === 'ar' ? 'مسح' : 'Clear'}
                   </button>
                   <button
                     onClick={() => setShowAdvancedFilters(false)}
-                    className="flex-1 px-4 py-3 bg-blue-100 hover:bg-blue-200 text-blue-700 rounded-xl font-medium transition-colors duration-200"
+                    className="flex-1 px-3 py-2 bg-[var(--bse-blue)] hover:bg-[var(--bse-navy)] text-white text-xs font-bold rounded transition-colors duration-200"
                   >
                     {currentLang === 'ar' ? 'تطبيق' : 'Apply'}
                   </button>
@@ -275,121 +270,108 @@ export const ReportsListSection = ({
   onClearFilters
 }: ReportsListSectionProps) => {
   return (
-    <section id="reports-list" className="py-8 lg:py-16 bg-gradient-to-br from-white via-slate-50 to-blue-50 relative overflow-hidden">
-      <div className="absolute inset-0">
-        <div className="absolute top-10 right-10 w-72 h-72 bg-slate-200/20 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-10 left-10 w-96 h-96 bg-blue-100/20 rounded-full blur-3xl"></div>
-      </div>
-      
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-white rounded-3xl shadow-2xl overflow-hidden border border-gray-100">
-          <div className="bg-gradient-to-r from-slate-700 via-blue-700 to-slate-800 p-6">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center">
-                  <FileText className="w-6 h-6 text-white" />
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-white">
-                    {currentLang === 'ar' ? 'قائمة التقارير' : 'Reports List'}
-                  </h3>
-                  <p className="text-blue-100 text-sm">
-                    {filteredReports.length} {currentLang === 'ar' ? 'تقرير متاح' : 'reports available'}
-                  </p>
-                </div>
-              </div>
+    <section id="reports-list" className="bp-section bp-section--paper">
+      <div className="bp-shell">
+        <Reveal className="mb-10">
+          <h2>
+            {currentLang === 'ar' ? 'قائمة التقارير' : 'Reports List'}
+          </h2>
+          <p className="bp-section-intro">
+            {filteredReports.length} {currentLang === 'ar' ? 'تقرير متاح للتحميل' : 'reports available for download'}
+          </p>
+        </Reveal>
 
-              <div className="relative">
-                <button
-                  onClick={() => setShowLanguageMenu(!showLanguageMenu)}
-                  className="flex items-center gap-3 px-4 py-2 bg-white/10 backdrop-blur-sm hover:bg-white/20 border border-white/20 rounded-2xl text-white transition-all duration-300"
+        <div className="bp-compare-card !p-0 overflow-hidden">
+          <div className="bg-[var(--bse-navy)] p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 bg-white/10 backdrop-blur-sm rounded-xl flex items-center justify-center">
+                <FileText className="w-5 h-5 text-white" />
+              </div>
+              <div>
+                <h3 className="text-white font-bold text-sm">
+                  {currentLang === 'ar' ? 'الأرشيف الكامل' : 'Full Archive'}
+                </h3>
+                <p className="text-white/60 text-xs">
+                  {currentLang === 'ar' ? 'من 1972 إلى 2025' : 'From 1972 to 2025'}
+                </p>
+              </div>
+            </div>
+
+            <div className="relative">
+              <button
+                onClick={() => setShowLanguageMenu(!showLanguageMenu)}
+                className="flex items-center gap-2 px-3 py-1.5 bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/10 rounded-lg text-white text-xs font-bold transition-all"
+              >
+                <Languages className="w-4 h-4" />
+                <span>{currentLang === 'ar' ? 'اللغة' : 'Language'}</span>
+                <ChevronDown className={`w-3 h-3 transition-transform duration-300 ${showLanguageMenu ? 'rotate-180' : ''}`} />
+              </button>
+
+              {showLanguageMenu && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10, scale: 0.95 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: -10, scale: 0.95 }}
+                  transition={{ duration: 0.2 }}
+                  className="absolute top-full right-0 mt-2 w-40 bg-white rounded-xl shadow-xl border border-[var(--bse-line)] overflow-hidden z-50"
                 >
-                  <Languages className="w-5 h-5" />
-                  <span className="font-medium">
-                    {currentLang === 'ar' ? 'اللغة' : 'Language'}
-                  </span>
-                  <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${showLanguageMenu ? 'rotate-180' : ''}`} />
-                </button>
-
-                {showLanguageMenu && (
-                  <motion.div
-                    initial={{ opacity: 0, y: -10, scale: 0.95 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    exit={{ opacity: 0, y: -10, scale: 0.95 }}
-                    transition={{ duration: 0.2 }}
-                    className="absolute top-full right-0 mt-2 w-48 bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden z-50"
+                  <button
+                    onClick={() => {
+                      setFilterLanguage('all');
+                      setShowLanguageMenu(false);
+                    }}
+                    className={`w-full px-3 py-2 text-left hover:bg-[var(--bse-sky)]/30 transition-colors duration-200 flex items-center gap-2 text-xs ${
+                      filterLanguage === 'all' ? 'bg-[var(--bse-sky)]/30 text-[var(--bse-blue)] font-bold' : 'text-[var(--bse-ink)]'
+                    }`}
                   >
-                    <button
-                      onClick={() => {
-                        setFilterLanguage('all');
-                        setShowLanguageMenu(false);
-                      }}
-                      className={`w-full px-4 py-3 text-left hover:bg-blue-50 transition-colors duration-200 flex items-center gap-3 ${
-                        filterLanguage === 'all' ? 'bg-blue-50 text-blue-600 font-medium' : 'text-gray-700'
-                      }`}
-                    >
-                      <Globe className="w-4 h-4" />
-                      <span>{currentLang === 'ar' ? 'جميع اللغات' : 'All Languages'}</span>
-                    </button>
-                    <button
-                      onClick={() => {
-                        setFilterLanguage('english');
-                        setShowLanguageMenu(false);
-                      }}
-                      className={`w-full px-4 py-3 text-left hover:bg-blue-50 transition-colors duration-200 flex items-center gap-3 ${
-                        filterLanguage === 'english' ? 'bg-blue-50 text-blue-600 font-medium' : 'text-gray-700'
-                      }`}
-                    >
-                      <div className="w-4 h-4 bg-blue-600 rounded-full flex items-center justify-center">
-                        <span className="text-white text-xs font-bold">E</span>
-                      </div>
-                      <span>{currentLang === 'ar' ? 'الإنجليزية' : 'English'}</span>
-                    </button>
-                    <button
-                      onClick={() => {
-                        setFilterLanguage('arabic');
-                        setShowLanguageMenu(false);
-                      }}
-                      className={`w-full px-4 py-3 text-left hover:bg-blue-50 transition-colors duration-200 flex items-center gap-3 ${
-                        filterLanguage === 'arabic' ? 'bg-blue-50 text-blue-600 font-medium' : 'text-gray-700'
-                      }`}
-                    >
-                      <div className="w-4 h-4 bg-green-600 rounded-full flex items-center justify-center">
-                        <span className="text-white text-xs font-bold">ع</span>
-                      </div>
-                      <span>{currentLang === 'ar' ? 'العربية' : 'Arabic'}</span>
-                    </button>
-                  </motion.div>
-                )}
-              </div>
+                    <Globe className="w-3.5 h-3.5" />
+                    <span>{currentLang === 'ar' ? 'الكل' : 'All'}</span>
+                  </button>
+                  <button
+                    onClick={() => {
+                      setFilterLanguage('english');
+                      setShowLanguageMenu(false);
+                    }}
+                    className={`w-full px-3 py-2 text-left hover:bg-[var(--bse-sky)]/30 transition-colors duration-200 flex items-center gap-2 text-xs ${
+                      filterLanguage === 'english' ? 'bg-[var(--bse-sky)]/30 text-[var(--bse-blue)] font-bold' : 'text-[var(--bse-ink)]'
+                    }`}
+                  >
+                    <div className="w-3 h-3 bg-[var(--bse-blue)] rounded-full flex items-center justify-center">
+                      <span className="text-white text-[10px] font-bold">E</span>
+                    </div>
+                    <span>{currentLang === 'ar' ? 'إنجليزي' : 'English'}</span>
+                  </button>
+                  <button
+                    onClick={() => {
+                      setFilterLanguage('arabic');
+                      setShowLanguageMenu(false);
+                    }}
+                    className={`w-full px-3 py-2 text-left hover:bg-[var(--bse-sky)]/30 transition-colors duration-200 flex items-center gap-2 text-xs ${
+                      filterLanguage === 'arabic' ? 'bg-[var(--bse-sky)]/30 text-[var(--bse-blue)] font-bold' : 'text-[var(--bse-ink)]'
+                    }`}
+                  >
+                    <div className="w-3 h-3 bg-emerald-600 rounded-full flex items-center justify-center">
+                      <span className="text-white text-[10px] font-bold">ع</span>
+                    </div>
+                    <span>{currentLang === 'ar' ? 'عربي' : 'Arabic'}</span>
+                  </button>
+                </motion.div>
+              )}
             </div>
           </div>
 
           <div className="overflow-x-auto">
             <table className="w-full">
-              <thead className="bg-gradient-to-r from-gray-50 to-blue-50 border-b border-gray-200">
+              <thead className="bg-[var(--bse-paper)] border-b border-[var(--bse-line)]">
                 <tr>
-                  <th className="px-6 py-4 text-center font-bold text-gray-900">
-                    <div className="flex items-center justify-center gap-2">
-                      <Calendar className="w-4 h-4 text-blue-600" />
-                      {currentLang === 'ar' ? 'السنة' : 'Year'}
-                    </div>
+                  <th className="px-4 py-3 text-center font-bold text-[var(--bse-navy)] text-xs font-mono">
+                    {currentLang === 'ar' ? 'السنة' : 'YEAR'}
                   </th>
-                  <th className="px-6 py-4 text-center font-bold text-gray-900">
-                    <div className="flex items-center justify-center gap-2">
-                      <div className="w-4 h-4 bg-blue-600 rounded-full flex items-center justify-center">
-                        <span className="text-white text-xs font-bold">E</span>
-                      </div>
-                      {currentLang === 'ar' ? 'تقرير إنجليزي' : 'English Report'}
-                    </div>
+                  <th className="px-4 py-3 text-center font-bold text-[var(--bse-navy)] text-xs font-mono">
+                    {currentLang === 'ar' ? 'تقرير إنجليزي' : 'ENGLISH'}
                   </th>
-                  <th className="px-6 py-4 text-center font-bold text-gray-900">
-                    <div className="flex items-center justify-center gap-2">
-                      <div className="w-4 h-4 bg-green-600 rounded-full flex items-center justify-center">
-                        <span className="text-white text-xs font-bold">ع</span>
-                      </div>
-                      {currentLang === 'ar' ? 'تقرير عربي' : 'Arabic Report'}
-                    </div>
+                  <th className="px-4 py-3 text-center font-bold text-[var(--bse-navy)] text-xs font-mono">
+                    {currentLang === 'ar' ? 'تقرير عربي' : 'ARABIC'}
                   </th>
                 </tr>
               </thead>
@@ -400,54 +382,52 @@ export const ReportsListSection = ({
                       key={report.id}
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
-                      whileHover={{ backgroundColor: '#f0f9ff', scale: 1.01 }}
-                      transition={{ duration: 0.3, delay: index * 0.05 }}
-                      className="border-b border-gray-100 hover:bg-blue-50/50 transition-all duration-200"
+                      whileHover={{ backgroundColor: 'var(--bse-sky)/20' }}
+                      transition={{ duration: 0.3, delay: Math.min(index * 0.02, 0.3) }}
+                      className="border-b border-[var(--bse-line)] hover:bg-[var(--bse-sky)]/20 transition-colors duration-200"
                     >
-                      <td className="px-6 py-6 text-center">
-                        <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-blue-100 to-slate-100 rounded-2xl font-bold text-lg text-gray-900 shadow-sm">
+                      <td className="px-4 py-4 text-center">
+                        <div className="inline-flex items-center justify-center w-12 h-12 bg-[var(--bse-navy)] text-white rounded-lg font-mono font-bold text-sm">
                           {report.year}
                         </div>
                       </td>
-                      <td className="px-6 py-6 text-center">
+                      <td className="px-4 py-4 text-center">
                         {report.englishUrl ? (
                           <motion.a
                             href={report.englishUrl}
                             target="_blank"
                             rel="noreferrer noopener"
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                            className="inline-flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white rounded-2xl font-medium shadow-lg hover:shadow-xl transition-all duration-300"
+                            whileHover={{ scale: 1.02 }}
+                            whileTap={{ scale: 0.98 }}
+                            className="inline-flex items-center gap-2 px-4 py-2 bg-[var(--bse-blue)] hover:bg-[var(--bse-navy)] text-white text-xs font-bold rounded-lg transition-all duration-200"
                           >
-                            <FileDown className="w-5 h-5" />
-                            <span>{report.englishTitle}</span>
-                            <div className="w-2 h-2 bg-white/30 rounded-full animate-pulse"></div>
+                            <FileDown className="w-3.5 h-3.5" />
+                            <span>{currentLang === 'ar' ? 'تحميل' : 'Download'}</span>
                           </motion.a>
                         ) : (
-                          <div className="inline-flex items-center gap-3 px-6 py-3 bg-gray-100 text-gray-400 rounded-2xl font-medium cursor-not-allowed">
-                            <FileDown className="w-5 h-5" />
-                            <span>{report.englishTitle}</span>
+                          <div className="inline-flex items-center gap-2 px-4 py-2 bg-[var(--bse-paper)] text-[var(--bse-muted)] text-xs font-bold rounded-lg cursor-not-allowed">
+                            <FileDown className="w-3.5 h-3.5" />
+                            <span>{currentLang === 'ar' ? 'غير متوفر' : 'N/A'}</span>
                           </div>
                         )}
                       </td>
-                      <td className="px-6 py-6 text-center">
+                      <td className="px-4 py-4 text-center">
                         {report.arabicUrl ? (
                           <motion.a
                             href={report.arabicUrl}
                             target="_blank"
                             rel="noreferrer noopener"
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                            className="inline-flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white rounded-2xl font-medium shadow-lg hover:shadow-xl transition-all duration-300"
+                            whileHover={{ scale: 1.02 }}
+                            whileTap={{ scale: 0.98 }}
+                            className="inline-flex items-center gap-2 px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-lg transition-all duration-200"
                           >
-                            <FileDown className="w-5 h-5" />
-                            <span>{report.arabicTitle}</span>
-                            <div className="w-2 h-2 bg-white/30 rounded-full animate-pulse"></div>
+                            <FileDown className="w-3.5 h-3.5" />
+                            <span>{currentLang === 'ar' ? 'تحميل' : 'Download'}</span>
                           </motion.a>
                         ) : (
-                          <div className="inline-flex items-center gap-3 px-6 py-3 bg-gray-100 text-gray-400 rounded-2xl font-medium cursor-not-allowed">
-                            <FileDown className="w-5 h-5" />
-                            <span>{report.arabicTitle}</span>
+                          <div className="inline-flex items-center gap-2 px-4 py-2 bg-[var(--bse-paper)] text-[var(--bse-muted)] text-xs font-bold rounded-lg cursor-not-allowed">
+                            <FileDown className="w-3.5 h-3.5" />
+                            <span>{currentLang === 'ar' ? 'غير متوفر' : 'N/A'}</span>
                           </div>
                         )}
                       </td>
@@ -455,27 +435,27 @@ export const ReportsListSection = ({
                   ))
                 ) : (
                   <tr>
-                    <td colSpan={3} className="px-6 py-16 text-center text-gray-500">
+                    <td colSpan={3} className="px-6 py-12 text-center text-[var(--bse-muted)]">
                       <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         className="flex flex-col items-center max-w-md mx-auto"
                       >
-                        <div className="w-20 h-20 bg-gradient-to-br from-gray-100 to-gray-200 rounded-3xl flex items-center justify-center mb-6">
-                          <FileText className="w-10 h-10 text-gray-400" />
+                        <div className="w-16 h-16 bg-[var(--bse-paper)] rounded-2xl flex items-center justify-center mb-4 border border-[var(--bse-line)]">
+                          <FileText className="w-8 h-8 text-[var(--bse-muted)]" />
                         </div>
-                        <h3 className="text-xl font-bold text-gray-700 mb-3">
+                        <h3 className="text-base font-bold text-[var(--bse-navy)] mb-2">
                           {currentLang === 'ar' ? 'لا توجد تقارير مطابقة' : 'No matching reports found'}
                         </h3>
-                        <p className="text-gray-500 mb-6">
+                        <p className="text-[var(--bse-muted)] text-sm mb-4">
                           {currentLang === 'ar' 
-                            ? 'حاول تعديل معايير البحث أو الفلترة للعثور على التقارير' 
-                            : 'Try adjusting your search or filter criteria to find reports'
+                            ? 'حاول تعديل معايير البحث أو الفلترة' 
+                            : 'Try adjusting your search or filter criteria'
                           }
                         </p>
                         <button
                           onClick={onClearFilters}
-                          className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-2xl font-medium transition-colors duration-200"
+                          className="px-4 py-2 bg-[var(--bse-blue)] hover:bg-[var(--bse-navy)] text-white text-xs font-bold rounded-lg transition-colors duration-200"
                         >
                           {currentLang === 'ar' ? 'مسح الفلاتر' : 'Clear Filters'}
                         </button>
@@ -508,53 +488,43 @@ interface FinancialHighlightsSectionProps {
 
 export const FinancialHighlightsSection = ({ currentLang, financialHighlights }: FinancialHighlightsSectionProps) => {
   return (
-    <section id="financial-highlights" className="py-20 lg:py-32 bg-gradient-to-br from-gray-50 to-slate-50 relative overflow-hidden">
-      <div className="absolute inset-0">
-        <div className="absolute top-40 right-20 w-80 h-80 bg-gradient-to-br from-slate-300/30 to-blue-300/30 rounded-full blur-3xl animate-bounce"></div>
-        <div className="absolute bottom-40 left-20 w-64 h-64 bg-gradient-to-br from-blue-300/30 to-slate-300/30 rounded-full blur-3xl animate-bounce delay-500"></div>
-      </div>
-      
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-16"
-        >
-          <h2 className="text-4xl lg:text-6xl font-bold bg-gradient-to-r from-slate-600 to-blue-600 bg-clip-text text-transparent mb-4">
-            {currentLang === 'ar' ? 'الملخص المالي' : 'Financial Summary'}
+    <section id="financial-highlights" className="bp-section bp-section--paper">
+      <div className="bp-shell">
+        <Reveal className="mb-10">
+          <h2>
+            {currentLang === 'ar' ? 'الأداء المالي' : 'Financial Performance'}
           </h2>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+          <p className="bp-section-intro">
             {currentLang === 'ar' ? 'نظرة عامة على الأداء المالي للجمعية خلال السنوات الأخيرة' : 'Overview of the society\'s financial performance in recent years'}
           </p>
-        </motion.div>
+        </Reveal>
         
         <div className="overflow-x-auto">
-          <table className="w-full bg-white rounded-3xl shadow-xl overflow-hidden">
-            <thead className="bg-gradient-to-r from-slate-600 to-blue-600 text-white">
+          <table className="w-full bg-white rounded-lg border border-[var(--bse-line)] overflow-hidden">
+            <thead className="bg-[var(--bse-navy)] text-white">
               <tr>
-                <th className="px-6 py-4 text-right">{currentLang === 'ar' ? 'السنة' : 'Year'}</th>
-                <th className="px-6 py-4 text-right">{currentLang === 'ar' ? 'الإيرادات' : 'Revenue'}</th>
-                <th className="px-6 py-4 text-right">{currentLang === 'ar' ? 'المصروفات' : 'Expenses'}</th>
-                <th className="px-6 py-4 text-right">{currentLang === 'ar' ? 'الفائض' : 'Surplus'}</th>
-                <th className="px-6 py-4 text-right">{currentLang === 'ar' ? 'النمو' : 'Growth'}</th>
+                <th className="px-4 py-3 text-right text-xs font-mono font-bold">{currentLang === 'ar' ? 'السنة' : 'YEAR'}</th>
+                <th className="px-4 py-3 text-right text-xs font-mono font-bold">{currentLang === 'ar' ? 'الإيرادات' : 'REVENUE'}</th>
+                <th className="px-4 py-3 text-right text-xs font-mono font-bold">{currentLang === 'ar' ? 'المصروفات' : 'EXPENSES'}</th>
+                <th className="px-4 py-3 text-right text-xs font-mono font-bold">{currentLang === 'ar' ? 'الفائض' : 'SURPLUS'}</th>
+                <th className="px-4 py-3 text-right text-xs font-mono font-bold">{currentLang === 'ar' ? 'النمو' : 'GROWTH'}</th>
               </tr>
             </thead>
             <tbody>
               {financialHighlights.map((item, index) => (
                 <motion.tr
                   key={index}
-                  initial={{ opacity: 0, x: -50 }}
+                  initial={{ opacity: 0, x: -20 }}
                   whileInView={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
-                  className="border-b hover:bg-slate-50 transition-colors duration-300"
+                  transition={{ duration: 0.4, delay: index * 0.1 }}
+                  className="border-b border-[var(--bse-line)] hover:bg-[var(--bse-sky)]/20 transition-colors duration-300"
                 >
-                  <td className="px-6 py-4 font-bold text-gray-900">{item.year}</td>
-                  <td className="px-6 py-4 text-gray-700">{item.revenue}</td>
-                  <td className="px-6 py-4 text-gray-700">{item.expenses}</td>
-                  <td className="px-6 py-4 text-slate-600 font-bold">{item.surplus}</td>
-                  <td className="px-6 py-4">
-                    <span className="px-3 py-1 rounded-full text-xs font-bold bg-slate-100 text-slate-700">
+                  <td className="px-4 py-3 font-bold text-[var(--bse-navy)] text-sm">{item.year}</td>
+                  <td className="px-4 py-3 text-[var(--bse-ink)] text-sm">{item.revenue}</td>
+                  <td className="px-4 py-3 text-[var(--bse-ink)] text-sm">{item.expenses}</td>
+                  <td className="px-4 py-3 text-[var(--bse-blue)] font-bold text-sm">{item.surplus}</td>
+                  <td className="px-4 py-3">
+                    <span className="px-2 py-1 rounded text-xs font-bold bg-[var(--bse-sky)]/50 text-[var(--bse-blue)]">
                       {item.growth}
                     </span>
                   </td>
@@ -583,61 +553,51 @@ interface UpcomingMeetingsSectionProps {
 
 export const UpcomingMeetingsSection = ({ currentLang, upcomingMeetings }: UpcomingMeetingsSectionProps) => {
   return (
-    <section id="upcoming-meetings" className="py-20 lg:py-32 bg-gradient-to-br from-white to-green-50 relative overflow-hidden">
-      <div className="absolute inset-0">
-        <div className="absolute top-10 right-10 w-72 h-72 bg-slate-200/20 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-10 left-10 w-96 h-96 bg-blue-100/20 rounded-full blur-3xl"></div>
-      </div>
-      
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-16"
-        >
-          <h2 className="text-4xl lg:text-6xl font-bold bg-gradient-to-r from-slate-600 to-blue-600 bg-clip-text text-transparent mb-4">
+    <section id="upcoming-meetings" className="bp-section bp-section--paper">
+      <div className="bp-shell">
+        <Reveal className="mb-10">
+          <h2>
             {currentLang === 'ar' ? 'الاجتماعات القادمة' : 'Upcoming Meetings'}
           </h2>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+          <p className="bp-section-intro">
             {currentLang === 'ar' ? 'جدول اجتماعات الجمعية العمومية القادمة' : 'Schedule of upcoming general assembly meetings'}
           </p>
-        </motion.div>
+        </Reveal>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {upcomingMeetings.map((meeting, index) => (
             <motion.div
               key={index}
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              whileHover={{ scale: 1.02 }}
-              transition={{ duration: 0.6, delay: index * 0.2 }}
-              className="bg-white rounded-3xl p-8 shadow-lg hover:shadow-xl transition-all duration-500"
+              whileHover={{ y: -4 }}
+              transition={{ duration: 0.4, delay: index * 0.1 }}
+              className="bp-service-card !p-6"
             >
-              <div className="flex items-start">
-                <div className="w-12 h-12 bg-gradient-to-br from-slate-500 to-blue-600 rounded-2xl flex items-center justify-center mr-4 flex-shrink-0">
-                  <Calendar className="w-6 h-6 text-white" />
+              <div className="flex items-start gap-4">
+                <div className="w-10 h-10 bg-[var(--bse-navy)] rounded-lg flex items-center justify-center flex-shrink-0">
+                  <Calendar className="w-5 h-5 text-white" />
                 </div>
                 <div className="flex-1">
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">{meeting.title}</h3>
-                  <div className="flex items-center text-slate-600 text-sm mb-3">
-                    <Clock className="w-4 h-4 mr-2" />
+                  <h3 className="text-base font-bold text-[var(--bse-navy)] mb-2">{meeting.title}</h3>
+                  <div className="flex items-center text-[var(--bse-blue)] text-xs mb-2">
+                    <Clock className="w-3.5 h-3.5 mr-2" />
                     <span>{meeting.date}</span>
                   </div>
-                  <div className="flex items-center text-gray-600 text-sm mb-4">
-                    <Users className="w-4 h-4 mr-2" />
+                  <div className="flex items-center text-[var(--bse-muted)] text-xs mb-3">
+                    <Users className="w-3.5 h-3.5 mr-2" />
                     <span>{meeting.location}</span>
                   </div>
                   
-                  <div className="mb-4">
-                    <h4 className="font-bold text-gray-900 mb-2 text-sm">
-                      {currentLang === 'ar' ? 'جدول الأعمال' : 'Agenda'}
+                  <div>
+                    <h4 className="font-bold text-[var(--bse-navy)] mb-2 text-xs font-mono">
+                      {currentLang === 'ar' ? 'جدول الأعمال' : 'AGENDA'}
                     </h4>
-                    <div className="space-y-2">
+                    <div className="space-y-1.5">
                       {meeting.agenda.map((item, itemIndex) => (
                         <div key={itemIndex} className="flex items-start">
-                          <div className="w-2 h-2 bg-slate-600 rounded-full mr-3 mt-1.5 flex-shrink-0"></div>
-                          <span className="text-gray-700 text-sm">{item}</span>
+                          <div className="w-1.5 h-1.5 bg-[var(--bse-blue)] rounded-full mr-2 mt-1 flex-shrink-0"></div>
+                          <span className="text-[var(--bse-ink)] text-xs">{item}</span>
                         </div>
                       ))}
                     </div>
@@ -660,28 +620,28 @@ interface ImportantInfoSectionProps {
 export const ImportantInfoSection = ({ currentLang }: ImportantInfoSectionProps) => {
   const infoItems = [
     {
-      icon: <AlertCircle className="w-8 h-8" />,
+      icon: <AlertCircle className="w-5 h-5" />,
       title: currentLang === 'ar' ? 'الحقوق والواجبات' : 'Rights and Responsibilities',
       description: currentLang === 'ar'
         ? 'لجميع الأعضاء الحق في حضور الجمعية العمومية والتصويت على القرارات والمشاركة في صنع القرار.'
         : 'All members have the right to attend the general assembly, vote on decisions, and participate in decision-making.'
     },
     {
-      icon: <Eye className="w-8 h-8" />,
+      icon: <Eye className="w-5 h-5" />,
       title: currentLang === 'ar' ? 'الشفافية والنزاهة' : 'Transparency and Integrity',
       description: currentLang === 'ar'
         ? 'جميع قرارات الجمعية العمومية يتم توثيقها ونشرها لضمان الشفافية الكاملة.'
         : 'All general assembly decisions are documented and published to ensure complete transparency.'
     },
     {
-      icon: <Users className="w-8 h-8" />,
+      icon: <Users className="w-5 h-5" />,
       title: currentLang === 'ar' ? 'المشاركة الفعالة' : 'Active Participation',
       description: currentLang === 'ar'
         ? 'نشجع جميع الأعضاء على المشاركة الفعالة في اجتماعات الجمعية العمومية لإثراء النقاش.'
         : 'We encourage all members to actively participate in general assembly meetings to enrich the discussion.'
     },
     {
-      icon: <FileText className="w-8 h-8" />,
+      icon: <FileText className="w-5 h-5" />,
       title: currentLang === 'ar' ? 'الوثائق الرسمية' : 'Official Documents',
       description: currentLang === 'ar'
         ? 'يمكن الحصول على نسخ رسمية من تقارير الجمعية العمومية من مقر الجمعية.'
@@ -690,47 +650,37 @@ export const ImportantInfoSection = ({ currentLang }: ImportantInfoSectionProps)
   ];
 
   return (
-    <section id="important-info" className="py-20 lg:py-32 bg-gradient-to-br from-slate-600 to-blue-700 relative overflow-hidden">
-      <div className="absolute inset-0">
-        <div className="absolute top-20 left-20 w-80 h-80 bg-slate-400/10 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-20 right-20 w-96 h-96 bg-blue-400/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
-      </div>
-      
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-16"
-        >
-          <h2 className="text-4xl lg:text-6xl font-bold text-white mb-6">
+    <section id="important-info" className="bp-section bp-section--dark">
+      <div className="bp-shell">
+        <Reveal className="mb-10">
+          <h2>
             {currentLang === 'ar' ? 'معلومات هامة' : 'Important Information'}
           </h2>
-          <p className="text-xl text-slate-100 max-w-2xl mx-auto">
+          <p className="bp-section-intro">
             {currentLang === 'ar' 
               ? 'كل ما تحتاج معرفته عن اجتماعات الجمعية العمومية'
               : 'Everything you need to know about general assembly meetings'
             }
           </p>
-        </motion.div>
+        </Reveal>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {infoItems.map((info, index) => (
             <motion.div
               key={index}
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              whileHover={{ scale: 1.02 }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-              className="bg-white/10 backdrop-blur-sm rounded-3xl p-8"
+              whileHover={{ y: -4 }}
+              transition={{ duration: 0.4, delay: index * 0.1 }}
+              className="bp-service-card !bg-[var(--bse-navy)] !border-[var(--bse-line-dark)] text-white !p-6"
             >
-              <div className="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center mb-6">
+              <div className="w-12 h-12 bg-white/10 backdrop-blur-sm rounded-xl flex items-center justify-center mb-4">
                 <div className="text-white">
                   {info.icon}
                 </div>
               </div>
-              <h3 className="text-xl font-bold text-white mb-4">{info.title}</h3>
-              <p className="text-slate-100 leading-relaxed">{info.description}</p>
+              <h3 className="text-base font-bold text-white mb-3">{info.title}</h3>
+              <p className="text-white/70 text-sm leading-relaxed">{info.description}</p>
             </motion.div>
           ))}
         </div>
@@ -746,36 +696,35 @@ interface ReportsContactSectionProps {
 
 export const ReportsContactSection = ({ currentLang }: ReportsContactSectionProps) => {
   return (
-    <section id="contact" className="py-20 lg:py-32 bg-gradient-to-br from-white to-green-50 relative overflow-hidden">
-      <div className="absolute inset-0">
-        <div className="absolute top-10 right-10 w-72 h-72 bg-slate-200/20 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-10 left-10 w-96 h-96 bg-blue-100/20 rounded-full blur-3xl"></div>
-      </div>
-      
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-        >
-          <h2 className="text-4xl lg:text-6xl font-bold bg-gradient-to-r from-slate-600 to-blue-600 bg-clip-text text-transparent mb-6">
-            {currentLang === 'ar' ? 'للمزيد من المعلومات' : 'For More Information'}
-          </h2>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto mb-8">
-            {currentLang === 'ar' 
-              ? 'تواصل معنا للحصول على أي معلومات إضافية حول تقارير الجمعية العمومية'
-              : 'Contact us for any additional information about general assembly reports'
-            }
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="bg-gradient-to-r from-slate-600 to-blue-600 hover:from-slate-700 hover:to-blue-700 text-white px-8 py-4 rounded-full font-bold text-lg shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300">
-              {currentLang === 'ar' ? 'تواصل معنا' : 'Contact Us'}
-            </button>
-            <button className="bg-transparent border-2 border-slate-600 text-slate-600 hover:bg-slate-600 hover:text-white px-8 py-4 rounded-full font-bold text-lg transition-all duration-300">
-              {currentLang === 'ar' ? 'الأرشيف الكامل' : 'Full Archive'}
-            </button>
+    <section id="contact" className="bp-section bp-contact">
+      <div className="bp-shell">
+        <Reveal className="bp-compare-card !bg-[var(--bse-navy-2)] !border-[var(--bse-line-dark)] text-white p-8 lg:p-12 flex flex-col md:flex-row items-center justify-between gap-8">
+          <div>
+            <h3 className="text-2xl lg:text-3xl font-extrabold text-white mb-3">
+              {currentLang === 'ar' ? 'تواصل معنا للحصول على أي معلومات إضافية' : 'Contact us for any additional information'}
+            </h3>
+            <p className="text-white/70 text-sm max-w-xl leading-relaxed">
+              {currentLang === 'ar' 
+                ? 'نحن هنا لمساعدتك في الحصول على أي معلومات حول تقارير الجمعية العمومية'
+                : 'We are here to help you with any information about general assembly reports'
+              }
+            </p>
           </div>
-        </motion.div>
+          <div className="flex flex-wrap gap-4">
+            <a 
+              href="mailto:info@bse.bh"
+              className="bg-[var(--bse-blue)] hover:bg-[var(--bse-navy)] text-white font-bold px-6 py-3 rounded-full text-sm shadow-md hover:shadow-lg transition-all"
+            >
+              {currentLang === 'ar' ? 'تواصل معنا' : 'Contact Us'}
+            </a>
+            <a 
+              href="tel:+97317727100"
+              className="bg-white hover:bg-slate-50 text-slate-800 font-bold px-6 py-3 rounded-full text-sm border border-slate-200 shadow-sm transition-all"
+            >
+              +973 1772 7100
+            </a>
+          </div>
+        </Reveal>
       </div>
     </section>
   );

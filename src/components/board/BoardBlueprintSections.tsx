@@ -8,6 +8,30 @@ const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
   e.currentTarget.src = DEFAULT_AVATAR;
 };
 
+// Interface definitions
+interface CurrentBoardSectionProps {
+  currentLang: string;
+  presidentMember: BoardMember;
+  otherMembers: BoardMember[];
+}
+
+interface PreviousBoardsSectionProps {
+  currentLang: string;
+  selectedDecade: string;
+  setSelectedDecade: (decade: string) => void;
+  boardSearch: string;
+  setBoardSearch: (search: string) => void;
+  filteredPreviousBoards: any[];
+}
+
+interface CommitteesSectionProps {
+  currentLang: string;
+}
+
+interface BoardContactSectionProps {
+  currentLang: string;
+}
+
 // Timeline Item Component
 interface TimelineItemProps {
   president: PresidentRecord;
@@ -165,12 +189,12 @@ export const BoardHeroSection = ({
   setTimelinePosition
 }: BoardHeroSectionProps) => {
   const handlePrevious = () => {
-    setTimelinePosition(prev => Math.min(prev + 200, 0));
+    setTimelinePosition(Math.min(timelinePosition + 200, 0));
   };
 
   const handleNext = () => {
     const maxPosition = -(presidentsTimeline.length * 180 - 600);
-    setTimelinePosition(prev => Math.max(prev - 200, maxPosition));
+    setTimelinePosition(Math.max(timelinePosition - 200, maxPosition));
   };
 
   const handlePresidentClick = (president: PresidentRecord) => {
@@ -391,11 +415,8 @@ export const CurrentBoardSection = ({ currentLang, presidentMember, otherMembers
     <section id="current-board" className="bp-section bp-section--paper">
       <div className="bp-shell">
         <div className="mb-12">
-          <span className="bp-eyebrow">
-            02 / {currentLang === 'ar' ? 'فريق القيادة' : 'LEADERSHIP TEAM'}
-          </span>
-          <h2 className="mt-3">
-            {currentLang === 'ar' ? 'أعضاء مجلس الإدارة' : 'Board of Directors'}
+          <h2>
+            {currentLang === 'ar' ? 'المجلس الحالي' : 'Current Board'}
           </h2>
           <p className="bp-section-intro">
             {currentLang === 'ar' 
@@ -404,93 +425,71 @@ export const CurrentBoardSection = ({ currentLang, presidentMember, otherMembers
           </p>
         </div>
 
-        {/* President Card - Blueprint Architecture */}
+        {/* President Card - Consistent Design */}
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="bp-compare-card mb-12 bg-white !p-0 overflow-hidden border border-[var(--bse-line)] shadow-sm hover:shadow-md transition-shadow"
+          className="bp-service-card !p-0 flex flex-col overflow-hidden bg-white border-2 border-[var(--bse-blue)] hover:border-[var(--bse-navy)] transition-all duration-300 group"
         >
-          <div className="bp-card-index p-4 sm:px-8 border-b border-[var(--bse-line)] bg-[var(--bse-sky)]/50 flex items-center justify-between">
-            <span className="font-mono text-[11px] tracking-wider text-[var(--bse-blue)]">
-              01 — {currentLang === 'ar' ? 'رئيس مجلس الإدارة' : 'PRESIDENT OF THE BOARD'}
-            </span>
-            <span className="text-[11px] px-2.5 py-0.5 rounded border border-[var(--bse-line)] bg-white text-[var(--bse-navy)] font-mono font-bold">
-              TERM 2026 - 2028
-            </span>
+          <div className="relative h-80 bg-[var(--bse-navy)] overflow-hidden">
+            <img 
+              src={presidentMember.image || DEFAULT_AVATAR} 
+              alt={currentLang === 'ar' ? presidentMember.nameAr : presidentMember.nameEn}
+              onError={handleImageError}
+              referrerPolicy="no-referrer"
+              className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-[var(--bse-navy)]/80 via-transparent to-transparent pointer-events-none"></div>
+            <div className="absolute top-4 start-4">
+              <span className="inline-block bg-[var(--bse-blue-bright)] text-white text-xs font-bold px-3 py-1.5 rounded shadow">
+                {currentLang === 'ar' ? 'الرئيس' : 'PRESIDENT'}
+              </span>
+            </div>
+            <div className="absolute bottom-4 start-4 end-4">
+              <span className="inline-block bg-white/20 backdrop-blur-sm text-white text-xs font-bold px-3 py-1.5 rounded border border-white/30">
+                {currentLang === 'ar' ? presidentMember.positionAr : presidentMember.positionEn}
+              </span>
+            </div>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-0">
-            <div className="lg:col-span-5 relative bg-[var(--bse-navy)] min-h-[360px] lg:min-h-[440px] overflow-hidden border-b lg:border-b-0 lg:border-e border-[var(--bse-line)]">
-              <img 
-                src={presidentMember.image || DEFAULT_AVATAR} 
-                alt={currentLang === 'ar' ? presidentMember.nameAr : presidentMember.nameEn}
-                onError={handleImageError}
-                referrerPolicy="no-referrer"
-                className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-700"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[var(--bse-navy)]/80 via-transparent to-transparent pointer-events-none"></div>
-              <div className="absolute bottom-4 start-4 end-4">
-                <span className="inline-block bg-[var(--bse-blue-bright)] text-white text-xs font-bold px-3 py-1 rounded shadow">
-                  {currentLang === 'ar' ? presidentMember.positionAr : presidentMember.positionEn}
-                </span>
-              </div>
+          <div className="p-6 flex-1 flex flex-col">
+            <div className="mb-4">
+              <h3 className="text-xl font-extrabold text-[var(--bse-navy)] mb-2">
+                {currentLang === 'ar' ? presidentMember.nameAr : presidentMember.nameEn}
+              </h3>
+              <p className="text-sm text-[var(--bse-blue)] font-medium">
+                {currentLang === 'ar' ? presidentMember.positionAr : presidentMember.positionEn}
+              </p>
             </div>
 
-            <div className="lg:col-span-7 p-6 sm:p-8 lg:p-10 flex flex-col justify-between bg-white">
-              <div className="space-y-6">
-                <div>
-                  <span className="bp-eyebrow text-xs">
-                    {currentLang === 'ar' ? 'رئاسة الجمعية' : 'SOCIETY PRESIDENCY'}
-                  </span>
-                  <h3 className="mt-2 text-2xl lg:text-3xl font-extrabold text-[var(--bse-navy)]">
-                    {currentLang === 'ar' ? presidentMember.nameAr : presidentMember.nameEn}
-                  </h3>
-                  <p className="text-[var(--bse-blue)] font-medium text-sm mt-1">
-                    {currentLang === 'ar' ? presidentMember.positionAr : presidentMember.positionEn}
-                  </p>
-                </div>
-
-                <div className="p-5 rounded-lg border border-[var(--bse-line)] bg-[var(--bse-paper)] relative">
-                  <div className="text-xs font-bold font-mono text-[var(--bse-blue)] mb-2 flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[var(--bse-blue)]"></span>
-                    {currentLang === 'ar' ? 'كلمة رئيس مجلس الإدارة' : "PRESIDENT'S MESSAGE"}
-                  </div>
-                  <p className="text-[var(--bse-ink)]/85 text-sm leading-relaxed">
-                    {currentLang === 'ar'
-                      ? 'يسعدني أن أرحب بكم في جمعية المهندسين البحرينية. نعمل بجد وإخلاص لمواصلة مسيرة التطوير الهندسي ودعم الكفاءات الوطنية وتمكين المهندسين في مملكة البحرين.'
-                      : 'I am delighted to welcome you to the Bahrain Society of Engineers. We are committed to advancing the engineering profession, empowering national talent, and serving the community.'}
-                  </p>
-                </div>
-
-                <div className="bp-card-tags">
-                  <span>{currentLang === 'ar' ? 'التخصص:' : 'Spec:'} {currentLang === 'ar' ? presidentMember.specialization : presidentMember.specializationEn}</span>
-                  <span>{currentLang === 'ar' ? 'الدورة: 2026 - 2028' : 'Term: 2026 - 2028'}</span>
-                  <span>BSE / COUNCIL 2026</span>
-                </div>
+            <div className="p-4 rounded-lg border border-[var(--bse-line)] bg-[var(--bse-paper)] mb-4">
+              <div className="text-xs font-bold font-mono text-[var(--bse-blue)] mb-2">
+                {currentLang === 'ar' ? 'كلمة الرئيس' : "PRESIDENT'S MESSAGE"}
               </div>
+              <p className="text-[var(--bse-ink)]/85 text-xs leading-relaxed">
+                {currentLang === 'ar'
+                  ? 'يسعدني أن أرحب بكم في جمعية المهندسين البحرينية. نعمل بجد وإخلاص لمواصلة مسيرة التطوير الهندسي.'
+                  : 'I am delighted to welcome you to the Bahrain Society of Engineers. We are committed to advancing the engineering profession.'}
+              </p>
+            </div>
 
-              <div className="pt-6 mt-6 border-t border-[var(--bse-line)] flex flex-wrap gap-4 items-center justify-between">
-                <a 
-                  href={`mailto:${presidentMember.email}`} 
-                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded bg-[var(--bse-navy)] text-white text-xs font-bold hover:bg-[var(--bse-blue)] transition-colors shadow-sm"
-                >
-                  <Mail className="w-4 h-4" />
-                  <span>{currentLang === 'ar' ? 'مراسلة الرئيس' : 'Contact President'}</span>
-                </a>
-
-                <div className="flex items-center gap-2 text-xs text-[var(--bse-muted)] font-mono">
-                  <Phone className="w-3.5 h-3.5 text-[var(--bse-blue)]" />
-                  <span>{presidentMember.phone || '+973 1772 7100'}</span>
-                </div>
-              </div>
+            <div className="mt-auto pt-4 border-t border-[var(--bse-line)] flex items-center justify-between">
+              <a 
+                href={`mailto:${presidentMember.email}`} 
+                className="inline-flex items-center gap-2 px-4 py-2 rounded bg-[var(--bse-navy)] text-white text-xs font-bold hover:bg-[var(--bse-blue)] transition-colors"
+              >
+                <Mail className="w-3.5 h-3.5" />
+                <span>{currentLang === 'ar' ? 'تواصل' : 'Contact'}</span>
+              </a>
+              <span className="text-[10px] font-mono text-[var(--bse-muted)]">2026-2028</span>
             </div>
           </div>
         </motion.div>
 
-        {/* Other Members Cards - Blueprint Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {/* Other Members Cards - Consistent Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {otherMembers.map((member: BoardMember, idx: number) => (
             <motion.div
               key={member.id}
@@ -500,14 +499,7 @@ export const CurrentBoardSection = ({ currentLang, presidentMember, otherMembers
               transition={{ duration: 0.4, delay: idx * 0.05 }}
               className="bp-service-card !p-0 flex flex-col overflow-hidden bg-white border border-[var(--bse-line)] hover:border-[var(--bse-blue)] transition-all duration-300 group"
             >
-              <div className="bp-card-index p-3 border-b border-[var(--bse-line)] bg-[var(--bse-paper)] flex items-center justify-between">
-                <span className="font-mono text-[10px] text-[var(--bse-blue)]">
-                  {String(idx + 2).padStart(2, '0')} — MEMBER
-                </span>
-                <span className="text-[10px] font-mono text-[var(--bse-muted)]">BSE 2026</span>
-              </div>
-
-              <div className="relative h-64 bg-slate-100 overflow-hidden border-b border-[var(--bse-line)]">
+              <div className="relative h-64 bg-[var(--bse-navy)] overflow-hidden">
                 <img 
                   src={member.image || DEFAULT_AVATAR} 
                   alt={currentLang === 'ar' ? member.nameAr : member.nameEn}
@@ -515,36 +507,31 @@ export const CurrentBoardSection = ({ currentLang, presidentMember, otherMembers
                   referrerPolicy="no-referrer"
                   className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
                 />
+                <div className="absolute inset-0 bg-gradient-to-t from-[var(--bse-navy)]/60 via-transparent to-transparent pointer-events-none"></div>
                 <div className="absolute top-3 start-3">
-                  <span className="inline-block bg-[var(--bse-navy)] text-white text-[10px] font-bold px-2.5 py-1 rounded shadow">
+                  <span className="inline-block bg-[var(--bse-blue)] text-white text-[10px] font-bold px-2.5 py-1 rounded shadow">
                     {currentLang === 'ar' ? member.positionAr : member.positionEn}
                   </span>
                 </div>
               </div>
 
-              <div className="p-4 flex-1 flex flex-col justify-between space-y-3 bg-white">
-                <div>
-                  <h3 className="text-base font-extrabold text-[var(--bse-navy)] truncate leading-tight">
+              <div className="p-5 flex-1 flex flex-col">
+                <div className="mb-4">
+                  <h3 className="text-base font-extrabold text-[var(--bse-navy)] mb-1">
                     {currentLang === 'ar' ? member.nameAr : member.nameEn}
                   </h3>
-                  <p className="text-xs text-[var(--bse-blue)] font-medium mt-1 truncate">
+                  <p className="text-xs text-[var(--bse-blue)] font-medium">
                     {currentLang === 'ar' ? member.positionAr : member.positionEn}
                   </p>
                 </div>
 
-                <div className="bp-card-tags !mt-2">
-                  <span className="truncate max-w-full text-[10px]">
-                    {currentLang === 'ar' ? member.specialization : member.specializationEn}
-                  </span>
-                </div>
-
-                <div className="pt-3 border-t border-[var(--bse-line)] flex items-center justify-between text-xs">
+                <div className="mt-auto pt-4 border-t border-[var(--bse-line)] flex items-center justify-between">
                   <a 
                     href={`mailto:${member.email}`}
-                    className="bp-service-link text-xs !m-0"
+                    className="inline-flex items-center gap-2 px-3 py-1.5 rounded bg-[var(--bse-navy)] text-white text-xs font-bold hover:bg-[var(--bse-blue)] transition-colors"
                   >
-                    <Mail className="w-3.5 h-3.5" />
-                    <span>{currentLang === 'ar' ? 'البريد الإلكتروني' : 'Email'}</span>
+                    <Mail className="w-3 h-3" />
+                    <span>{currentLang === 'ar' ? 'تواصل' : 'Contact'}</span>
                   </a>
                   <span className="text-[10px] font-mono text-[var(--bse-muted)]">2026-2028</span>
                 </div>
@@ -569,11 +556,8 @@ export const PreviousBoardsSection = ({
     <section id="previous-boards" className="bp-section bp-section--paper">
       <div className="bp-shell">
         <div className="mb-10">
-          <span className="bp-eyebrow">
-            02 / {currentLang === 'ar' ? 'الأرشيف التاريخي' : 'HISTORICAL ARCHIVE'}
-          </span>
-          <h2 className="mt-3">
-            {currentLang === 'ar' ? 'مجالس الإدارة المتعاقبة' : 'Previous Boards of Directors'}
+          <h2>
+            {currentLang === 'ar' ? 'المجالس السابقة' : 'Previous Boards'}
           </h2>
           <p className="bp-section-intro">
             {currentLang === 'ar' 
@@ -647,9 +631,6 @@ export const PreviousBoardsSection = ({
                 >
                   <div className="bp-card-index p-4 border-b border-[var(--bse-line)] bg-[var(--bse-sky)]/30 flex flex-wrap items-center justify-between gap-2">
                     <div className="flex items-center gap-3">
-                      <span className="font-mono font-bold text-xs text-[var(--bse-blue)]">
-                        COUNCIL / {board.year}
-                      </span>
                       <h3 className="text-sm font-bold text-[var(--bse-navy)]">
                         {boardTitle}
                       </h3>
@@ -747,11 +728,8 @@ export const CommitteesSection = ({ currentLang }: CommitteesSectionProps) => {
           transition={{ duration: 0.6 }}
           className="mb-12"
         >
-          <span className="bp-eyebrow">
-            03 / {currentLang === 'ar' ? 'اللجان الدائمة' : 'STANDING COMMITTEES'}
-          </span>
-          <h2 className="mt-3">
-            {currentLang === 'ar' ? 'الهيكل التنظيمي للجان' : 'Committees Structure'}
+          <h2>
+            {currentLang === 'ar' ? 'اللجان' : 'Committees'}
           </h2>
           <p className="bp-section-intro">
             {currentLang === 'ar' 
@@ -800,10 +778,7 @@ export const BoardContactSection = ({ currentLang }: BoardContactSectionProps) =
       <div className="bp-shell">
         <div className="bp-compare-card !bg-[var(--bse-navy-2)] !border-[var(--bse-line-dark)] text-white p-8 lg:p-12 flex flex-col md:flex-row items-center justify-between gap-8">
           <div>
-            <span className="bp-eyebrow text-xs">
-              {currentLang === 'ar' ? 'أمانة السر' : 'BOARD SECRETARIAT'}
-            </span>
-            <h3 className="text-2xl lg:text-3xl font-extrabold text-white mt-2 mb-3">
+            <h3 className="text-2xl lg:text-3xl font-extrabold text-white mb-3">
               {currentLang === 'ar' ? 'تواصل مع أمانة سر مجلس الإدارة' : 'Contact the Board Secretariat'}
             </h3>
             <p className="text-white/70 text-sm max-w-xl leading-relaxed">

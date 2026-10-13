@@ -72,7 +72,6 @@ const AboutHeroSection = ({ currentLang }: LanguageProps) => (
 
     <div className="bp-shell bp-hero-content">
       <Reveal className="bp-hero-copy">
-        <SectionKicker>ABOUT THE SOCIETY</SectionKicker>
         <h1>
           {copy(currentLang, "هندسةٌ", "Engineering")}
           <br />
@@ -139,7 +138,6 @@ const AboutOverviewSection = ({ currentLang }: LanguageProps) => {
       <div className="bp-shell relative z-10">
         <div className="bp-overview-head">
           <Reveal className="bp-overview-copy">
-            <SectionKicker>01 / {copy(currentLang, "التعريف", "OVERVIEW")}</SectionKicker>
             <h2>
               {copy(currentLang, "نصنع مساحة", "A space to")}
               <br />
@@ -206,7 +204,6 @@ const AboutHistorySection = ({ currentLang }: LanguageProps) => {
       <div className="bp-shell">
         <div className="bp-history-top">
           <Reveal>
-            <SectionKicker>02 / {copy(currentLang, "المسيرة", "HISTORY")}</SectionKicker>
             <h2>{copy(currentLang, "ثلاث محطات تبني ذاكرة المهنة.", "Three milestones build a professional memory.")}</h2>
           </Reveal>
           <Reveal delay={0.1}>
@@ -241,7 +238,6 @@ const AboutVisionMissionSection = ({ currentLang }: LanguageProps) => (
     <div className="bp-shell relative z-10">
       <div className="bp-vision-layout">
         <Reveal className="bp-vision-head">
-          <SectionKicker>03 / {copy(currentLang, "الرؤية والرسالة", "VISION & MISSION")}</SectionKicker>
           <h2>
             {copy(currentLang, "اتجاه واضح.", "A clear direction.")}
             <br />
@@ -330,7 +326,6 @@ const AboutGoalsSection = ({ currentLang }: LanguageProps) => {
       <div className="bp-shell relative z-10">
         <div className="bp-goals-head">
           <Reveal>
-            <SectionKicker>04 / {copy(currentLang, "الإطار الاستراتيجي", "STRATEGIC FRAMEWORK")}</SectionKicker>
             <h2>
               {copy(currentLang, "أهداف تتحول", "Goals that become")}
               <br />
@@ -402,7 +397,6 @@ const AboutValuesSection = ({ currentLang }: LanguageProps) => {
       <div className="bp-shell relative z-10">
         <div className="bp-values-layout">
           <Reveal className="bp-values-intro">
-            <SectionKicker>05 / {copy(currentLang, "القيم", "VALUES")}</SectionKicker>
             <h2>
               {copy(currentLang, "مبادئ قصيرة.", "Short principles.")}
               <br />
@@ -444,7 +438,6 @@ const AboutActivitiesSection = ({ currentLang }: LanguageProps) => {
     <section className="bp-section bp-section--activities">
       <div className="bp-shell">
         <Reveal>
-          <SectionKicker>06 / {copy(currentLang, "الأنشطة", "ACTIVITIES")}</SectionKicker>
           <h2>{copy(currentLang, "مساحات للمعرفة والعمل.", "Spaces for knowledge and action.")}</h2>
           <p className="bp-section-intro">
             {copy(currentLang, "أنشطة وبرامج الجمعية التي تترجم دورها المهني إلى تجربة ملموسة للأعضاء والمجتمع.", "Programmes and activities that turn the Society’s professional role into tangible experiences for members and society.")}
@@ -480,7 +473,6 @@ const AboutServicesSection = ({ currentLang }: LanguageProps) => {
       <div className="bp-shell relative z-10">
         <div className="bp-services-head">
           <Reveal>
-            <SectionKicker>07 / {copy(currentLang, "الخدمات", "SERVICES")}</SectionKicker>
             <h2>{copy(currentLang, "دعم يواكب مسيرة المهندس.", "Support for every engineering journey.")}</h2>
           </Reveal>
           <Reveal delay={0.1}>
@@ -519,7 +511,6 @@ const AboutContactSection = ({ currentLang }: LanguageProps) => {
       <div className="bp-shell">
         <div className="bp-contact-grid">
           <Reveal>
-            <SectionKicker>08 / {copy(currentLang, "تواصل معنا", "CONTACT")}</SectionKicker>
             <h2>
               {copy(currentLang, "لنحوّل المعرفة", "Let’s turn knowledge")}
               <br />

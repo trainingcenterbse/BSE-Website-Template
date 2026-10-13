@@ -94,10 +94,7 @@ export const FoundingStorySection = ({ currentLang, foundingStory }: FoundingSto
     <section id="founding-story" className="bp-section bp-section--paper">
       <div className="bp-shell">
         <div className="mb-12">
-          <span className="bp-eyebrow">
-            01 / {currentLang === 'ar' ? 'قصة التأسيس' : 'FOUNDING STORY'}
-          </span>
-          <h2 className="mt-3">
+          <h2>
             {foundingStory.title}
           </h2>
           <p className="bp-section-intro">
@@ -211,10 +208,7 @@ export const FoundationJourneySection = ({ currentLang }: FoundationJourneySecti
           transition={{ duration: 0.6 }}
           className="mb-12"
         >
-          <span className="bp-eyebrow">
-            02 / {currentLang === 'ar' ? 'مسار التأسيس' : 'FOUNDATION JOURNEY'}
-          </span>
-          <h2 className="mt-3">
+          <h2>
             {currentLang === 'ar' ? 'رحلة التأسيس التاريخية' : 'The Foundation Journey'}
           </h2>
           <p className="bp-section-intro">
@@ -224,34 +218,28 @@ export const FoundationJourneySection = ({ currentLang }: FoundationJourneySecti
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-12">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
           {journeyItems.map((item, index) => (
             <motion.div
               key={index}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, y: 20, scale: 0.95 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: index * 0.1 }}
-              className="bp-service-card !bg-[var(--bse-navy)] !border-[var(--bse-line-dark)] text-white p-6 flex flex-col justify-between"
+              transition={{ duration: 0.5, delay: index * 0.15, ease: "easeOut" }}
+              className="bg-white/10 backdrop-blur-md rounded-2xl p-8 border border-white/20 hover:bg-white/15 hover:border-white/30 transition-all duration-300 shadow-xl"
             >
-              <div>
-                <div className="bp-service-icon !bg-blue-500/20 !border-blue-400/30 !text-[var(--bse-blue-bright)] mb-5">
-                  <item.icon className="w-5 h-5" />
-                </div>
-                <div className="bp-card-index text-[10px] font-mono text-[var(--bse-ring)] mb-2">
-                  <span>STAGE / {item.stage}</span>
-                  <span>BSE 1972</span>
-                </div>
-                <h3 className="text-lg font-bold text-white mb-3">{item.title}</h3>
-                <p className="text-white/70 text-xs leading-relaxed">{item.description}</p>
+              <div className="text-xs font-mono text-blue-300 mb-2">
+                STAGE {item.stage}
               </div>
+              <h3 className="text-xl font-bold text-white mb-4">{item.title}</h3>
+              <p className="text-white/80 leading-relaxed">{item.description}</p>
             </motion.div>
           ))}
         </div>
 
         {/* Proclamation Banner */}
-        <div className="bp-compare-card !bg-[var(--bse-navy-2)] !border-[var(--bse-line-dark)] p-8 text-center text-white">
-          <div className="text-xs font-mono tracking-widest text-[var(--bse-ring)] uppercase mb-2">
+        <div className="bg-white/10 backdrop-blur-md rounded-2xl p-8 text-center text-white border border-white/20">
+          <div className="text-xs font-mono tracking-widest text-blue-300 uppercase mb-2">
             OFFICIAL DECLARATION DATE
           </div>
           <div className="text-4xl lg:text-5xl font-extrabold text-white mb-2">
@@ -307,10 +295,7 @@ export const FoundersNamesSection = ({ currentLang }: FoundersNamesSectionProps)
           transition={{ duration: 0.6 }}
           className="mb-10"
         >
-          <span className="bp-eyebrow">
-            03 / {currentLang === 'ar' ? 'الهيئة التأسيسية' : 'FOUNDING ROLL'}
-          </span>
-          <h2 className="mt-3">
+          <h2>
             {currentLang === 'ar' ? 'أسماء المؤسسين الأوائل' : 'Names of First Founders'}
           </h2>
           <p className="bp-section-intro">
@@ -443,10 +428,7 @@ export const FoundersLegacySection = ({ currentLang }: FoundersLegacySectionProp
           transition={{ duration: 0.6 }}
           className="mb-12"
         >
-          <span className="bp-eyebrow">
-            04 / {currentLang === 'ar' ? 'الإرث المستمر' : 'ENDURING LEGACY'}
-          </span>
-          <h2 className="mt-3">
+          <h2>
             {currentLang === 'ar' ? 'إرث المؤسسين الأوائل' : 'The Founders\' Legacy'}
           </h2>
           <p className="bp-section-intro">

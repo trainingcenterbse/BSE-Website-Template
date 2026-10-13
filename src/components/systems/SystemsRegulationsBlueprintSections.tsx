@@ -101,11 +101,8 @@ export const RegulationsGridSection = ({ currentLang, regulations }: Regulations
     <section id="regulations" className="bp-section bp-section--paper">
       <div className="bp-shell">
         <div className="mb-12">
-          <span className="bp-eyebrow">
-            01 / {currentLang === 'ar' ? 'الوثائق الرسمية' : 'OFFICIAL DOCUMENTS'}
-          </span>
-          <h2 className="mt-3">
-            {currentLang === 'ar' ? 'اللوائح والأنظمة المعتمدة' : 'Official Regulations & Systems'}
+          <h2>
+            {currentLang === 'ar' ? 'الأنظمة واللوائح' : 'Systems & Regulations'}
           </h2>
           <p className="bp-section-intro">
             {currentLang === 'ar'
@@ -192,11 +189,8 @@ export const ProceduresSection = ({ currentLang, procedures }: ProceduresSection
           transition={{ duration: 0.6 }}
           className="mb-12"
         >
-          <span className="bp-eyebrow">
-            02 / {currentLang === 'ar' ? 'مسارات العمل' : 'WORKFLOW & PROCEDURES'}
-          </span>
-          <h2 className="mt-3">
-            {currentLang === 'ar' ? 'الإجراءات والعمليات المعتمدة' : 'Approved Procedures & Operations'}
+          <h2>
+            {currentLang === 'ar' ? 'الإجراءات' : 'Procedures'}
           </h2>
           <p className="bp-section-intro">
             {currentLang === 'ar' 
@@ -307,11 +301,8 @@ export const ImportantNotesSection = ({ currentLang }: ImportantNotesSectionProp
           transition={{ duration: 0.6 }}
           className="mb-12"
         >
-          <span className="bp-eyebrow">
-            03 / {currentLang === 'ar' ? 'الحوكمة والامتثال' : 'COMPLIANCE & GOVERNANCE'}
-          </span>
-          <h2 className="mt-3">
-            {currentLang === 'ar' ? 'ملاحظات تنظيمية هامة' : 'Important Regulatory Notes'}
+          <h2>
+            {currentLang === 'ar' ? 'ملاحظات هامة' : 'Important Notes'}
           </h2>
           <p className="bp-section-intro">
             {currentLang === 'ar' 
@@ -362,10 +353,7 @@ export const SystemsContactSection = ({ currentLang }: SystemsContactSectionProp
       <div className="bp-shell">
         <div className="bp-compare-card !bg-[var(--bse-navy-2)] !border-[var(--bse-line-dark)] text-white p-8 lg:p-12 flex flex-col md:flex-row items-center justify-between gap-8">
           <div>
-            <span className="bp-eyebrow text-xs">
-              {currentLang === 'ar' ? 'الاستشارات التنظيمية' : 'REGULATORY INQUIRIES'}
-            </span>
-            <h3 className="text-2xl lg:text-3xl font-extrabold text-white mt-2 mb-3">
+            <h3 className="text-2xl lg:text-3xl font-extrabold text-white mb-3">
               {currentLang === 'ar' ? 'هل لديك استفسار حول اللوائح والأنظمة؟' : 'Have questions about regulations?'}
             </h3>
             <p className="text-white/70 text-sm max-w-xl leading-relaxed">
